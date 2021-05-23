@@ -10,4 +10,7 @@
     <color name="red">#cb5151</color>
 
     <color name="gray">#464646</color>
+
+    <color name="yellow_brand">#F8DA5B</color>
+    <color name="blue_brand">#247291</color>
 </resources>

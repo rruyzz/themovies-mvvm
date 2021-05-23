@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
-        android:name="dominando.android.moviesdb.login.LoginFragment"
+        android:name="dominando.android.moviesdb.login.SignUpFragment"
         android:label="fragment_login"
-        tools:layout="@layout/fragment_login" />
+        tools:layout="@layout/fragment_sign_up" />
 </navigation>

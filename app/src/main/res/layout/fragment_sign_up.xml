@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".login.LoginFragment">
+    tools:context=".login.SignUpFragment">
 
     <ImageView
         android:id="@+id/background"
@@ -41,7 +41,7 @@
         android:id="@+id/buttonLoginGoogle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginStart="16dp"
@@ -54,6 +54,43 @@
         app:iconGravity="textStart"
         android:textColor="@color/white"
         app:icon="@drawable/ic_google" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="0dp"
+        android:layout_height="2dp"
+        android:layout_margin="16dp"
+        android:background="#80464646"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toTopOf="@id/textViewMoreOptions"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewMoreOptions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="36dp"
+        app:layout_constraintBottom_toTopOf="@id/textTerms"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:textColor="@color/yellow_brand"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:text="Cadastre-se com email" />
+
+    <TextView
+        android:id="@+id/textTerms"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:textColor="@color/white"
+        android:text="Ao se cadastrar, você concorda com nossos Termos e nossas Políticas da Privacidade"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/view"
+        app:layout_constraintStart_toStartOf="@+id/view" />
+
 
 
 
