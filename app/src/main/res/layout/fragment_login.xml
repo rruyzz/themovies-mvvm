@@ -31,6 +31,8 @@
         app:elevation="5dp"
         app:icon="@drawable/ic_facebook"
         app:iconGravity="textStart"
+        app:iconTint="@color/white"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/buttonLoginGoogle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -46,9 +48,11 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="56dp"
         android:backgroundTint="#DB4437"
+        app:iconTint="@color/white"
         android:text="Cadastre-se com o Google"
         android:textAllCaps="false"
         app:iconGravity="textStart"
+        android:textColor="@color/white"
         app:icon="@drawable/ic_google" />
 
 
