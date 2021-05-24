@@ -38,6 +38,6 @@ class SplashFragment : Fragment() {
     }
 
     private fun navigation(){
-        navigation.navigate(SplashFragmentDirections.actionSplashFragmentToLoginFragment())
+        navigation.navigate(SplashFragmentDirections.actionSplashFragmentToLoginHomeFragment())
     }
 }

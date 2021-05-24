@@ -1,28 +1,24 @@
-package dominando.android.moviesdb.login
+package dominando.android.moviesdb.login.signup
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.fragment.findNavController
 import dominando.android.moviesdb.R
+import dominando.android.moviesdb.databinding.FragmentSignUpEmailBinding
 
+class SignUpEmailFragment : Fragment() {
 
-class SignUpFragment : Fragment() {
-
-    private val navigation get()= findNavController()
+    lateinit var binding: FragmentSignUpEmailBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        binding = FragmentSignUpEmailBinding.inflate(inflater, container, false)
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_sign_up, container, false)
-    }
-
-    private fun navigation(){
-//        navigation.navigate()
+        return binding.root
     }
 
 }

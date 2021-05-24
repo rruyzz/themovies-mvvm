@@ -11,12 +11,38 @@
         android:label="fragment_splash"
         tools:layout="@layout/fragment_splash" >
         <action
-            android:id="@+id/action_splashFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
+            android:id="@+id/action_splashFragment_to_loginHomeFragment"
+            app:destination="@id/loginHomeFragment" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
-        android:name="dominando.android.moviesdb.login.SignUpFragment"
+        android:name="dominando.android.moviesdb.login.signup.SignUpFragment"
         android:label="fragment_login"
-        tools:layout="@layout/fragment_sign_up" />
+        tools:layout="@layout/fragment_sign_up" >
+        <action
+            android:id="@+id/action_loginFragment_to_signUpEmailFragment"
+            app:destination="@id/signUpEmailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/loginHomeFragment"
+        android:name="dominando.android.moviesdb.login.home.LoginHomeFragment"
+        android:label="fragment_login_home"
+        tools:layout="@layout/fragment_login_home" >
+        <action
+            android:id="@+id/action_loginHomeFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_loginHomeFragment_to_signInFragment"
+            app:destination="@id/signInFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/signInFragment"
+        android:name="dominando.android.moviesdb.login.signin.SignInFragment"
+        android:label="fragment_sign_in"
+        tools:layout="@layout/fragment_sign_in" />
+    <fragment
+        android:id="@+id/signUpEmailFragment"
+        android:name="dominando.android.moviesdb.login.signup.SignUpEmailFragment"
+        android:label="fragment_sign_up_email"
+        tools:layout="@layout/fragment_sign_up_email" />
 </navigation>
