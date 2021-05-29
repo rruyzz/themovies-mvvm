@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "58812324418",
+    "project_id": "rrmovies-bd976",
+    "storage_bucket": "rrmovies-bd976.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:58812324418:android:fdc3eb993e651f34e76bdb",
+        "android_client_info": {
+          "package_name": "dominando.android.moviesdb"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "58812324418-0qc27k77cp6e4u63ib4g84ntiql532pd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDzAH3UTonSdsaB1LrqVAK65qXAQvlgUOQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "58812324418-0qc27k77cp6e4u63ib4g84ntiql532pd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

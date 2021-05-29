@@ -29,6 +29,7 @@
         app:layout_constraintStart_toStartOf="@+id/text_title"
         app:layout_constraintTop_toBottomOf="@+id/text_title" />
 
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_main"
         android:layout_width="match_parent"

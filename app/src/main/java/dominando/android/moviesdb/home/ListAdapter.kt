@@ -12,6 +12,7 @@ import dominando.android.moviesdb.model.DiscoveryListMovieItem
 import kotlinx.android.synthetic.main.item_movie.view.*
 
 class ListAdapter(
+    var listener: onClick,
     private val list: List<DiscoveryListMovieItem>,
     private val context: Context
 ) : RecyclerView.Adapter<ListAdapter.ListViewHolder>() {
@@ -22,6 +23,10 @@ class ListAdapter(
         )
     }
 
+    interface onClick{
+        fun onClick()
+    }
+
     override fun getItemCount() = list.size
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
@@ -29,9 +34,15 @@ class ListAdapter(
         holder.grade.text = list[position].voteAverage.toString()
     }
 
-    inner class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
         val title = itemView.text_title
         val grade = itemView.text_grade
+
+        override fun onClick(v: View?) {
+            val position = adapterPosition
+            if(RecyclerView.NO_POSITION != position)
+                listener.onClick()
+        }
     }
 
 }
