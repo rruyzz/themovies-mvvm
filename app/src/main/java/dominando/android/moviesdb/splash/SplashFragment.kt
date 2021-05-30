@@ -20,7 +20,6 @@ import kotlinx.coroutines.launch
 
 class SplashFragment : Fragment() {
 
-    val navigation get() = findNavController()
     val scope = CoroutineScope(Dispatchers.Main)
     private lateinit var mAuth: FirebaseAuth
 
@@ -58,9 +57,5 @@ class SplashFragment : Fragment() {
             Log.d("SIGN", "$user")
             requireActivity().finish()
         }
-    }
-
-    private fun navigationSignIn(){
-        navigation.navigate(SplashFragmentDirections.actionSplashFragmentToLoginHomeFragment())
     }
 }

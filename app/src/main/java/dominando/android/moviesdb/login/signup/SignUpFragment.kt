@@ -83,6 +83,7 @@ class SignUpFragment : Fragment() {
                 firebaseAuthWithGoogle(account.idToken!!)
             } catch (e: ApiException) {
                 // Google Sign In failed, update UI appropriately
+                    Toast.makeText(requireContext(), "ERRO", Toast.LENGTH_LONG).show()
                 Log.w("SignIn", "Google sign in failed", e)
             }
         }
