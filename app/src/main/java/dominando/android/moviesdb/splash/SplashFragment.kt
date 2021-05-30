@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
 import dominando.android.moviesdb.MainActivity
 import dominando.android.moviesdb.R
+import dominando.android.moviesdb.login.SignUpActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -48,7 +49,9 @@ class SplashFragment : Fragment() {
         val user = mAuth.currentUser
         if(user == null){
             Log.d("SIGN", "$user")
-            navigationSignIn()
+            val intent = Intent(requireContext(), SignUpActivity::class.java)
+            startActivity(intent)
+            requireActivity().finish()
         } else {
             val intent = Intent(requireContext(), MainActivity::class.java)
             startActivity(intent)

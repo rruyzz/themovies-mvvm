@@ -13,12 +13,5 @@ class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
-//        setNav()
-    }
-
-    private fun setNav(){
-        val myNavHostFragment : NavHostFragment = fragment as NavHostFragment
-        val inflater = myNavHostFragment.navController.navInflater
-        myNavHostFragment.navController.graph = inflater.inflate(R.navigation.login_graph)
     }
 }
