@@ -76,7 +76,6 @@ class SignUpFragment : Fragment() {
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == 120) {
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
-            val excepetion = task.exception
             try {
                 // Google Sign In was successful, authenticate with Firebase
                 val account = task.getResult(ApiException::class.java)!!
