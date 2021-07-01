@@ -3,6 +3,7 @@ package dominando.android.moviesdb.di
 import android.app.Application
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.facebook.FacebookSdk
 import dominando.android.moviesdb.login.signup.SignUpViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger

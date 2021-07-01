@@ -1,8 +1,9 @@
 package dominando.android.moviesdb.login.signup
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.facebook.AccessToken
+import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 
@@ -18,6 +19,15 @@ class SignUpViewModel() : ViewModel() {
     fun getGoogleLogin(credential: String){
         showLoad.value = true
         val credential = GoogleAuthProvider.getCredential(credential, null)
+        mAuth.signInWithCredential(credential)
+            .addOnCompleteListener {
+                showLoad.value = false
+                loginSuccess.value = it.isSuccessful
+            }
+    }
+
+    fun getFacebookLogin(accessToken: AccessToken) {
+        val credential = FacebookAuthProvider.getCredential(accessToken.token)
         mAuth.signInWithCredential(credential)
             .addOnCompleteListener {
                 showLoad.value = false
