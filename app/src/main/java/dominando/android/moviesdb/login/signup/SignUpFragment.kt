@@ -9,6 +9,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.observe
+
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -21,15 +23,16 @@ import com.google.firebase.ktx.Firebase
 import dominando.android.moviesdb.MainActivity
 import dominando.android.moviesdb.R
 import dominando.android.moviesdb.databinding.FragmentSignUpBinding
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class SignUpFragment : Fragment() {
 
     private val navigation get() = findNavController()
     private lateinit var binding: FragmentSignUpBinding
+    private lateinit var googleSignInClient: GoogleSignInClient
+    private val viewModel: SignUpViewModel by viewModel()
 
-    private lateinit var googleSignInClient : GoogleSignInClient
-    val viewModel: SignUpViewModel by viewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -41,6 +44,7 @@ class SignUpFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setButtons()
+        setObserveLogin()
     }
 
     private fun setButtons() {
@@ -52,7 +56,7 @@ class SignUpFragment : Fragment() {
         }
     }
 
-    private fun checkLogin(){
+    private fun checkLogin() {
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
@@ -64,10 +68,20 @@ class SignUpFragment : Fragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        viewModel.getGoogleLogin(requestCode, data, requireContext())
+        if (requestCode == 120) {
+            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+            val account = task.getResult(ApiException::class.java)!!
+            viewModel.getGoogleLogin(account.idToken!!)
+        }
     }
 
-    private fun loginSuccess(){
+    private fun setObserveLogin() {
+        viewModel.loginSuccess.observe(requireActivity()){
+            if(it) loginSuccess()
+        }
+    }
+
+    private fun loginSuccess() {
         val intent = Intent(requireContext(), MainActivity::class.java)
         startActivity(intent)
         requireActivity().finish()
