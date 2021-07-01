@@ -16,10 +16,11 @@ class SignUpViewModel() : ViewModel() {
     }
 
     fun getGoogleLogin(credential: String){
+        showLoad.value = true
         val credential = GoogleAuthProvider.getCredential(credential, null)
         mAuth.signInWithCredential(credential)
             .addOnCompleteListener {
-                Log.i("TESTE", it.toString())
+                showLoad.value = false
                 loginSuccess.value = it.isSuccessful
             }
     }

@@ -14,15 +14,5 @@ class SignUpActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
-//        val appModules = listOf(viewModels)
-//        startKoin {
-//            modules(appModules)
-//            androidLogger()
-//            androidContext(this@SignUpActivity)
-//        }
-//    }
-//
-//    val viewModels = module {
-//        viewModel { SignUpViewModel() }
     }
 }

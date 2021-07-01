@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
 
@@ -23,6 +24,7 @@ import com.google.firebase.ktx.Firebase
 import dominando.android.moviesdb.MainActivity
 import dominando.android.moviesdb.R
 import dominando.android.moviesdb.databinding.FragmentSignUpBinding
+import kotlinx.android.synthetic.main.fragment_sign_in.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -44,7 +46,8 @@ class SignUpFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setButtons()
-        setObserveLogin()
+        observeLoginResult()
+        obsereLoad()
     }
 
     private fun setButtons() {
@@ -75,9 +78,15 @@ class SignUpFragment : Fragment() {
         }
     }
 
-    private fun setObserveLogin() {
+    private fun observeLoginResult() {
         viewModel.loginSuccess.observe(requireActivity()){
             if(it) loginSuccess()
+        }
+    }
+
+    private fun obsereLoad(){
+        viewModel.showLoad.observe(requireActivity()){
+            progress.isVisible = it
         }
     }
 
