@@ -6,8 +6,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.lifecycle.observe
+import com.facebook.CallbackManager
+import com.facebook.FacebookCallback
+import com.facebook.FacebookException
+import com.facebook.login.LoginManager
+import com.facebook.login.LoginResult
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -25,6 +31,7 @@ class SignInFragment : Fragment() {
     lateinit var binding: FragmentSignInBinding
     private val viewModel: SignUpViewModel by viewModel()
     private lateinit var googleSignInClient: GoogleSignInClient
+    private lateinit var callbackManager: CallbackManager
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,6 +52,9 @@ class SignInFragment : Fragment() {
         binding.buttonGoogle.setOnClickListener {
             checkLogin()
         }
+        binding.buttonFacebook.setOnClickListener {
+            checkFacebook()
+        }
     }
 
     private fun checkLogin() {
@@ -57,13 +67,32 @@ class SignInFragment : Fragment() {
         startActivityForResult(signInIntent, 120)
     }
 
+    private fun checkFacebook() {
+        callbackManager = CallbackManager.Factory.create()
+        LoginManager.getInstance().logInWithReadPermissions(this, listOf("email", "public_profile"))
+        LoginManager.getInstance().registerCallback(callbackManager, object :
+            FacebookCallback<LoginResult> {
+            override fun onSuccess(result: LoginResult) {
+                viewModel.getFacebookLogin(result.accessToken)
+            }
+
+            override fun onCancel() {
+                Toast.makeText(requireActivity(), "error.toString()", Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onError(error: FacebookException?) {
+                Toast.makeText(requireActivity(), error.toString(), Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 120) {
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             val account = task.getResult(ApiException::class.java)!!
             viewModel.getGoogleLogin(account.idToken!!)
-        }
+        } else callbackManager.onActivityResult(requestCode, resultCode, data)
     }
 
     private fun observeLoginResult() {

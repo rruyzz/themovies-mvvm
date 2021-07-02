@@ -22,12 +22,12 @@ class SignUpViewModel() : ViewModel() {
         mAuth.signInWithCredential(credential)
             .addOnCompleteListener {
                 showLoad.value = false
-//                val user = mAuth.currentUser
                 loginSuccess.value = it.isSuccessful
             }
     }
 
     fun getFacebookLogin(accessToken: AccessToken) {
+        showLoad.value = true
         val credential = FacebookAuthProvider.getCredential(accessToken.token)
         mAuth.signInWithCredential(credential)
             .addOnCompleteListener {

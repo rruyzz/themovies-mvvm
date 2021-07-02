@@ -48,10 +48,9 @@ class SignUpFragment : Fragment() {
         setButtons()
         observeLoginResult()
         obsereLoad()
-        callbackManager = CallbackManager.Factory.create()
     }
 
-    private fun setButtons()= with(binding) {
+    private fun setButtons() = with(binding) {
         textViewMoreOptions.setOnClickListener {
             navigation.navigate(SignUpFragmentDirections.actionLoginFragmentToSignUpEmailFragment())
         }
@@ -59,7 +58,7 @@ class SignUpFragment : Fragment() {
             checkLogin()
         }
         buttonLoginFacebook.setOnClickListener {
-                checkFacebook()
+            checkFacebook()
         }
     }
 
@@ -74,7 +73,8 @@ class SignUpFragment : Fragment() {
     }
 
     private fun checkFacebook() {
-        LoginManager.getInstance().logInWithReadPermissions(this,listOf("email", "public_profile"))
+        callbackManager = CallbackManager.Factory.create()
+        LoginManager.getInstance().logInWithReadPermissions(this, listOf("email", "public_profile"))
         LoginManager.getInstance().registerCallback(callbackManager, object :
             FacebookCallback<LoginResult> {
             override fun onSuccess(result: LoginResult) {
@@ -88,7 +88,6 @@ class SignUpFragment : Fragment() {
             override fun onError(error: FacebookException?) {
                 Toast.makeText(requireActivity(), error.toString(), Toast.LENGTH_SHORT).show()
             }
-
         })
     }
 
