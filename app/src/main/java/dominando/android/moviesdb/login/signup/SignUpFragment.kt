@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.lifecycle.observe
 
@@ -31,8 +32,7 @@ class SignUpFragment : Fragment() {
     private val navigation get() = findNavController()
     private lateinit var binding: FragmentSignUpBinding
     private lateinit var googleSignInClient: GoogleSignInClient
-    private var callbackManager: CallbackManager = CallbackManager.Factory.create()
-
+    private lateinit var callbackManager: CallbackManager
     private val viewModel: SignUpViewModel by viewModel()
 
     override fun onCreateView(
@@ -48,17 +48,18 @@ class SignUpFragment : Fragment() {
         setButtons()
         observeLoginResult()
         obsereLoad()
+        callbackManager = CallbackManager.Factory.create()
     }
 
-    private fun setButtons() {
-        binding.textViewMoreOptions.setOnClickListener {
+    private fun setButtons()= with(binding) {
+        textViewMoreOptions.setOnClickListener {
             navigation.navigate(SignUpFragmentDirections.actionLoginFragmentToSignUpEmailFragment())
         }
-        binding.buttonLoginGoogle.setOnClickListener {
+        buttonLoginGoogle.setOnClickListener {
             checkLogin()
         }
-        binding.buttonLoginFacebook.setOnClickListener {
-            checkFacebook()
+        buttonLoginFacebook.setOnClickListener {
+                checkFacebook()
         }
     }
 
@@ -73,6 +74,7 @@ class SignUpFragment : Fragment() {
     }
 
     private fun checkFacebook() {
+        LoginManager.getInstance().logInWithReadPermissions(this,listOf("email", "public_profile"))
         LoginManager.getInstance().registerCallback(callbackManager, object :
             FacebookCallback<LoginResult> {
             override fun onSuccess(result: LoginResult) {
@@ -80,11 +82,11 @@ class SignUpFragment : Fragment() {
             }
 
             override fun onCancel() {
-                TODO("Not yet implemented")
+                Toast.makeText(requireActivity(), "error.toString()", Toast.LENGTH_SHORT).show()
             }
 
             override fun onError(error: FacebookException?) {
-                TODO("Not yet implemented")
+                Toast.makeText(requireActivity(), error.toString(), Toast.LENGTH_SHORT).show()
             }
 
         })
@@ -92,12 +94,11 @@ class SignUpFragment : Fragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        callbackManager.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 120) {
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             val account = task.getResult(ApiException::class.java)!!
             viewModel.getGoogleLogin(account.idToken!!)
-        }
+        } else callbackManager.onActivityResult(requestCode, resultCode, data)
     }
 
     private fun observeLoginResult() {

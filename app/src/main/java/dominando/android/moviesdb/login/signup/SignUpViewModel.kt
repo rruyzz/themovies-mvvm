@@ -22,6 +22,7 @@ class SignUpViewModel() : ViewModel() {
         mAuth.signInWithCredential(credential)
             .addOnCompleteListener {
                 showLoad.value = false
+//                val user = mAuth.currentUser
                 loginSuccess.value = it.isSuccessful
             }
     }
