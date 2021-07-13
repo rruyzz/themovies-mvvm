@@ -21,7 +21,6 @@ import com.google.android.gms.common.api.ApiException
 import dominando.android.moviesdb.MainActivity
 import dominando.android.moviesdb.R
 import dominando.android.moviesdb.databinding.FragmentSignInBinding
-import dominando.android.moviesdb.login.signup.SignUpFragmentDirections
 import dominando.android.moviesdb.login.signup.SignUpViewModel
 import kotlinx.android.synthetic.main.fragment_sign_in.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -43,9 +42,8 @@ class SignInFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        observeLoginResult()
+        renderLoginResult()
         setButtons()
-        obsereLoad()
     }
 
     private fun setButtons() {
@@ -95,15 +93,16 @@ class SignInFragment : Fragment() {
         } else callbackManager.onActivityResult(requestCode, resultCode, data)
     }
 
-    private fun observeLoginResult() {
+    private fun renderLoginResult() {
         viewModel.loginSuccess.observe(requireActivity()){
             if(it) loginSuccess()
         }
-    }
-
-    private fun obsereLoad(){
         viewModel.showLoad.observe(requireActivity()){
             progress.isVisible = it
+        }
+        viewModel.hasError.observe(requireActivity()){
+            Toast.makeText(requireContext(), "Erro", Toast.LENGTH_SHORT).show()
+            viewModel.hasError.value = false
         }
     }
 

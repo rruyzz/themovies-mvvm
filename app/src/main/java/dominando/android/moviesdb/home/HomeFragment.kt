@@ -9,18 +9,20 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.GridLayout
+import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.firebase.auth.FirebaseAuth
 import dominando.android.moviesdb.R
 import dominando.android.moviesdb.model.DiscoveryListMovieItem
 import dominando.android.moviesdb.splash.SplashActivity
 import kotlinx.android.synthetic.main.fragment_list.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
-class ListFragment : Fragment(), ListAdapter.onClick {
+class HomeFragment : Fragment(), HomeAdapter.onClick {
 
     private lateinit var mAuth: FirebaseAuth
+    private val viewModel: HomeViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,6 +37,7 @@ class ListFragment : Fragment(), ListAdapter.onClick {
         setView()
         setRecycler()
         setButtons()
+        viewModel.getMovie()
     }
 
     private fun setView() {
@@ -49,7 +52,7 @@ class ListFragment : Fragment(), ListAdapter.onClick {
     }
 
     private fun setRecycler(){
-        recycler_view_main.adapter= ListAdapter(this ,setMovie(), requireContext())
+        recycler_view_main.adapter= HomeAdapter(this ,setMovie(), requireContext())
         recycler_view_main.layoutManager = GridLayoutManager(requireContext(), 2, GridLayoutManager.VERTICAL, false)
     }
 
@@ -85,13 +88,14 @@ class ListFragment : Fragment(), ListAdapter.onClick {
             startActivity(intent)
             requireActivity().finish()
         }
+        text_check_movies.setOnClickListener {
+            Toast.makeText(requireContext(), "TESTO", Toast.LENGTH_SHORT).show()
+            viewModel.getMovie()
+        }
     }
 
     override fun onClick() {
-        mAuth = FirebaseAuth.getInstance()
-        mAuth.signOut()
-        val intent = Intent(requireContext(), SplashActivity::class.java)
-        startActivity(intent)
-        requireActivity().finish()
+        Toast.makeText(requireContext(), "TESTO", Toast.LENGTH_SHORT).show()
+        viewModel.getMovie()
     }
 }

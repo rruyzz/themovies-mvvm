@@ -11,12 +11,14 @@ class SignUpViewModel() : ViewModel() {
     private var mAuth = FirebaseAuth.getInstance()
     var loginSuccess: MutableLiveData<Boolean> = MutableLiveData()
     var showLoad: MutableLiveData<Boolean> = MutableLiveData()
+    var hasError: MutableLiveData<Boolean> = MutableLiveData()
+
 
     fun loginEmail(email: String, password: String) {
         mAuth.createUserWithEmailAndPassword(email, password)
     }
 
-    fun getGoogleLogin(credential: String){
+    fun getGoogleLogin(credential: String) {
         showLoad.value = true
         val credential = GoogleAuthProvider.getCredential(credential, null)
         mAuth.signInWithCredential(credential)
@@ -31,11 +33,16 @@ class SignUpViewModel() : ViewModel() {
         val credential = FacebookAuthProvider.getCredential(accessToken.token)
         mAuth.signInWithCredential(credential)
             .addOnCompleteListener {
-                showLoad.value = false
-                loginSuccess.value = it.isSuccessful
+                if (it.isSuccessful) {
+                    showLoad.value = false
+                    loginSuccess.value = it.isSuccessful
+                } else {
+                    hasError.value = true
+                }
             }
     }
 }
+
 
 
 
