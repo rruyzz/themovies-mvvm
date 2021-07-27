@@ -10,11 +10,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.firebase.auth.FirebaseAuth
 import dominando.android.moviesdb.R
+import dominando.android.moviesdb.databinding.FragmentListBinding
 import dominando.android.moviesdb.model.DiscoveryListMovieItem
+import dominando.android.moviesdb.model.DiscoveryListMovieResponse
 import dominando.android.moviesdb.splash.SplashActivity
+import dominando.android.moviesdb.utils.api.Resources
+import dominando.android.moviesdb.utils.api.Status
 import kotlinx.android.synthetic.main.fragment_list.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -23,13 +28,15 @@ class HomeFragment : Fragment(), HomeAdapter.onClick {
 
     private lateinit var mAuth: FirebaseAuth
     private val viewModel: HomeViewModel by viewModel()
-
+    private lateinit var binding : FragmentListBinding
+    private var  observer : Observer<Resources<DiscoveryListMovieResponse>> = Resources.error()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
+        binding = FragmentListBinding.inflate(inflater, container, false)
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_list, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -37,7 +44,8 @@ class HomeFragment : Fragment(), HomeAdapter.onClick {
         setView()
         setRecycler()
         setButtons()
-        viewModel.getMovie()
+        viewModel.weather.observe(requireActivity(), observer)
+
     }
 
     private fun setView() {
@@ -90,12 +98,17 @@ class HomeFragment : Fragment(), HomeAdapter.onClick {
         }
         text_check_movies.setOnClickListener {
             Toast.makeText(requireContext(), "TESTO", Toast.LENGTH_SHORT).show()
-            viewModel.getMovie()
+            observer = Observer {
+                when (it.status) {
+                    Status.SUCCESS -> Toast.makeText(requireContext(), "SUCCESS", Toast.LENGTH_SHORT).show()
+                    Status.ERROR -> Toast.makeText(requireContext(), "ERROR", Toast.LENGTH_SHORT).show()
+                    Status.LOADING -> Toast.makeText(requireContext(), "TESTO", Toast.LENGTH_SHORT).show()
+                }
+            }
         }
     }
 
     override fun onClick() {
-        Toast.makeText(requireContext(), "TESTO", Toast.LENGTH_SHORT).show()
-        viewModel.getMovie()
+        TODO("Not yet implemented")
     }
 }

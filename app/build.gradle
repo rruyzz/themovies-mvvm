@@ -57,6 +57,8 @@ dependencies {
 
 //    Retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation "com.squareup.retrofit2:adapter-rxjava2:2.9.0"
+
     //Lifecyle
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1"
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.3.1"
@@ -78,9 +80,17 @@ dependencies {
     implementation 'com.facebook.android:facebook-android-sdk:8.1.0'
     //Koin
     implementation 'org.koin:koin-androidx-viewmodel:2.0.1'
+    implementation "org.koin:koin-android:2.0.1"
+    implementation "org.koin:koin-core:2.0.1"
 
     //Gson
     implementation 'com.google.code.gson:gson:2.8.6'
     implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
+
+//    def lifecycle_version = "2.2.0-alpha02"
+//    implementation "androidx.fragment:fragment-ktx:1.2.0-alpha01"
+//    kapt "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
+
+
 
 }

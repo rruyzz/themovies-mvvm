@@ -1,24 +1,25 @@
 package dominando.android.moviesdb.utils.di
 
 import android.app.Application
+import dominando.android.moviesdb.home.HomeRepository
 import dominando.android.moviesdb.home.HomeViewModel
 import dominando.android.moviesdb.login.signup.SignUpViewModel
-import dominando.android.moviesdb.utils.api.Service
-import dominando.android.moviesdb.utils.di.Retrofit.okHttp
-import dominando.android.moviesdb.utils.di.Retrofit.retrofit
-import okhttp3.OkHttpClient
+import dominando.android.moviesdb.utils.api.Interceptor
+import dominando.android.moviesdb.utils.api.ResponseHandler
+import dominando.android.moviesdb.utils.di.Retrofit.provideForecastApi
+import dominando.android.moviesdb.utils.di.Retrofit.provideOkHttpClient
+import dominando.android.moviesdb.utils.di.Retrofit.provideRetrofit
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.context.startKoin
 import org.koin.dsl.module
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 class MyCustomApp : Application() {
     override fun onCreate() {
         super.onCreate()
-        val appModules = listOf(viewModels, network)
+        val appModules = listOf(viewModels, network, repositorys)
         startKoin {
             modules(appModules)
             androidLogger()
@@ -27,11 +28,19 @@ class MyCustomApp : Application() {
     }
 
     val network = module {
-        single{ retrofit() }
-        single{ okHttp() }
-        single { get<Retrofit>().create(Service::class.java) }
+//        single{ retrofit() }
+//        single{ okHttp() }
+//        single { get<Retrofit>().creatce(Service::class.java) }
+        factory { Interceptor() }
+        factory { provideOkHttpClient(get()) }
+        factory { provideForecastApi(get()) }
+        single { provideRetrofit(get()) }
+        factory { ResponseHandler() }
     }
 
+    val repositorys = module{
+        factory { HomeRepository(get(), get()) }
+    }
     val viewModels = module {
         viewModel { SignUpViewModel() }
         viewModel { HomeViewModel(get()) }

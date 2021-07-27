@@ -1,19 +1,19 @@
 package dominando.android.moviesdb.home
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import dominando.android.moviesdb.model.DiscoveryListMovieResponse
+import dominando.android.moviesdb.utils.api.Resources
 import dominando.android.moviesdb.utils.api.Service
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class HomeViewModel(private val service: Service) : ViewModel(){
+class HomeViewModel(private val repository: HomeRepository) : ViewModel(){
 
-    val listMoviews = MutableLiveData<DiscoveryListMovieResponse>()
-    fun getMovie() = viewModelScope.launch {
-        val response = service.getDiscoveryList()
-
+    val weather: LiveData<Resources<DiscoveryListMovieResponse>> = liveData {
+        emit(repository.getWeather())
     }
+
 }
