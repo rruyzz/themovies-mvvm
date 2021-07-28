@@ -49,9 +49,22 @@ class SignUpFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setButtons()
         observeLoginResult()
-        obsereLoad()
     }
 
+    private fun observeLoginResult() {
+        viewModel.state.observe(requireActivity()){
+            when(it){
+                LoginState.LOADING -> progress.isVisible = true
+                LoginState.SUCCESS -> loginSuccess()
+                LoginState.ERROR -> renderError()
+            }
+        }
+    }
+
+    private fun renderError(){
+        progress.isVisible = false
+        Toast.makeText(requireContext(), "Error", Toast.LENGTH_SHORT).show()
+    }
     private fun setButtons() = with(binding) {
         textViewMoreOptions.setOnClickListener {
             navigation.navigate(SignUpFragmentDirections.actionLoginFragmentToSignUpEmailFragment())
@@ -107,19 +120,8 @@ class SignUpFragment : Fragment() {
         }
     }
 
-    private fun observeLoginResult() {
-        viewModel.loginSuccess.observe(requireActivity()) {
-            if (it) loginSuccess()
-        }
-    }
-
-    private fun obsereLoad() {
-        viewModel.showLoad.observe(requireActivity()) {
-            progress.isVisible = it
-        }
-    }
-
     private fun loginSuccess() {
+        progress.isVisible = false
         val intent = Intent(requireContext(), MainActivity::class.java)
         startActivity(intent)
         requireActivity().finish()

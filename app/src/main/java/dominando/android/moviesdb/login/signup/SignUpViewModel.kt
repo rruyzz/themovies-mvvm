@@ -10,41 +10,41 @@ import com.google.firebase.auth.GoogleAuthProvider
 
 class SignUpViewModel() : ViewModel() {
     private var mAuth = FirebaseAuth.getInstance()
-    var loginSuccess: MutableLiveData<Boolean> = MutableLiveData()
-    var showLoad: MutableLiveData<Boolean> = MutableLiveData()
-    var hasError: MutableLiveData<Boolean> = MutableLiveData()
-    lateinit var live: LiveData<Int>
-
+    var state : MutableLiveData<LoginState> = MutableLiveData()
 
     fun loginEmail(email: String, password: String) {
         mAuth.createUserWithEmailAndPassword(email, password)
     }
 
     fun getGoogleLogin(credential: String) {
-        showLoad.value = true
+        state.value = LoginState.LOADING
         val credential = GoogleAuthProvider.getCredential(credential, null)
         mAuth.signInWithCredential(credential)
-            .addOnCompleteListener {
-                showLoad.value = false
-                loginSuccess.value = it.isSuccessful
+            .addOnFailureListener {
+                state.value = LoginState.ERROR
+            }
+            .addOnSuccessListener {
+                state.value = LoginState.SUCCESS
             }
     }
 
     fun getFacebookLogin(accessToken: AccessToken) {
-        showLoad.value = true
+        state.value = LoginState.LOADING
         val credential = FacebookAuthProvider.getCredential(accessToken.token)
         mAuth.signInWithCredential(credential)
             .addOnCompleteListener {
                 if (it.isSuccessful) {
-                    showLoad.value = false
-                    loginSuccess.value = it.isSuccessful
+                    state.value = LoginState.SUCCESS
                 } else {
-                    hasError.value = true
+                    state.value = LoginState.ERROR
                 }
             }
     }
 }
-
-
+enum class LoginState {
+    SUCCESS,
+    LOADING,
+    ERROR
+}
 
 
