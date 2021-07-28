@@ -1,5 +1,6 @@
 package dominando.android.moviesdb.login.signup
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.facebook.AccessToken
@@ -12,6 +13,7 @@ class SignUpViewModel() : ViewModel() {
     var loginSuccess: MutableLiveData<Boolean> = MutableLiveData()
     var showLoad: MutableLiveData<Boolean> = MutableLiveData()
     var hasError: MutableLiveData<Boolean> = MutableLiveData()
+    lateinit var live: LiveData<Int>
 
 
     fun loginEmail(email: String, password: String) {

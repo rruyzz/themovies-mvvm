@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.firebase.auth.FirebaseAuth
@@ -18,18 +19,16 @@ import dominando.android.moviesdb.databinding.FragmentListBinding
 import dominando.android.moviesdb.model.DiscoveryListMovieItem
 import dominando.android.moviesdb.model.DiscoveryListMovieResponse
 import dominando.android.moviesdb.splash.SplashActivity
-import dominando.android.moviesdb.utils.api.Resources
 import dominando.android.moviesdb.utils.api.Status
 import kotlinx.android.synthetic.main.fragment_list.*
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class HomeFragment : Fragment(), HomeAdapter.onClick {
 
     private lateinit var mAuth: FirebaseAuth
-    private val viewModel: HomeViewModel by viewModel()
+    private val viewModel: HomeViewModel by viewModels()
     private lateinit var binding : FragmentListBinding
-    private var  observer : Observer<Resources<DiscoveryListMovieResponse>> = Resources.error()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -44,7 +43,6 @@ class HomeFragment : Fragment(), HomeAdapter.onClick {
         setView()
         setRecycler()
         setButtons()
-        viewModel.weather.observe(requireActivity(), observer)
 
     }
 
@@ -98,13 +96,6 @@ class HomeFragment : Fragment(), HomeAdapter.onClick {
         }
         text_check_movies.setOnClickListener {
             Toast.makeText(requireContext(), "TESTO", Toast.LENGTH_SHORT).show()
-            observer = Observer {
-                when (it.status) {
-                    Status.SUCCESS -> Toast.makeText(requireContext(), "SUCCESS", Toast.LENGTH_SHORT).show()
-                    Status.ERROR -> Toast.makeText(requireContext(), "ERROR", Toast.LENGTH_SHORT).show()
-                    Status.LOADING -> Toast.makeText(requireContext(), "TESTO", Toast.LENGTH_SHORT).show()
-                }
-            }
         }
     }
 

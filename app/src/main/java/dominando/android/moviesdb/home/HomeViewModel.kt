@@ -12,8 +12,5 @@ import kotlinx.coroutines.launch
 
 class HomeViewModel(private val repository: HomeRepository) : ViewModel(){
 
-    val weather: LiveData<Resources<DiscoveryListMovieResponse>> = liveData {
-        emit(repository.getWeather())
-    }
 
 }
