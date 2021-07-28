@@ -10,7 +10,7 @@ import com.google.firebase.auth.GoogleAuthProvider
 
 class SignUpViewModel() : ViewModel() {
     private var mAuth = FirebaseAuth.getInstance()
-    var state : MutableLiveData<LoginState> = MutableLiveData()
+    var state: MutableLiveData<LoginState> = MutableLiveData()
 
     fun loginEmail(email: String, password: String) {
         mAuth.createUserWithEmailAndPassword(email, password)
@@ -41,6 +41,7 @@ class SignUpViewModel() : ViewModel() {
             }
     }
 }
+
 enum class LoginState {
     SUCCESS,
     LOADING,

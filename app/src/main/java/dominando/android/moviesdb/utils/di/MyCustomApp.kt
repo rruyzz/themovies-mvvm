@@ -5,16 +5,11 @@ import dominando.android.moviesdb.home.HomeRepository
 import dominando.android.moviesdb.home.HomeViewModel
 import dominando.android.moviesdb.login.signup.SignUpViewModel
 import dominando.android.moviesdb.utils.api.Interceptor
-import dominando.android.moviesdb.utils.api.ResponseHandler
-import dominando.android.moviesdb.utils.di.Retrofit.provideForecastApi
-import dominando.android.moviesdb.utils.di.Retrofit.provideOkHttpClient
-import dominando.android.moviesdb.utils.di.Retrofit.provideRetrofit
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.context.startKoin
 import org.koin.dsl.module
-import retrofit2.Retrofit
 
 class MyCustomApp : Application() {
     override fun onCreate() {
@@ -32,10 +27,10 @@ class MyCustomApp : Application() {
 //        single{ okHttp() }
 //        single { get<Retrofit>().creatce(Service::class.java) }
         factory { Interceptor() }
-        factory { provideOkHttpClient(get()) }
-        factory { provideForecastApi(get()) }
-        single { provideRetrofit(get()) }
-        factory { ResponseHandler() }
+//        factory { provideOkHttpClient(get()) }
+//        factory { provideForecastApi(get()) }
+//        single { provideRetrofit(get()) }
+//        factory { ResponseHandler() }
     }
 
     val repositorys = module{
