@@ -15,8 +15,17 @@
     </style>
 
     <style name="MainTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <item name="android:statusBarColor">@color/gray </item>
+        <item name="android:statusBarColor">@color/gray</item>
         <item name="android:windowBackground">@color/gray</item>
         <item name="android:windowActionBar">@color/gray</item>
     </style>
+
+    <style name="MainTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="MainTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="MainTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

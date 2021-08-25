@@ -1,0 +1,92 @@
+{
+  "project_info": {
+    "project_number": "58812324418",
+    "project_id": "rrmovies-bd976",
+    "storage_bucket": "rrmovies-bd976.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:58812324418:android:bf9ea885aedd9e13e76bdb",
+        "android_client_info": {
+          "package_name": "com.inspirecoding.firebaseauthdemo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "58812324418-0qc27k77cp6e4u63ib4g84ntiql532pd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDzAH3UTonSdsaB1LrqVAK65qXAQvlgUOQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "58812324418-0qc27k77cp6e4u63ib4g84ntiql532pd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:58812324418:android:fdc3eb993e651f34e76bdb",
+        "android_client_info": {
+          "package_name": "dominando.android.moviesdb"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "58812324418-96gr3h45uk7ueh3v7cvngsevsc0pglg6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "dominando.android.moviesdb",
+            "certificate_hash": "f5e0e37eff45fe0df44698478163dc52802c1f9a"
+          }
+        },
+        {
+          "client_id": "58812324418-q7pai44tr245g8g3qpspq49nsgcdigi4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "dominando.android.moviesdb",
+            "certificate_hash": "f6f02c9162a6a547821d044deeeffd04934a1f38"
+          }
+        },
+        {
+          "client_id": "58812324418-v5neu365cgn2lk7annnlpab2360namb7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "dominando.android.moviesdb",
+            "certificate_hash": "82562633e70ee3dac0394c07c811252aaacc6755"
+          }
+        },
+        {
+          "client_id": "58812324418-0qc27k77cp6e4u63ib4g84ntiql532pd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDzAH3UTonSdsaB1LrqVAK65qXAQvlgUOQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "58812324418-0qc27k77cp6e4u63ib4g84ntiql532pd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
