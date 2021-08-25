@@ -71,6 +71,7 @@ class HomeFragment : Fragment(), HomeAdapter.onClick {
             "Super Bad",
             true,
             "SUPER BAD",
+
             listOf(21),
             "",
             "",
