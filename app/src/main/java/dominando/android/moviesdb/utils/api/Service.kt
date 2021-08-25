@@ -1,7 +1,8 @@
 package dominando.android.moviesdb.utils.api
 
-import com.google.firebase.inject.Deferred
 import dominando.android.moviesdb.model.DiscoveryListMovieResponse
+import dominando.android.moviesdb.utils.Constanst.API_KEY
+import kotlinx.coroutines.Deferred
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.Retrofit
@@ -17,5 +18,5 @@ import retrofit2.http.Query
 interface Service {
 
     @GET("movie/popular")
-    suspend fun getDiscoveryList(@Query("key") key: String) : Response<DiscoveryListMovieResponse>
+    suspend fun getDiscoveryList(@Query("api_key") api_key: String) : DiscoveryListMovieResponse
 }

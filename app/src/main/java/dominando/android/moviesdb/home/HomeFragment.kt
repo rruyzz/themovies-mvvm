@@ -5,28 +5,28 @@ import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.ForegroundColorSpan
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.observe
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.firebase.auth.FirebaseAuth
 import dominando.android.moviesdb.R
 import dominando.android.moviesdb.databinding.FragmentListBinding
 import dominando.android.moviesdb.model.DiscoveryListMovieItem
-import dominando.android.moviesdb.model.DiscoveryListMovieResponse
 import dominando.android.moviesdb.splash.SplashActivity
-import dominando.android.moviesdb.utils.api.Status
 import kotlinx.android.synthetic.main.fragment_list.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class HomeFragment : Fragment(), HomeAdapter.onClick {
 
     private lateinit var mAuth: FirebaseAuth
-    private val viewModel: HomeViewModel by viewModels()
+    private val viewModel: HomeViewModel by viewModel()
     private lateinit var binding : FragmentListBinding
 
     override fun onCreateView(
@@ -43,7 +43,7 @@ class HomeFragment : Fragment(), HomeAdapter.onClick {
         setView()
         setRecycler()
         setButtons()
-
+        viewModel.getAllMovies()
     }
 
     private fun setView() {
@@ -63,6 +63,9 @@ class HomeFragment : Fragment(), HomeAdapter.onClick {
     }
 
     private fun setMovie(): List<DiscoveryListMovieItem> {
+        viewModel.items.observe(requireActivity(), Observer {
+             binding.textTitle.text = it.results[0].originalTitle
+        })
         val superbad = DiscoveryListMovieItem("",
             "",
             "Super Bad",
