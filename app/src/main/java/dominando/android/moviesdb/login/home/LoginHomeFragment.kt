@@ -18,7 +18,7 @@ class LoginHomeFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         binding = FragmentLoginHomeBinding.inflate(inflater, container, false)
         return binding.root
@@ -32,9 +32,6 @@ class LoginHomeFragment : Fragment() {
     private fun setButton(){
         binding.buttonStart.setOnClickListener {
             navigate.navigate(LoginHomeFragmentDirections.actionLoginHomeFragmentToLoginFragment())
-        }
-        binding.textLogin.setOnClickListener {
-            navigate.navigate(LoginHomeFragmentDirections.actionLoginHomeFragmentToSignInFragment())
         }
     }
 }

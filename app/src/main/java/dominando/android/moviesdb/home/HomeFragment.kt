@@ -9,15 +9,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.observe
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.firebase.auth.FirebaseAuth
 import dominando.android.moviesdb.R
 import dominando.android.moviesdb.databinding.FragmentListBinding
-import dominando.android.moviesdb.model.DiscoveryListMovieItem
+import dominando.android.moviesdb.model.DiscoveryListMovieResponse
 import dominando.android.moviesdb.splash.SplashActivity
 import kotlinx.android.synthetic.main.fragment_list.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -34,62 +33,34 @@ class HomeFragment : Fragment(), HomeAdapter.onClick {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentListBinding.inflate(inflater, container, false)
-        // Inflate the layout for this fragment
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setView()
-        setRecycler()
         setButtons()
+        setObservers()
         viewModel.getAllMovies()
     }
-
-    private fun setView() {
-        val spannable = SpannableStringBuilder(getString(R.string.text_title_list))
-        spannable.setSpan(
-            ForegroundColorSpan(resources.getColor(R.color.red)),
-            12,
-            spannable.length,
-            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-        )
-        text_title.text = spannable
+    private fun setObservers() {
+        viewModel.state.observe(requireActivity(), Observer {
+            when(it){
+                is HomeMovieList.Success -> setRecycler(it.response)
+                is HomeMovieList.Error -> Toast.makeText(requireActivity() ,it.error, Toast.LENGTH_SHORT).show()
+                is HomeMovieList.Loading -> renderLoading(it.isLoading)
+            }
+        })
     }
 
-    private fun setRecycler(){
-        recycler_view_main.adapter= HomeAdapter(this ,setMovie(), requireContext())
+    private fun setRecycler(list: DiscoveryListMovieResponse){
+        recycler_view_main.adapter= HomeAdapter(this ,list.results, requireContext())
         recycler_view_main.layoutManager = GridLayoutManager(requireContext(), 2, GridLayoutManager.VERTICAL, false)
     }
 
-    private fun setMovie(): List<DiscoveryListMovieItem> {
-        viewModel.items.observe(requireActivity(), Observer {
-             binding.textTitle.text = it.results[0].originalTitle
-        })
-        val superbad = DiscoveryListMovieItem("",
-            "",
-            "Super Bad",
-            true,
-            "SUPER BAD
-
-            listOf(21),
-            "",
-            "",
-            "",
-            10.0,9.0, 21, true, 10)
-        val batman = DiscoveryListMovieItem("",
-            "",
-            "BATMAN",
-            true,
-            "BATMAN",
-            listOf(21),
-            "",
-            "",
-            "",
-            10.0,8.0, 21, true, 10)
-        return listOf(superbad, batman, batman, superbad, superbad, batman, batman, superbad, superbad, batman, batman, superbad, superbad, batman, batman, superbad)
+    private fun renderLoading(isLoading: Boolean) = with(binding){
+        progress.isVisible  = isLoading
     }
-
     private fun setButtons(){
         text_title.setOnClickListener {
             mAuth = FirebaseAuth.getInstance()
@@ -101,6 +72,17 @@ class HomeFragment : Fragment(), HomeAdapter.onClick {
         text_check_movies.setOnClickListener {
             Toast.makeText(requireContext(), "TESTO", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private fun setView() {
+        val spannable = SpannableStringBuilder(getString(R.string.text_title_list))
+        spannable.setSpan(
+            ForegroundColorSpan(resources.getColor(R.color.red)),
+            12,
+            spannable.length,
+            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+        text_title.text = spannable
     }
 
     override fun onClick() {

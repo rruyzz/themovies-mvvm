@@ -18,25 +18,10 @@ const val CONNECT_TIMEOUT = 15L
 const val WRITE_TIMEOUT = 15L
 const val READ_TIMEOUT = 15L
 
-val RetrofitModule = module {
-    single { Cache(androidApplication().cacheDir, 10L * 1024 * 1024) }
-    single { GsonBuilder().create() }
-    single { retrofitHttpClient() }
-    single { retrofitBuilder() }
-    single {
-        Interceptor { chain ->
-            chain.proceed(chain.request().newBuilder().apply {
-                header("Accept", "application/json")
-            }.build())
-        }
-    }
-}
-
 fun Scope.retrofitBuilder(): Retrofit {
     return Retrofit.Builder()
         .baseUrl(API_URL)
         .addConverterFactory(GsonConverterFactory.create(get()))
-        //.addCallAdapterFactory(RxJava2CallAdapterFactory.create()) krn sudah pakai --> Coroutines
         .client(get())
         .build()
 }
@@ -49,14 +34,8 @@ fun Scope.retrofitHttpClient(): OkHttpClient {
         writeTimeout(WRITE_TIMEOUT, TimeUnit.SECONDS)
         readTimeout(READ_TIMEOUT, TimeUnit.SECONDS)
         retryOnConnectionFailure(true)
-//        addInterceptor(get())
         addInterceptor(HttpLoggingInterceptor().apply {
-            level = if (BuildConfig.DEBUG) {
-                HttpLoggingInterceptor.Level.HEADERS
-            }
-            else {
-                HttpLoggingInterceptor.Level.NONE
-            }
+            level = HttpLoggingInterceptor.Level.BODY
         })
     }.build()
 }

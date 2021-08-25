@@ -24,7 +24,6 @@ import com.google.android.gms.common.api.ApiException
 import dominando.android.moviesdb.MainActivity
 import dominando.android.moviesdb.R
 import dominando.android.moviesdb.databinding.FragmentSignUpBinding
-import kotlinx.android.synthetic.main.fragment_sign_in.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -54,21 +53,18 @@ class SignUpFragment : Fragment() {
     private fun observeLoginResult() {
         viewModel.state.observe(requireActivity()){
             when(it){
-                LoginState.LOADING -> progress.isVisible = true
+                LoginState.LOADING -> binding.progress.isVisible = true
                 LoginState.SUCCESS -> loginSuccess()
                 LoginState.ERROR -> renderError()
             }
         }
     }
 
-    private fun renderError(){
+    private fun renderError() = with(binding){
         progress.isVisible = false
         Toast.makeText(requireContext(), "Error", Toast.LENGTH_SHORT).show()
     }
     private fun setButtons() = with(binding) {
-        textViewMoreOptions.setOnClickListener {
-            navigation.navigate(SignUpFragmentDirections.actionLoginFragmentToSignUpEmailFragment())
-        }
         buttonLoginGoogle.setOnClickListener {
             checkLogin()
         }
@@ -120,7 +116,7 @@ class SignUpFragment : Fragment() {
         }
     }
 
-    private fun loginSuccess() {
+    private fun loginSuccess() = with(binding) {
         progress.isVisible = false
         val intent = Intent(requireContext(), MainActivity::class.java)
         startActivity(intent)
