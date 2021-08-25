@@ -74,6 +74,7 @@ class HomeFragment : Fragment(), HomeAdapter.onClick {
         }
     }
 
+
     private fun setView() {
         val spannable = SpannableStringBuilder(getString(R.string.text_title_list))
         spannable.setSpan(
