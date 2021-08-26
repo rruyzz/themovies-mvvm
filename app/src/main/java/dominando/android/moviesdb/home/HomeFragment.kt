@@ -18,6 +18,8 @@ import dominando.android.moviesdb.R
 import dominando.android.moviesdb.databinding.FragmentListBinding
 import dominando.android.moviesdb.model.DiscoveryListMovieResponse
 import dominando.android.moviesdb.splash.SplashActivity
+import dominando.android.moviesdb.utils.extensions.showToast
+import dominando.android.moviesdb.utils.extensions.disableTouch
 import kotlinx.android.synthetic.main.fragment_list.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -44,10 +46,10 @@ class HomeFragment : Fragment(), HomeAdapter.onClick {
         viewModel.getAllMovies()
     }
     private fun setObservers() {
-        viewModel.state.observe(requireActivity(), Observer {
+        viewModel.movieViewState.observe(requireActivity(), Observer {
             when(it){
                 is HomeMovieList.Success -> setRecycler(it.response)
-                is HomeMovieList.Error -> Toast.makeText(requireActivity() ,it.error, Toast.LENGTH_SHORT).show()
+                is HomeMovieList.Error -> showToast(requireActivity(), "Error")
                 is HomeMovieList.Loading -> renderLoading(it.isLoading)
             }
         })
@@ -60,6 +62,7 @@ class HomeFragment : Fragment(), HomeAdapter.onClick {
 
     private fun renderLoading(isLoading: Boolean) = with(binding){
         progress.isVisible  = isLoading
+        disableTouch(isLoading)
     }
     private fun setButtons(){
         text_title.setOnClickListener {

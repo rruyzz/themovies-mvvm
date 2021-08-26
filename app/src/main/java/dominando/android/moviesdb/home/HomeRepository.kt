@@ -13,18 +13,5 @@ class HomeRepository(private val service: Service) {
 
     suspend fun getMovies() = service.getDiscoveryList(API_KEY)
 
-//        suspend fun getGithubAccountAsync(): Deferred<DiscoveryListMovieResponse?> {
-//            return withContext(Dispatchers.IO) {
-//                async {
-//                    try {
-//                        // for demo purpose, hence no error checking
-//                        service.getDiscoveryList(Constanst.API_KEY).await().body() as DiscoveryListMovieResponse
-//                    } catch (e: Exception) {
-//                        e.printStackTrace()
-//                        null
-//                    }
-//                }
-//            }
-
 }
 
