@@ -13,6 +13,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
 import dominando.android.moviesdb.R
 import dominando.android.moviesdb.databinding.FragmentListBinding
@@ -40,7 +41,6 @@ class HomeFragment : Fragment(), HomeAdapter.onClick {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setView()
         setButtons()
         setObservers()
         viewModel.getAllMovies()
@@ -49,21 +49,23 @@ class HomeFragment : Fragment(), HomeAdapter.onClick {
     private fun setObservers() {
         viewModel.movieViewState.observe(requireActivity(), Observer {
             when(it){
-                is HomeMovieList.Success -> setRecycler(it.response)
+                is HomeMovieList.Success -> setRecycler(it.listSerie, it.listMovie)
                 is HomeMovieList.Error -> showToast(requireActivity(), "Error")
                 is HomeMovieList.Loading -> renderLoading(it.isLoading)
             }
         })
     }
 
-    private fun setRecycler(list: DiscoveryListMovieResponse){
-        recycler_view_main.adapter= HomeAdapter(this ,list.results, requireContext())
-        recycler_view_main.layoutManager = GridLayoutManager(requireContext(), 2, GridLayoutManager.VERTICAL, false)
+    private fun setRecycler(listSerie: DiscoveryListMovieResponse, listMovie: DiscoveryListMovieResponse) = with(binding){
+        recyclerViewSeries.adapter= HomeAdapter(this@HomeFragment ,listSerie.results, requireContext())
+        recyclerViewMovies.adapter= HomeAdapter(this@HomeFragment ,listMovie.results, requireContext())
+        recyclerViewSeries.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL, false)
+        recyclerViewMovies.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL, false)
     }
 
     private fun renderLoading(isLoading: Boolean) = with(binding){
         progress.isVisible  = isLoading
-//        disableTouch(isLoading)
+        disableTouch(isLoading)
     }
     private fun setButtons(){
         text_title.setOnClickListener {
@@ -76,18 +78,6 @@ class HomeFragment : Fragment(), HomeAdapter.onClick {
         text_check_movies.setOnClickListener {
             Toast.makeText(requireContext(), "TESTO", Toast.LENGTH_SHORT).show()
         }
-    }
-
-
-    private fun setView() {
-        val spannable = SpannableStringBuilder(getString(R.string.text_title_list))
-        spannable.setSpan(
-            ForegroundColorSpan(resources.getColor(R.color.red)),
-            12,
-            spannable.length,
-            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-        )
-        text_title.text = spannable
     }
 
     override fun onClick() {

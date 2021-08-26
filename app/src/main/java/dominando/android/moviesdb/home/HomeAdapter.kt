@@ -30,6 +30,10 @@ class HomeAdapter(
 
     override fun getItemCount() = list.size
 
+    override fun getItemId(position: Int) = position.toLong()
+
+    override fun getItemViewType(position: Int) = position
+
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
         holder.bind(list[position])
     }

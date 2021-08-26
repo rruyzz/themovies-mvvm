@@ -10,8 +10,8 @@
         android:id="@+id/text_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/text_title_list"
-        android:textSize="28sp"
+        android:text="Principais séries para você"
+        android:textSize="16sp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="48dp"
         android:textColor="@color/white"
@@ -22,23 +22,38 @@
         android:id="@+id/text_check_movies"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/check_movies"
-        android:textSize="26sp"
-        android:layout_marginTop="16dp"
-        android:textColor="@color/white"
-        app:layout_constraintStart_toStartOf="@+id/text_title"
-        app:layout_constraintTop_toBottomOf="@+id/text_title" />
+        android:text="VER MAIS"
+        android:textColor="@color/yellow_brand"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/text_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/text_title" />
 
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view_main"
+        android:id="@+id/recycler_view_series"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_margin="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_check_movies"
+        android:orientation="horizontal"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/item_movie"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view_movies"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recycler_view_series"
+        android:orientation="horizontal"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:listitem="@layout/item_movie"/>
 
     <ProgressBar

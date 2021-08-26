@@ -2,7 +2,6 @@ package dominando.android.moviesdb.utils.di
 
 import android.app.Application
 import com.google.gson.GsonBuilder
-import dominando.android.moviesdb.home.HomeRepository
 import dominando.android.moviesdb.home.HomeViewModel
 import dominando.android.moviesdb.login.signup.SignUpViewModel
 import dominando.android.moviesdb.utils.api.Service
@@ -21,7 +20,7 @@ import retrofit2.Retrofit
 class MyCustomApp : Application() {
     override fun onCreate() {
         super.onCreate()
-        val appModules = listOf(repositoryModule, viewModels, apiModule, retrofitModule)
+        val appModules = listOf(viewModels, apiModule, retrofitModule)
         startKoin {
             androidLogger()
             androidContext(this@MyCustomApp)
@@ -32,9 +31,6 @@ class MyCustomApp : Application() {
 
     val apiModule = module {
         single(createdAtStart = false) { get<Retrofit>().create(Service::class.java) }
-    }
-    val repositoryModule = module {
-        single { HomeRepository(get()) }
     }
 
     val viewModels = module {

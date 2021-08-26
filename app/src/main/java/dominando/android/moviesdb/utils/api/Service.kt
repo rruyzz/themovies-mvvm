@@ -17,6 +17,9 @@ import retrofit2.http.Query
 
 interface Service {
 
-    @GET("movie/popular")
-    suspend fun getDiscoveryList(@Query("api_key") api_key: String) : DiscoveryListMovieResponse
+    @GET("discover/tv")
+    suspend fun getDiscoverySerieList(@Query("api_key") api_key: String) : DiscoveryListMovieResponse
+
+    @GET("discover/movie")
+    suspend fun getDiscoveryMovieList(@Query("api_key") api_key: String) : DiscoveryListMovieResponse
 }

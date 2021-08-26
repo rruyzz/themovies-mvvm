@@ -20,8 +20,9 @@ class HomeViewModel(private val service: Service) : ViewModel() {
         viewModelScope.launch {
             delay(3000)
             try {
-                val result = service.getDiscoveryList(API_KEY)
-                movieState.value = HomeMovieList.Success(result)
+                val resultSerie = service.getDiscoverySerieList(API_KEY)
+                val resultMovie = service.getDiscoveryMovieList(API_KEY)
+                movieState.value = HomeMovieList.Success(resultSerie, resultMovie)
             } catch (throwable: Exception) {
                 movieState.value = HomeMovieList.Error(throwable.message ?: "Erro Desconhecido")
             } finally {
@@ -32,7 +33,7 @@ class HomeViewModel(private val service: Service) : ViewModel() {
 }
 
 sealed class HomeMovieList {
-    class Success(val response: DiscoveryListMovieResponse) : HomeMovieList()
+    class Success(val listSerie: DiscoveryListMovieResponse,val listMovie: DiscoveryListMovieResponse) : HomeMovieList()
     class Loading(val isLoading: Boolean) : HomeMovieList()
     class Error(val error: String) : HomeMovieList()
 }
