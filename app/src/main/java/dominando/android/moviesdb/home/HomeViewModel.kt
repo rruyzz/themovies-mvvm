@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dominando.android.moviesdb.model.MovieResultResponse
 import dominando.android.moviesdb.model.SeriesResultsResponse
-import dominando.android.moviesdb.utils.Constanst.API_KEY
 import dominando.android.moviesdb.utils.api.Service
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -15,15 +14,18 @@ class HomeViewModel(private val service: Service) : ViewModel() {
 
     private val movieState = MutableLiveData<HomeMovieList>()
     val movieViewState: LiveData<HomeMovieList> = movieState
-
+    private var hasGet = false
     fun getAllMovies() {
+        if(hasGet) return
         movieState.value = HomeMovieList.Loading(true)
         viewModelScope.launch {
             delay(3000)
             try {
-                val resultSerie = service.getDiscoverySerieList()
-                val resultMovie = service.getDiscoveryMovieList()
-                movieState.value = HomeMovieList.Success(resultSerie, resultMovie)
+                val resultSerie = service.getPopularSeries()
+                val resultMovie = service.getPopularMovies()
+                val resulTopSeries = service.getSoonMovies()
+                movieState.value = HomeMovieList.Success(resultSerie, resultMovie, resulTopSeries)
+                hasGet = true
             } catch (throwable: Exception) {
                 movieState.value = HomeMovieList.Error(throwable.message ?: "Erro Desconhecido")
             } finally {
@@ -34,7 +36,9 @@ class HomeViewModel(private val service: Service) : ViewModel() {
 }
 
 sealed class HomeMovieList {
-    class Success(val listSerie: SeriesResultsResponse, val listMovie: MovieResultResponse) : HomeMovieList()
+    class Success(val listSerie: SeriesResultsResponse,
+                  val listMovie: MovieResultResponse,
+                  val listTopSerie: MovieResultResponse) : HomeMovieList()
     class Loading(val isLoading: Boolean) : HomeMovieList()
     class Error(val error: String) : HomeMovieList()
 }

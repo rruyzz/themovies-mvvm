@@ -19,7 +19,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".login.SignUpActivity" />
-        <activity android:name=".MainActivity" />
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait"/>
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"

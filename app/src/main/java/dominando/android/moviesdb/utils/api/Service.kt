@@ -12,9 +12,12 @@ import retrofit2.http.Query
 
 interface Service {
 
-    @GET("discover/tv")
-    suspend fun getDiscoverySerieList() : SeriesResultsResponse
+    @GET("tv/popular")
+    suspend fun getPopularSeries() : SeriesResultsResponse
 
-    @GET("discover/movie")
-    suspend fun getDiscoveryMovieList() : MovieResultResponse
+    @GET("movie/popular")
+    suspend fun getPopularMovies() : MovieResultResponse
+
+    @GET("movie/upcoming")
+    suspend fun getSoonMovies() : MovieResultResponse
 }

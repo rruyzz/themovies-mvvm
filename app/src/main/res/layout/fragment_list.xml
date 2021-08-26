@@ -26,7 +26,7 @@
                 android:text="Séries em alta"
                 android:textSize="16sp"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="48dp"
+                android:layout_marginTop="24dp"
                 android:textColor="@color/white"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -114,6 +114,44 @@
                 app:layout_constraintEnd_toEndOf="@id/rvSeries"
                 app:layout_constraintTop_toBottomOf="@id/rvMovies"/>
 
+            <TextView
+                android:id="@+id/textSoonMovies"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Em breve nos cinemas"
+                android:textSize="16sp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="24dp"
+                android:textColor="@color/white"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/viewMovie" />
+
+            <TextView
+                android:id="@+id/textSoonMoviesMore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="VER MAIS"
+                android:textColor="@color/yellow_brand"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintBottom_toBottomOf="@+id/textSoonMovies"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/textSoonMovies" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvTopSeries"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textSoonMovies"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/item_movie"/>
+
+
             <ProgressBar
                 android:id="@+id/progress"
                 android:layout_width="wrap_content"
@@ -129,7 +167,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:visibility="visible"
-                app:constraint_referenced_ids="textSeries,textSeriesMore,viewSerie,textMovies, textMoviesMore, viewMovie" />
+                app:constraint_referenced_ids="textSeries,textSeriesMore,viewSerie,textMovies, textMoviesMore, viewMovie, textSoonMovies, textSoonMoviesMore" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -44,20 +44,26 @@ class HomeFragment : Fragment(), HomeAdapter.onClick {
     private fun setObservers() {
         viewModel.movieViewState.observe(requireActivity(), Observer {
             when(it){
-                is HomeMovieList.Success -> setRecycler(it.listSerie, it.listMovie)
-                is HomeMovieList.Error -> showToast(requireActivity(), "Error")
+                is HomeMovieList.Success -> setRecycler(it.listSerie, it.listMovie, it.listTopSerie)
+                is HomeMovieList.Error -> renderError()
                 is HomeMovieList.Loading -> renderLoading(it.isLoading)
             }
         })
     }
 
-    private fun setRecycler(listSerie: SeriesResultsResponse, listMovie: MovieResultResponse) = with(binding){
+    private fun setRecycler(listSerie: SeriesResultsResponse, listMovie: MovieResultResponse, topSeries: MovieResultResponse) = with(binding){
         rvSeries.adapter= HomeAdapter(this@HomeFragment ,listSerie.results, requireContext())
         rvMovies.adapter= HomeAdapter(this@HomeFragment ,listMovie.results, requireContext())
+        rvTopSeries.adapter= HomeAdapter(this@HomeFragment ,topSeries.results, requireContext())
         rvSeries.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL, false)
         rvMovies.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL, false)
+        rvTopSeries.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL, false)
     }
 
+    private fun renderError(){
+        showToast(requireActivity(), "Error")
+        binding.group.isVisible = false
+    }
     private fun renderLoading(isLoading: Boolean) = with(binding){
         progress.isVisible  = isLoading
         group.isVisible = isLoading.not()
