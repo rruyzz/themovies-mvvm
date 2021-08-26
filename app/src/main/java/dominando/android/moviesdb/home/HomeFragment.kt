@@ -11,8 +11,8 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
 import dominando.android.moviesdb.databinding.FragmentListBinding
-import dominando.android.moviesdb.model.DiscoveryMovieResponse
-import dominando.android.moviesdb.model.DiscoverySerieResponse
+import dominando.android.moviesdb.model.MovieResultResponse
+import dominando.android.moviesdb.model.SeriesResultsResponse
 import dominando.android.moviesdb.splash.SplashActivity
 import dominando.android.moviesdb.utils.extensions.showToast
 import dominando.android.moviesdb.utils.extensions.disableTouch
@@ -51,7 +51,7 @@ class HomeFragment : Fragment(), HomeAdapter.onClick {
         })
     }
 
-    private fun setRecycler(listSerie: DiscoverySerieResponse, listMovie: DiscoveryMovieResponse) = with(binding){
+    private fun setRecycler(listSerie: SeriesResultsResponse, listMovie: MovieResultResponse) = with(binding){
         rvSeries.adapter= HomeAdapter(this@HomeFragment ,listSerie.results, requireContext())
         rvMovies.adapter= HomeAdapter(this@HomeFragment ,listMovie.results, requireContext())
         rvSeries.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL, false)

@@ -7,15 +7,15 @@ import dominando.android.moviesdb.utils.Constanst
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class DiscoverySerieResponse(
+data class SeriesResultsResponse(
 	@SerializedName("page") val page: Int,
 	@SerializedName("total_pages") val totalPages: Int,
-	@SerializedName("results") val results: List<DiscoverySerieItem>,
+	@SerializedName("results") val results: List<SerieItem>,
 	@SerializedName("total_results") val totalResults: Int
 ) : Parcelable
 
 @Parcelize
-data class DiscoverySerieItem(
+data class SerieItem(
 	@SerializedName("first_air_date") val firstAirDate: String,
 	@SerializedName("overview") val overview: String,
 	@SerializedName("original_language") val originalLanguage: String,

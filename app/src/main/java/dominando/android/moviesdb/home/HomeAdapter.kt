@@ -7,8 +7,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import dominando.android.moviesdb.databinding.ItemMovieBinding
-import dominando.android.moviesdb.model.DiscoveryMovieItem
-import dominando.android.moviesdb.utils.Constanst
 
 class HomeAdapter(
     var listener: onClick,

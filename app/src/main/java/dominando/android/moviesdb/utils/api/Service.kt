@@ -1,7 +1,7 @@
 package dominando.android.moviesdb.utils.api
 
-import dominando.android.moviesdb.model.DiscoveryMovieResponse
-import dominando.android.moviesdb.model.DiscoverySerieResponse
+import dominando.android.moviesdb.model.MovieResultResponse
+import dominando.android.moviesdb.model.SeriesResultsResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -13,8 +13,8 @@ import retrofit2.http.Query
 interface Service {
 
     @GET("discover/tv")
-    suspend fun getDiscoverySerieList(@Query("api_key") api_key: String) : DiscoverySerieResponse
+    suspend fun getDiscoverySerieList(@Query("api_key") api_key: String) : SeriesResultsResponse
 
     @GET("discover/movie")
-    suspend fun getDiscoveryMovieList(@Query("api_key") api_key: String) : DiscoveryMovieResponse
+    suspend fun getDiscoveryMovieList(@Query("api_key") api_key: String) : MovieResultResponse
 }
