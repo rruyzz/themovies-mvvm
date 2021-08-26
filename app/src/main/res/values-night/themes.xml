@@ -15,8 +15,8 @@
     </style>
 
     <style name="MainTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <item name="android:statusBarColor">@color/gray </item>
-        <item name="android:windowBackground">@color/gray</item>
-        <item name="android:windowActionBar">@color/gray</item>
+        <item name="android:statusBarColor">@color/gray_brand </item>
+        <item name="android:windowBackground">@color/gray_brand</item>
+        <item name="android:windowActionBar">@color/gray_brand</item>
     </style>
 </resources>

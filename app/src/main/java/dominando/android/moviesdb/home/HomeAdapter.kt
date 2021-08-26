@@ -6,15 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import dominando.android.moviesdb.R
 import dominando.android.moviesdb.databinding.ItemMovieBinding
-import dominando.android.moviesdb.model.DiscoveryListMovieItem
+import dominando.android.moviesdb.model.DiscoveryMovieItem
 import dominando.android.moviesdb.utils.Constanst
-import kotlinx.android.synthetic.main.item_movie.view.*
 
 class HomeAdapter(
     var listener: onClick,
-    private val list: List<DiscoveryListMovieItem>,
+    private val list: List<MovieSerieItem>,
     private val context: Context
 ) : RecyclerView.Adapter<HomeAdapter.ListViewHolder>() {
 
@@ -39,10 +37,10 @@ class HomeAdapter(
     }
 
     inner class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
-        fun bind(movie: DiscoveryListMovieItem) = with(binding){
+        fun bind(movie: MovieSerieItem) = with(binding){
             textTitle.text = movie.title
-            textGrade.text = movie.voteAverage.toString()
-            Glide.with(context).load(Constanst.IMAGE_URL +movie.posterPath).into(imagePoster)
+            textGrade.text = movie.grade
+            Glide.with(context).load(movie.poster).into(imagePoster)
         }
 
         override fun onClick(v: View?) {
@@ -51,5 +49,10 @@ class HomeAdapter(
                 listener.onClick()
         }
     }
+}
 
+interface MovieSerieItem {
+    val title: String
+    val grade: String
+    val poster: String
 }

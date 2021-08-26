@@ -2,22 +2,17 @@ package dominando.android.moviesdb.home
 
 import android.content.Intent
 import android.os.Bundle
-import android.text.Spannable
-import android.text.SpannableStringBuilder
-import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
-import dominando.android.moviesdb.R
 import dominando.android.moviesdb.databinding.FragmentListBinding
-import dominando.android.moviesdb.model.DiscoveryListMovieResponse
+import dominando.android.moviesdb.model.DiscoveryMovieResponse
+import dominando.android.moviesdb.model.DiscoverySerieResponse
 import dominando.android.moviesdb.splash.SplashActivity
 import dominando.android.moviesdb.utils.extensions.showToast
 import dominando.android.moviesdb.utils.extensions.disableTouch
@@ -56,27 +51,25 @@ class HomeFragment : Fragment(), HomeAdapter.onClick {
         })
     }
 
-    private fun setRecycler(listSerie: DiscoveryListMovieResponse, listMovie: DiscoveryListMovieResponse) = with(binding){
-        recyclerViewSeries.adapter= HomeAdapter(this@HomeFragment ,listSerie.results, requireContext())
-        recyclerViewMovies.adapter= HomeAdapter(this@HomeFragment ,listMovie.results, requireContext())
-        recyclerViewSeries.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL, false)
-        recyclerViewMovies.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL, false)
+    private fun setRecycler(listSerie: DiscoverySerieResponse, listMovie: DiscoveryMovieResponse) = with(binding){
+        rvSeries.adapter= HomeAdapter(this@HomeFragment ,listSerie.results, requireContext())
+        rvMovies.adapter= HomeAdapter(this@HomeFragment ,listMovie.results, requireContext())
+        rvSeries.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL, false)
+        rvMovies.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL, false)
     }
 
     private fun renderLoading(isLoading: Boolean) = with(binding){
         progress.isVisible  = isLoading
+        group.isVisible = isLoading.not()
         disableTouch(isLoading)
     }
-    private fun setButtons(){
-        text_title.setOnClickListener {
+    private fun setButtons() = with(binding){
+        textSeries.setOnClickListener {
             mAuth = FirebaseAuth.getInstance()
             mAuth.signOut()
             val intent = Intent(requireContext(), SplashActivity::class.java)
             startActivity(intent)
             requireActivity().finish()
-        }
-        text_check_movies.setOnClickListener {
-            Toast.makeText(requireContext(), "TESTO", Toast.LENGTH_SHORT).show()
         }
     }
 

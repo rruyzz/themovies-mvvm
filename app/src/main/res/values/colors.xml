@@ -9,7 +9,8 @@
     <color name="white">#FFFFFFFF</color>
     <color name="red">#cb5151</color>
 
-    <color name="gray">#2d2d2d</color>
+    <color name="gray_brand">#2d2d2d</color>
+    <color name="gray_brand_light">#433F3F</color>
 
     <color name="yellow_brand">#f6d452</color>
     <color name="blue_brand">#247291</color>

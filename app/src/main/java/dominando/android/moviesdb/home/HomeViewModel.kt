@@ -4,7 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import dominando.android.moviesdb.model.DiscoveryListMovieResponse
+import dominando.android.moviesdb.model.DiscoveryMovieResponse
+import dominando.android.moviesdb.model.DiscoverySerieResponse
 import dominando.android.moviesdb.utils.Constanst.API_KEY
 import dominando.android.moviesdb.utils.api.Service
 import kotlinx.coroutines.delay
@@ -33,7 +34,7 @@ class HomeViewModel(private val service: Service) : ViewModel() {
 }
 
 sealed class HomeMovieList {
-    class Success(val listSerie: DiscoveryListMovieResponse,val listMovie: DiscoveryListMovieResponse) : HomeMovieList()
+    class Success(val listSerie: DiscoverySerieResponse, val listMovie: DiscoveryMovieResponse) : HomeMovieList()
     class Loading(val isLoading: Boolean) : HomeMovieList()
     class Error(val error: String) : HomeMovieList()
 }

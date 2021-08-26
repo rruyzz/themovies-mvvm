@@ -67,7 +67,7 @@
         app:layout_constraintStart_toStartOf="@id/grade_background"
         app:layout_constraintBottom_toBottomOf="@id/grade_background"
         android:text="10,0"
-        android:textColor="@color/gray"
+        android:textColor="@color/gray_brand"
         android:textStyle="bold"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
