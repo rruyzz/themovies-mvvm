@@ -3,6 +3,7 @@ package dominando.android.moviesdb.utils.extensions
 import android.app.Activity
 import android.content.Context
 import android.view.WindowManager
+import android.view.WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
 import android.widget.Toast
 
 fun Activity.showToast(context: Context, text: String){
@@ -11,10 +12,10 @@ fun Activity.showToast(context: Context, text: String){
 
 fun Activity.disableTouch(isDisable: Boolean){
     if(isDisable){
-        getWindow().setFlags(
-            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+        window.setFlags(FLAG_NOT_TOUCHABLE, FLAG_NOT_TOUCHABLE)
+        window.setFlags(FLAG_NOT_TOUCHABLE, FLAG_NOT_TOUCHABLE)
     } else {
-        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+        window.clearFlags(FLAG_NOT_TOUCHABLE)
+        window.clearFlags(FLAG_NOT_TOUCHABLE)
     }
 }

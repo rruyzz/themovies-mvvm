@@ -45,6 +45,7 @@ class HomeFragment : Fragment(), HomeAdapter.onClick {
         setObservers()
         viewModel.getAllMovies()
     }
+
     private fun setObservers() {
         viewModel.movieViewState.observe(requireActivity(), Observer {
             when(it){
@@ -62,7 +63,7 @@ class HomeFragment : Fragment(), HomeAdapter.onClick {
 
     private fun renderLoading(isLoading: Boolean) = with(binding){
         progress.isVisible  = isLoading
-        disableTouch(isLoading)
+//        disableTouch(isLoading)
     }
     private fun setButtons(){
         text_title.setOnClickListener {

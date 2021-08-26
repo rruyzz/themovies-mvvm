@@ -4,4 +4,5 @@ object Constanst {
 
     const val API_KEY = "e591023d8d396231d3045ea6341a6fd2"
     const val API_URL = "https://api.themoviedb.org/3/"
+    const val IMAGE_URL = "https://image.tmdb.org/t/p/w500"
 }
