@@ -1,5 +1,6 @@
 package dominando.android.moviesdb.home
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -31,6 +32,7 @@ class HomeViewModel(private val service: Service) : ViewModel() {
                 movieState.value = HomeMovieList.Success(resultSerie, resultMovie, resulTopSeries)
                 hasGet = true
             } catch (throwable: Exception) {
+                Log.e("HomeViewModel", "exception", throwable);
                 movieState.value = HomeMovieList.Error(throwable.message ?: "Erro Desconhecido")
             } finally {
                 movieState.value = HomeMovieList.Loading(false)
@@ -46,4 +48,3 @@ sealed class HomeMovieList {
     class Loading(val isLoading: Boolean) : HomeMovieList()
     class Error(val error: String) : HomeMovieList()
 }
-
