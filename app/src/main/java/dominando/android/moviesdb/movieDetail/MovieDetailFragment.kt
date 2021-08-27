@@ -27,7 +27,6 @@ class MovieDetailFragment : Fragment() {
     private val viewModel: MovieDetailViewModel by viewModel()
     private val args by navArgs<MovieDetailFragmentArgs>()
     private val movieId get() = args.movieId
-    private val navigation get() = findNavController()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,11 +45,7 @@ class MovieDetailFragment : Fragment() {
     private fun setObservers() {
         viewModel.movieDetailViewState.observe(requireActivity(), Observer {
             when (it) {
-                is MovieDetails.Success -> renderSucces(
-                    it.movieDetail,
-                    it.providerResponse,
-                    it.similarMovies
-                )
+                is MovieDetails.Success -> renderSucces(it.movieDetail, it.providerResponse, it.similarMovies)
                 is MovieDetails.Error -> renderError()
                 is MovieDetails.Loading -> renderLoading(it.isLoading)
             }
@@ -69,13 +64,11 @@ class MovieDetailFragment : Fragment() {
             rating.rating = (movieDetail.voteAverage/2).toFloat()
             textResume.text = movieDetail.overview
             rvSimilarMovies.adapter = HomeAdapter(::onClick, similarMovies.results, requireContext())
-            rvSimilarMovies.layoutManager = LinearLayoutManager(requireContext(),
-                LinearLayoutManager.HORIZONTAL, false)
+            rvSimilarMovies.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
     }
 
     private fun renderError() {
         showToast(requireActivity(), "Error")
-
     }
 
     private fun renderLoading(isLoading: Boolean) = with(binding) {
@@ -84,6 +77,4 @@ class MovieDetailFragment : Fragment() {
     private fun onClick(movieId: Int) {
         viewModel.getMovieDetail(movieId.toString())
     }
-
-
 }

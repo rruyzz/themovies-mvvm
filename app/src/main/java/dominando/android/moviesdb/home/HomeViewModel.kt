@@ -7,21 +7,27 @@ import androidx.lifecycle.viewModelScope
 import dominando.android.moviesdb.model.MovieResultResponse
 import dominando.android.moviesdb.model.SeriesResultsResponse
 import dominando.android.moviesdb.utils.api.Service
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class HomeViewModel(private val service: Service) : ViewModel() {
 
     private val movieState = MutableLiveData<HomeMovieList>()
     val movieViewState: LiveData<HomeMovieList> = movieState
+    private lateinit var resultSerie : SeriesResultsResponse
+    private lateinit var resultMovie : MovieResultResponse
+    private lateinit var resulTopSeries : MovieResultResponse
     private var hasGet = false
     fun getAllMovies() {
+        if(hasGet) {
+            movieState.value = HomeMovieList.Success(resultSerie, resultMovie, resulTopSeries)
+            return
+        }
         movieState.value = HomeMovieList.Loading(true)
         viewModelScope.launch {
             try {
-                val resultSerie = service.getPopularSeries()
-                val resultMovie = service.getPopularMovies()
-                val resulTopSeries = service.getSoonMovies()
+                resultSerie = service.getPopularSeries()
+                resultMovie = service.getPopularMovies()
+                resulTopSeries = service.getSoonMovies()
                 movieState.value = HomeMovieList.Success(resultSerie, resultMovie, resulTopSeries)
                 hasGet = true
             } catch (throwable: Exception) {
