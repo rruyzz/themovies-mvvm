@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.activity.OnBackPressedCallback
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -12,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import dominando.android.moviesdb.R
 import dominando.android.moviesdb.adapters.HomeAdapter
 import dominando.android.moviesdb.adapters.ProviderAdapter
 import dominando.android.moviesdb.databinding.FragmentMovieDetailBinding
@@ -48,11 +50,7 @@ class MovieDetailFragment : Fragment() {
         activity?.onBackPressedDispatcher?.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 if(viewModel.itemPosition == 0 ) findNavController().popBackStack()
-                else {
-                    viewModel.itemPosition--
-                    viewModel.listMovies.removeLast()
-                    renderSucces(viewModel.listMovies)
-                }
+                else renderBackPressed()
             }
         })
     }
@@ -61,17 +59,19 @@ class MovieDetailFragment : Fragment() {
         viewModel.movieDetailViewState.observe(requireActivity(), Observer {
             when (it) {
                 is MovieDetails.Success -> renderSucces(it.movie)
-                is MovieDetails.Error -> renderError()
+                is MovieDetails.Error -> showToast(requireActivity(), "Error")
                 is MovieDetails.Loading -> renderLoading(it.isLoading)
             }
         })
     }
 
     private fun renderSucces(movieList: List<MovieDetail>) = with(binding) {
-            movieId = movieList[viewModel.itemPosition].detail.id.toString()
-            renderDetail(movieList[viewModel.itemPosition].detail)
-            renderProvider(movieList[viewModel.itemPosition].providers.results.bR?.flatrate ?: listOf())
-            renderSimilar(movieList[viewModel.itemPosition].similar.results)
+        scroll.isVisible = true
+        movieId = movieList[viewModel.itemPosition].detail.id.toString()
+        renderDetail(movieList[viewModel.itemPosition].detail)
+        renderProvider(movieList[viewModel.itemPosition].providers.results.bR?.flatrate ?: listOf())
+        renderSimilar(movieList[viewModel.itemPosition].similar.results)
+        if(movieId != firstMovieId) animationIn()
     }
 
     private fun renderDetail(movie: MovieDetailResponse)=with(binding){
@@ -82,22 +82,31 @@ class MovieDetailFragment : Fragment() {
         textResume.text = movie.overview
     }
 
-    private fun renderSimilar(movieList: List<MovieItem>) = with(binding){
-        rvSimilarMovies.adapter = HomeAdapter(::onClick, movieList, requireContext())
-        rvSimilarMovies.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+    private fun renderBackPressed(){
+        viewModel.itemPosition--
+        viewModel.listMovies.removeLast()
+        renderSucces(viewModel.listMovies)
+        animationIn()
+    }
+    private fun renderLoading(isLoading: Boolean) = with(binding){
+        progress.isVisible = isLoading
     }
 
     private fun renderProvider(providerList: List<FlatrateItem>) = with(binding){
         rvProvider.adapter = ProviderAdapter(providerList)
         rvProvider.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
     }
-    private fun renderError() {
-        showToast(requireActivity(), "Error")
+
+    private fun renderSimilar(movieList: List<MovieItem>) = with(binding){
+        rvSimilarMovies.adapter = HomeAdapter(::onClick, movieList, requireContext())
+        rvSimilarMovies.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
     }
 
-    private fun renderLoading(isLoading: Boolean) = with(binding) {
-        progress.isVisible = isLoading
+    private fun animationIn() = with(binding){
+        val animation= AnimationUtils.loadAnimation(requireContext(), R.anim.fade_in)
+        layout.startAnimation(animation)
     }
+
     private fun onClick(id: Int) {
         movieId = id.toString()
         viewModel.itemPosition++
