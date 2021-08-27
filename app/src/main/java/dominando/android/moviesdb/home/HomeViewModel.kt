@@ -16,10 +16,8 @@ class HomeViewModel(private val service: Service) : ViewModel() {
     val movieViewState: LiveData<HomeMovieList> = movieState
     private var hasGet = false
     fun getAllMovies() {
-        if(hasGet) return
         movieState.value = HomeMovieList.Loading(true)
         viewModelScope.launch {
-            delay(3000)
             try {
                 val resultSerie = service.getPopularSeries()
                 val resultMovie = service.getPopularMovies()

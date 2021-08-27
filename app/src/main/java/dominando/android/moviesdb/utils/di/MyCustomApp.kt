@@ -4,6 +4,7 @@ import android.app.Application
 import com.google.gson.GsonBuilder
 import dominando.android.moviesdb.home.HomeViewModel
 import dominando.android.moviesdb.login.signup.SignUpViewModel
+import dominando.android.moviesdb.movieDetail.MovieDetailViewModel
 import dominando.android.moviesdb.utils.api.Service
 import dominando.android.moviesdb.utils.api.retrofitBuilder
 import dominando.android.moviesdb.utils.api.retrofitHttpClient
@@ -36,6 +37,7 @@ class MyCustomApp : Application() {
     val viewModels = module {
         viewModel { SignUpViewModel() }
         viewModel { HomeViewModel(get()) }
+        viewModel { MovieDetailViewModel(get()) }
     }
 
     val retrofitModule = module {

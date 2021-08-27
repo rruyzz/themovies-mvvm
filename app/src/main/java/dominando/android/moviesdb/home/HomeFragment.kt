@@ -8,8 +8,10 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
+import dominando.android.moviesdb.adapters.HomeAdapter
 import dominando.android.moviesdb.databinding.FragmentListBinding
 import dominando.android.moviesdb.model.MovieResultResponse
 import dominando.android.moviesdb.model.SeriesResultsResponse
@@ -20,11 +22,12 @@ import kotlinx.android.synthetic.main.fragment_list.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
-class HomeFragment : Fragment(), HomeAdapter.onClick {
+class HomeFragment : Fragment() {
 
     private lateinit var mAuth: FirebaseAuth
     private val viewModel: HomeViewModel by viewModel()
     private lateinit var binding : FragmentListBinding
+    private val navigation get() = findNavController()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -52,9 +55,9 @@ class HomeFragment : Fragment(), HomeAdapter.onClick {
     }
 
     private fun setRecycler(listSerie: SeriesResultsResponse, listMovie: MovieResultResponse, topSeries: MovieResultResponse) = with(binding){
-        rvSeries.adapter= HomeAdapter(this@HomeFragment ,listSerie.results, requireContext())
-        rvMovies.adapter= HomeAdapter(this@HomeFragment ,listMovie.results, requireContext())
-        rvTopSeries.adapter= HomeAdapter(this@HomeFragment ,topSeries.results, requireContext())
+        rvSeries.adapter= HomeAdapter(::onClick, listSerie.results, requireContext())
+        rvMovies.adapter= HomeAdapter(::onClick, listMovie.results, requireContext())
+        rvTopSeries.adapter= HomeAdapter(::onClick, topSeries.results, requireContext())
         rvSeries.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL, false)
         rvMovies.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL, false)
         rvTopSeries.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL, false)
@@ -79,7 +82,8 @@ class HomeFragment : Fragment(), HomeAdapter.onClick {
         }
     }
 
-    override fun onClick() {
-        TODO("Not yet implemented")
+    private fun onClick(movieId: Int) {
+        val destination = HomeFragmentDirections.actionListFragmentToMovieDetailFragment(movieId.toString())
+        navigation.navigate(destination)
     }
 }

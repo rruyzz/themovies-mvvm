@@ -1,8 +1,11 @@
 package dominando.android.moviesdb.utils.api
 
+import dominando.android.moviesdb.model.MovieDetailResponse
+import dominando.android.moviesdb.model.MovieProviderResponse
 import dominando.android.moviesdb.model.MovieResultResponse
 import dominando.android.moviesdb.model.SeriesResultsResponse
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 
@@ -20,4 +23,13 @@ interface Service {
 
     @GET("movie/upcoming")
     suspend fun getSoonMovies() : MovieResultResponse
+
+    @GET("movie/{movie_id}")
+    suspend fun getMovieDetail(@Path("movie_id") movie_id: String) : MovieDetailResponse
+
+    @GET("movie/{movie_id}/watch/providers")
+    suspend fun getMoviesProviders(@Path("movie_id") movie_id: String): MovieProviderResponse
+
+    @GET("movie/{movie_id}/similar")
+    suspend fun getSimilarMovie(@Path("movie_id") movie_id: String) : MovieResultResponse
 }

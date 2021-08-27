@@ -1,4 +1,4 @@
-package dominando.android.moviesdb.home
+package dominando.android.moviesdb.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -9,7 +9,7 @@ import com.bumptech.glide.Glide
 import dominando.android.moviesdb.databinding.ItemMovieBinding
 
 class HomeAdapter(
-    var listener: onClick,
+    var onClick: (Int) -> Unit,
     private val list: List<MovieSerieItem>,
     private val context: Context
 ) : RecyclerView.Adapter<HomeAdapter.ListViewHolder>() {
@@ -18,10 +18,6 @@ class HomeAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
         binding = ItemMovieBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ListViewHolder(binding.root)
-    }
-
-    interface onClick{
-        fun onClick()
     }
 
     override fun getItemCount() = list.size
@@ -34,17 +30,20 @@ class HomeAdapter(
         holder.bind(list[position])
     }
 
-    inner class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
-        fun bind(movie: MovieSerieItem) = with(binding){
+    inner class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
+        fun bind(movie: MovieSerieItem) = with(binding) {
             textTitle.text = movie.title
             textGrade.text = movie.grade
             Glide.with(context).load(movie.poster).into(imagePoster)
         }
 
-        override fun onClick(v: View?) {
-            val position = adapterPosition
-            if(RecyclerView.NO_POSITION != position)
-                listener.onClick()
+        init {
+            itemView.setOnClickListener {
+                val position = adapterPosition
+                if (RecyclerView.NO_POSITION != position)
+                    onClick(list[position].movie_id)
+
+            }
         }
     }
 }
@@ -53,4 +52,5 @@ interface MovieSerieItem {
     val title: String
     val grade: String
     val poster: String
+    val movie_id: Int
 }

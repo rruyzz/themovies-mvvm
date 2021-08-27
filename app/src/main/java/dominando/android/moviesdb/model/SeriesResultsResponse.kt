@@ -2,7 +2,7 @@ package dominando.android.moviesdb.model
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
-import dominando.android.moviesdb.home.MovieSerieItem
+import dominando.android.moviesdb.adapters.MovieSerieItem
 import dominando.android.moviesdb.utils.Constanst
 import kotlinx.android.parcel.Parcelize
 
@@ -29,8 +29,9 @@ data class SerieItem(
 	@SerializedName("name") val name: String,
 	@SerializedName("id") val id: Int,
 	@SerializedName("vote_count") val voteCount: Int
-) : Parcelable, MovieSerieItem{
+) : Parcelable, MovieSerieItem {
 	override val grade: String get() = voteAverage.toString()
 	override val title: String get() = name
 	override val poster: String get() = Constanst.IMAGE_URL + posterPath
+	override val movie_id: Int get() = id
 }
