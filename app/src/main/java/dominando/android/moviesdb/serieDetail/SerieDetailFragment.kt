@@ -1,6 +1,7 @@
 package dominando.android.moviesdb.serieDetail
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -40,14 +41,17 @@ class SerieDetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel.getSerieDetail(serieId)
         setObserve()
-        setViewPager()
+    }
+
+    private fun setViews(serieDetail: SerieDetail){
+        setViewPager(serieDetail)
         setTab()
     }
 
     private fun setObserve(){
         viewModel.serieDetailViewState.observe(requireActivity(), Observer {
             when(it){
-                is SerieDetailsState.Success -> renderSuccess(it.serieDetail.detail)
+                is SerieDetailsState.Success -> renderSuccess(it.serieDetail)
                 is SerieDetailsState.Error -> showToast(requireContext(), it.error)
                 is SerieDetailsState.Loading -> renderLoading(it.isLoading)
             }
@@ -59,15 +63,17 @@ class SerieDetailFragment : Fragment() {
         scroll.isVisible = isLoading.not()
     }
 
-    private fun renderSuccess(serieDetail: SerieDetailResponse) = with(binding){
-        Glide.with(this@SerieDetailFragment).load(IMAGE_URL+serieDetail.backdropPath).into(poster)
-        textTitle.text = serieDetail.name
+    private fun renderSuccess(serieDetail: SerieDetail) = with(binding){
+        setViews(serieDetail)
+        Glide.with(this@SerieDetailFragment).load(IMAGE_URL+serieDetail.detail.backdropPath).into(poster)
+        textTitle.text = serieDetail.detail.name
         textDuration.text = try{
-            serieDetail.episodeRunTime?.get(0).toString().formattedAsHour()
+            serieDetail.detail.episodeRunTime?.get(0).toString().formattedAsHour()
         } catch (e: Exception) {
+            Log.e("MoviesDetail", "exception", e);
             "Tempo não disponivel"
         }
-        textGenero.text = serieDetail.genres[0].name
+        textGenero.text = serieDetail.detail.genres[0].name
     }
     private fun setTab() = with(binding){
         val tabNames = listOf("Sobre", "Episódios")
@@ -83,11 +89,10 @@ class SerieDetailFragment : Fragment() {
             })
         }
     }
-    private fun setViewPager() = with(binding){
+    private fun setViewPager(serieDetail: SerieDetail) = with(binding){
         val pagerAdapter = SerieDetailAdapter(this@SerieDetailFragment)
-        pagerAdapter.addFragment(SerieInfosFragment())
+        pagerAdapter.addFragment(SerieInfosFragment(serieDetail))
         pagerAdapter.addFragment(SerieSeasonsFragment())
         viewPager.adapter = pagerAdapter
-//        viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback(){ })
     }
 }

@@ -55,18 +55,21 @@
                 android:layout_marginEnd="16dp"
                 android:background="#80464646"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@id/textWhereWatch"
+                app:layout_constraintStart_toStartOf="@id/textMoviewInfo"
                 app:layout_constraintTop_toBottomOf="@+id/rvProvider" />
 
             <TextView
                 android:id="@+id/textMoviewInfo"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:layout_marginStart="16dp"
                 android:text="Sinopse"
+                android:layout_marginEnd="16dp"
                 android:textColor="@color/white"
                 android:textSize="18sp"
-                app:layout_constraintStart_toStartOf="@id/view2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/view2" />
 
             <TextView
@@ -75,7 +78,7 @@
                 android:layout_height="wrap_content"
                 android:text="2020"
                 android:textColor="@color/gray_brand_01"
-                app:layout_constraintStart_toStartOf="@+id/view2"
+                app:layout_constraintStart_toStartOf="@+id/textMoviewInfo"
                 app:layout_constraintTop_toBottomOf="@+id/textMoviewInfo" />
 
             <androidx.appcompat.widget.AppCompatImageView
@@ -108,7 +111,7 @@
                 android:text="8/10"
                 android:textColor="@color/gray_brand_01"
                 app:layout_constraintBottom_toBottomOf="@+id/firstAir"
-                app:layout_constraintEnd_toEndOf="@+id/rvProvider"
+                app:layout_constraintEnd_toEndOf="@+id/textMoviewInfo"
                 app:layout_constraintTop_toTopOf="@+id/firstAir" />
 
             <TextView
@@ -117,8 +120,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:textColor="@color/white"
-                app:layout_constraintEnd_toEndOf="@+id/view2"
-                app:layout_constraintStart_toStartOf="@+id/view2"
+                app:layout_constraintEnd_toEndOf="@+id/textMoviewInfo"
+                app:layout_constraintStart_toStartOf="@+id/textMoviewInfo"
                 app:layout_constraintTop_toBottomOf="@+id/firstAir"
                 tools:text="Sinopse Sinopse Sinopse Sinopse Sinopse Sinopse Sinopse Sinopse Sinopse Sinopse Sinopse Sinopse Sinopse Sinopse Sinopse Sinopse Sinopse Sinopse Sinopse Sinopse Sinopse Sinopse Sinopse Sinopse Sinopse Sinopse Sinopse Sinopse Sinopse Sinopse Sinopse Sinopse Sinopse Sinopse Sinopse Sinopse Sinopse Sinopse Sinopse Sinopse Sinopse Sinopse " />
 
@@ -129,7 +132,7 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:background="#80464646"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/textMoviewInfo"
                 app:layout_constraintStart_toStartOf="@id/textWhereWatch"
                 app:layout_constraintTop_toBottomOf="@+id/textResume" />
 
@@ -141,7 +144,7 @@
                 android:text="Elenco"
                 android:textColor="@color/white"
                 android:textSize="18sp"
-                app:layout_constraintStart_toStartOf="@id/view2"
+                app:layout_constraintStart_toStartOf="@id/textMoviewInfo"
                 app:layout_constraintTop_toBottomOf="@id/view3" />
 
             <androidx.recyclerview.widget.RecyclerView
@@ -151,8 +154,8 @@
                 android:layout_margin="8dp"
                 android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/textMoviewInfo"
+                app:layout_constraintStart_toStartOf="@id/textMoviewInfo"
                 app:layout_constraintTop_toBottomOf="@+id/textCast"
                 tools:listitem="@layout/item_cast" />
 

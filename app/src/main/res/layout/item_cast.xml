@@ -42,7 +42,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
-                android:textSize="6sp"
+                android:textSize="12sp"
                 android:maxLines="1"
                 android:text="Emilia Clarke"
                 android:textColor="@color/white"
@@ -55,7 +55,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
-                android:textSize="6sp"
+                android:textSize="10sp"
                 android:maxLines="1"
                 android:text="Daenerys Targaryen"
                 android:textColor="@color/gray_brand_01"
@@ -66,4 +66,5 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

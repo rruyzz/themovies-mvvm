@@ -49,5 +49,5 @@ sealed class SerieDetailsState {
 data class SerieDetail(
     val detail: SerieDetailResponse,
     val providers: MovieProviderResponse,
-    val similar: CastResponse
+    val casting: CastResponse
 )

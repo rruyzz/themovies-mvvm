@@ -20,7 +20,7 @@ data class FlatrateItem(
 
 @Parcelize
 data class Results(
-	@SerializedName("BR") val bR: BR
+	@SerializedName("BR") val bR: BR?
 ) : Parcelable
 
 @Parcelize
