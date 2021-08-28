@@ -5,33 +5,70 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.FragmentManager
-import androidx.viewpager2.widget.ViewPager2
-import com.bumptech.glide.manager.SupportRequestManagerFragment
+import androidx.core.view.isVisible
+import androidx.lifecycle.Observer
+import androidx.navigation.fragment.navArgs
+import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import dominando.android.moviesdb.R
 import dominando.android.moviesdb.databinding.FragmentSerieDetailBinding
+import dominando.android.moviesdb.model.SerieDetailResponse
 import dominando.android.moviesdb.serieDetail.serieInfos.SerieInfosFragment
 import dominando.android.moviesdb.serieDetail.serieSeasons.SerieSeasonsFragment
+import dominando.android.moviesdb.utils.Constanst.IMAGE_URL
+import dominando.android.moviesdb.utils.extensions.formattedAsHour
+import dominando.android.moviesdb.utils.extensions.showToast
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.lang.Exception
 
 class SerieDetailFragment : Fragment() {
 
     private lateinit var binding: FragmentSerieDetailBinding
+    private val viewModel: SerieDetailViewModel by viewModel()
+    private val args by navArgs<SerieDetailFragmentArgs>()
+    private val serieId get()= args.serieId
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentSerieDetailBinding.inflate(inflater, container,false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.getSerieDetail(serieId)
+        setObserve()
         setViewPager()
         setTab()
     }
 
+    private fun setObserve(){
+        viewModel.serieDetailViewState.observe(requireActivity(), Observer {
+            when(it){
+                is SerieDetailsState.Success -> renderSuccess(it.serieDetail.detail)
+                is SerieDetailsState.Error -> showToast(requireContext(), it.error)
+                is SerieDetailsState.Loading -> renderLoading(it.isLoading)
+            }
+        })
+    }
+
+    private fun renderLoading(isLoading: Boolean) = with(binding){
+        progress.isVisible = isLoading
+        scroll.isVisible = isLoading.not()
+    }
+
+    private fun renderSuccess(serieDetail: SerieDetailResponse) = with(binding){
+        Glide.with(this@SerieDetailFragment).load(IMAGE_URL+serieDetail.backdropPath).into(poster)
+        textTitle.text = serieDetail.name
+        textDuration.text = try{
+            serieDetail.episodeRunTime?.get(0).toString().formattedAsHour()
+        } catch (e: Exception) {
+            "Tempo não disponivel"
+        }
+        textGenero.text = serieDetail.genres[0].name
+    }
     private fun setTab() = with(binding){
         val tabNames = listOf("Sobre", "Episódios")
         tabLayout.apply {
@@ -51,9 +88,6 @@ class SerieDetailFragment : Fragment() {
         pagerAdapter.addFragment(SerieInfosFragment())
         pagerAdapter.addFragment(SerieSeasonsFragment())
         viewPager.adapter = pagerAdapter
-//        viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback(){
-//
-//        })
+//        viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback(){ })
     }
-
 }

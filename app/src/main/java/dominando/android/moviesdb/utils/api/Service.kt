@@ -1,17 +1,8 @@
 package dominando.android.moviesdb.utils.api
 
-import dominando.android.moviesdb.model.MovieDetailResponse
-import dominando.android.moviesdb.model.MovieProviderResponse
-import dominando.android.moviesdb.model.MovieResultResponse
-import dominando.android.moviesdb.model.SeriesResultsResponse
+import dominando.android.moviesdb.model.*
 import retrofit2.http.GET
 import retrofit2.http.Path
-import retrofit2.http.Query
-
-
-//https://api.themoviedb.org/3/movie/76341?api_key=
-//https://api.themoviedb.org/3/movie/550?api_key=e591023d8d396231d3045ea6341a6fd2
-
 
 interface Service {
 
@@ -30,6 +21,15 @@ interface Service {
     @GET("movie/{movie_id}/watch/providers")
     suspend fun getMoviesProviders(@Path("movie_id") movie_id: String): MovieProviderResponse
 
+    @GET("tv/{tv_id}/watch/providers")
+    suspend fun getSerieProviders(@Path("tv_id") tv_id: String): MovieProviderResponse
+
     @GET("movie/{movie_id}/similar")
     suspend fun getSimilarMovie(@Path("movie_id") movie_id: String) : MovieResultResponse
+
+    @GET("tv/{tv_id}")
+    suspend fun getSerieDetail(@Path("tv_id") tv_id: String) : SerieDetailResponse
+
+    @GET("tv/{tv_id}/credits")
+    suspend fun getCast(@Path("tv_id") tv_id: String) : CastResponse
 }

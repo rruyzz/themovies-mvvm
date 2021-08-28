@@ -35,5 +35,5 @@ data class MovieItem(
     override val poster: String get() = Constanst.IMAGE_URL + posterPath
     override val title: String get() = titleMovie
     override val movie_id: Int get() = id
-    override val isShow: Boolean = false
+    override val isShow: Boolean get() = false
 }

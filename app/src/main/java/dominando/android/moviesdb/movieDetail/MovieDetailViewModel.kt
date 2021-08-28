@@ -18,7 +18,6 @@ class MovieDetailViewModel(private val service: Service) : ViewModel() {
     val movieDetailViewState: LiveData<MovieDetails> = movieDetailState
     val listMovies : MutableList<MovieDetail> = mutableListOf()
     var itemPosition = 0
-    var shouldFade = false
     fun getMovieDetail(movieId: String) {
         movieDetailState.value = MovieDetails.Loading(true)
         viewModelScope.launch {
