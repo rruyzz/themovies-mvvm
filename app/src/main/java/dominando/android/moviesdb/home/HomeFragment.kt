@@ -82,8 +82,8 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun onClick(movieId: Int) {
+    private fun onClick(movieId: Int, isShow: Boolean) {
         val destination = HomeFragmentDirections.actionListFragmentToMovieDetailFragment(movieId.toString())
-        navigation.navigate(destination)
+        if(isShow.not()) navigation.navigate(destination)
     }
 }

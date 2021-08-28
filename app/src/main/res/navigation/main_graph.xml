@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/listFragment">
+    app:startDestination="@id/serieDetailFragment">
 
     <fragment
         android:id="@+id/listFragment"
@@ -27,4 +27,9 @@
             android:name="movie_id"
             app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/serieDetailFragment"
+        android:name="dominando.android.moviesdb.serieDetail.SerieDetailFragment"
+        android:label="fragment_serie_detail"
+        tools:layout="@layout/fragment_serie_detail" />
 </navigation>

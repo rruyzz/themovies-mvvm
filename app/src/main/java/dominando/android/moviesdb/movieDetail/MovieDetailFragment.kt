@@ -21,6 +21,8 @@ import dominando.android.moviesdb.model.FlatrateItem
 import dominando.android.moviesdb.model.MovieDetailResponse
 import dominando.android.moviesdb.model.MovieItem
 import dominando.android.moviesdb.utils.Constanst.IMAGE_URL
+import dominando.android.moviesdb.utils.extensions.formattedAsHour
+import dominando.android.moviesdb.utils.extensions.formtattedAsDate
 import dominando.android.moviesdb.utils.extensions.showToast
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -43,6 +45,7 @@ class MovieDetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel.getMovieDetail(firstMovieId)
         setObservers()
+        setViews()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,12 +58,18 @@ class MovieDetailFragment : Fragment() {
         })
     }
 
+    private fun setViews() = with(binding){
+        icBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
+    }
+
     private fun setObservers() {
         viewModel.movieDetailViewState.observe(requireActivity(), Observer {
             when (it) {
                 is MovieDetails.Success -> renderSucces(it.movie)
-                is MovieDetails.Error -> showToast(requireActivity(), "Error")
-                is MovieDetails.Loading -> renderLoading(it.isLoading)
+                is MovieDetails.Error -> renderError()
+                is MovieDetails.Loading -> binding.progress.isVisible = it.isLoading
             }
         })
     }
@@ -77,7 +86,9 @@ class MovieDetailFragment : Fragment() {
     private fun renderDetail(movie: MovieDetailResponse)=with(binding){
         Glide.with(requireActivity()).load(IMAGE_URL+movie.backdropPath).into(poster)
         textTitle.text = movie.title
-        textDuration.text = movie.releaseDate
+        textDate.text = movie.releaseDate.toString().formtattedAsDate()
+        textDuration.text = movie.runtime.toString().formattedAsHour()
+        textGenero.text = movie.genres[0].name
         rating.rating = (movie.voteAverage/2).toFloat()
         textResume.text = movie.overview
     }
@@ -88,11 +99,10 @@ class MovieDetailFragment : Fragment() {
         renderSucces(viewModel.listMovies)
         animationIn()
     }
-    private fun renderLoading(isLoading: Boolean) = with(binding){
-        progress.isVisible = isLoading
-    }
 
     private fun renderProvider(providerList: List<FlatrateItem>) = with(binding){
+        textWhereWatch.isVisible = providerList.isNotEmpty()
+        view.isVisible = providerList.isNotEmpty()
         rvProvider.adapter = ProviderAdapter(providerList)
         rvProvider.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
     }
@@ -102,12 +112,16 @@ class MovieDetailFragment : Fragment() {
         rvSimilarMovies.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
     }
 
+    private fun renderError(){
+        viewModel.itemPosition--
+        showToast(requireActivity(), "Error")
+    }
     private fun animationIn() = with(binding){
         val animation= AnimationUtils.loadAnimation(requireContext(), R.anim.fade_in)
         layout.startAnimation(animation)
     }
 
-    private fun onClick(id: Int) {
+    private fun onClick(id: Int, isShow: Boolean) {
         movieId = id.toString()
         viewModel.itemPosition++
         viewModel.getMovieDetail(id.toString())
