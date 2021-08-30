@@ -73,6 +73,10 @@ class HomeFragment : Fragment() {
         disableTouch(isLoading)
     }
     private fun setButtons() = with(binding){
+        ic_back3.setOnClickListener {
+            showToast(requireContext(), "PESQUISAR")
+            viewModel.searchMovie(textInputLayout.query.toString())
+        }
         textSeries.setOnClickListener {
             mAuth = FirebaseAuth.getInstance()
             mAuth.signOut()

@@ -3,6 +3,8 @@ package dominando.android.moviesdb.utils.api
 import dominando.android.moviesdb.model.*
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
+import java.util.*
 
 interface Service {
 
@@ -32,4 +34,7 @@ interface Service {
 
     @GET("tv/{tv_id}/credits")
     suspend fun getCast(@Path("tv_id") tv_id: String) : CastResponse
+
+    @GET("search/multi")
+    suspend fun serachList(@Query("query") search: String) : SearchResponse
 }
