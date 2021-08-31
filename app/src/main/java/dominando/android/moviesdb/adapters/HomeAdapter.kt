@@ -42,7 +42,6 @@ class HomeAdapter(
                 val position = adapterPosition
                 if (RecyclerView.NO_POSITION != position)
                     onClick(list[position].movie_id, list[position].isShow)
-
             }
         }
     }

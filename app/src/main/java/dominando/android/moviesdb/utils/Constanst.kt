@@ -6,3 +6,5 @@ object Constanst {
     const val API_URL = "https://api.themoviedb.org/3/"
     const val IMAGE_URL = "https://image.tmdb.org/t/p/w500"
 }
+
+//https://image.tmdb.org/t/p/w500/jlGmlFOcfo8n5tURmhC7YVd4Iyy.jpg

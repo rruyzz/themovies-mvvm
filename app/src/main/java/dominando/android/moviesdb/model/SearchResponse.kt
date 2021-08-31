@@ -2,6 +2,8 @@ package dominando.android.moviesdb.model
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import dominando.android.moviesdb.adapters.MovieSerieItem
+import dominando.android.moviesdb.utils.Constanst
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
@@ -16,7 +18,7 @@ data class SearchResponse(
 data class ResultsItem(
 	@SerializedName("media_type") val mediaType: String,
 	@SerializedName("known_for") val knownFor: List<KnownForItem>,
-	@SerializedName("popularity") val popularity: Int,
+	@SerializedName("popularity") val popularity: Double,
 	@SerializedName("name") val name: String,
 	@SerializedName("profile_path") val profilePath: String,
 	@SerializedName("id") val id: Int,
@@ -25,17 +27,28 @@ data class ResultsItem(
 	@SerializedName("original_language") val originalLanguage: String,
 	@SerializedName("original_title") val originalTitle: String,
 	@SerializedName("video") val video: Boolean,
-	@SerializedName("title") val title: String,
+	@SerializedName("title") val titleName: String,
 	@SerializedName("genre_ids") val genreIds: List<Int>,
 	@SerializedName("poster_path") val posterPath: String,
 	@SerializedName("backdrop_path") val backdropPath: String,
 	@SerializedName("release_date") val releaseDate: String,
-	@SerializedName("vote_average") val voteAverage: Int,
+	@SerializedName("vote_average") val voteAverage: Double,
 	@SerializedName("vote_count") val voteCount: Int,
 	@SerializedName("first_air_date") val firstAirDate: String,
 	@SerializedName("origin_country") val originCountry: List<String>,
 	@SerializedName("original_name") val originalName: String
-) : Parcelable
+) : Parcelable, MovieSerieItem{
+	override val title: String
+		get() = if (mediaType == "tv") name else titleName
+	override val grade: String
+		get() = voteAverage.toString()
+	override val poster: String
+		get() = Constanst.IMAGE_URL + backdropPath
+	override val movie_id: Int
+		get() = id
+	override val isShow: Boolean
+		get() =  (mediaType == "tv")
+}
 
 @Parcelize
 data class KnownForItem(

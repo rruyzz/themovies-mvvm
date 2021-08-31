@@ -43,7 +43,7 @@ class HomeViewModel(private val service: Service) : ViewModel() {
     fun searchMovie(text: String){
         viewModelScope.launch {
             try{
-                service.serachList(text)
+                service.getSearch(text)
             } catch (e: java.lang.Exception){
                 Log.e("HomeViewModel", "exception", e);
             }

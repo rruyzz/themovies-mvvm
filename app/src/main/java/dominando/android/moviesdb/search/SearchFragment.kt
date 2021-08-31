@@ -1,24 +1,29 @@
 package dominando.android.moviesdb.search
 
-import android.content.res.ColorStateList
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.SearchView
+import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import dominando.android.moviesdb.R
 import dominando.android.moviesdb.databinding.FragmentSearchBinding
-import dominando.android.moviesdb.serieDetail.SerieDetail
+import dominando.android.moviesdb.search.movieSearch.MoviesSearchFragment
+import dominando.android.moviesdb.search.seriesSearch.SeriesSearchFragment
 import dominando.android.moviesdb.serieDetail.SerieDetailAdapter
-import dominando.android.moviesdb.serieDetail.serieInfos.SerieInfosFragment
-import dominando.android.moviesdb.serieDetail.serieSeasons.SerieSeasonsFragment
+import androidx.lifecycle.Observer
+import dominando.android.moviesdb.model.ResultsItem
+import dominando.android.moviesdb.utils.extensions.showToast
+
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class SearchFragment : Fragment() {
 
     private lateinit var binding : FragmentSearchBinding
+    private val viewModel: SearchViewModel by viewModel()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -29,21 +34,46 @@ class SearchFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setViewPager()
+        setObserver()
+//        setViewPager()
+        setView()
+    }
+
+    private fun setObserver() {
+        viewModel.searchViewState.observe(requireActivity(), Observer {
+            when(it){
+                is SearchState.Succcess -> setViewPager(it.success.results)
+                is SearchState.Error -> showToast(requireContext(), "Error")
+                is SearchState.Loading -> showToast(requireContext(), "LOADING")
+            }
+        })
+    }
+    private fun setView() = with(binding){
+        textInputLayout.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextChange(newText: String): Boolean {
+                return false
+            }
+            override fun onQueryTextSubmit(query: String): Boolean {
+                viewModel.searchMovie(textInputLayout.query.toString())
+                return false
+            }
+        })
+        tabLayout.tabGravity = TabLayout.GRAVITY_FILL
+        tabLayout.addTab((tabLayout.newTab().setText("Serie")))
+        tabLayout.addTab((tabLayout.newTab().setText("Movie")))
+    }
+
+    private fun setViewPager(results: List<ResultsItem>) = with(binding){
+        val pagerAdapter = SerieDetailAdapter(this@SearchFragment)
+        pagerAdapter.addFragment(SeriesSearchFragment(results.filter{ it.mediaType == "tv"}))
+        pagerAdapter.addFragment(MoviesSearchFragment(results.filter { it.mediaType == "movie"}))
+        viewPager.adapter = pagerAdapter
         setTab()
     }
 
-    private fun setViewPager() = with(binding){
-        val pagerAdapter = SerieDetailAdapter(this@SearchFragment)
-        pagerAdapter.addFragment(SerieSeasonsFragment())
-        pagerAdapter.addFragment(SerieSeasonsFragment())
-        viewPager.adapter = pagerAdapter
-    }
-
     private fun setTab() = with(binding){
-        val tabNames = listOf("Sobre", "Episódios")
+        val tabNames = listOf("Séries", "Filmes")
         tabLayout.apply {
-            tabGravity = TabLayout.GRAVITY_FILL
             TabLayoutMediator(tabLayout, viewPager){tab, position ->
                 tab.text = tabNames[position]
             }.attach()
@@ -54,6 +84,4 @@ class SearchFragment : Fragment() {
             })
         }
     }
-
-
 }

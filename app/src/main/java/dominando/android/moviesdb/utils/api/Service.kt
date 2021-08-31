@@ -36,5 +36,11 @@ interface Service {
     suspend fun getCast(@Path("tv_id") tv_id: String) : CastResponse
 
     @GET("search/multi")
-    suspend fun serachList(@Query("query") search: String) : SearchResponse
+    suspend fun getSearch(@Query("query") search: String) : SearchResponse
+
+    @GET("tv/popular")
+    suspend fun getDiscoverySeries() : SeriesResultsResponse
+
+    @GET("movie/popular")
+    suspend fun getDiescoveryMovies() : MovieResultResponse
 }
