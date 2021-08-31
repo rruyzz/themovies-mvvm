@@ -99,13 +99,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:background="@color/black"
-                app:tabTextColor="@color/white"
                 app:tabIndicatorColor="@color/white"
+                app:tabSelectedTextColor="@color/white"
+                app:tabTextColor="@color/gray_brand_light"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/poster" />
 
-            ;<androidx.viewpager2.widget.ViewPager2
+            <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/viewPager"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -113,9 +114,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tab_layout" >
-
-            </androidx.viewpager2.widget.ViewPager2>
+                app:layout_constraintTop_toBottomOf="@id/tab_layout" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
