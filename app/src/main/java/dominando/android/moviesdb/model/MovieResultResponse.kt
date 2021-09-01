@@ -34,6 +34,7 @@ data class MovieItem(
     override val grade: String get() =  voteAverage.toString()
     override val poster: String get() = Constanst.IMAGE_URL + posterPath
     override val title: String get() = titleMovie
+    override val backPoster: String get() = Constanst.IMAGE_URL + backdropPath
     override val movie_id: Int get() = id
     override val isShow: Boolean get() = false
 }

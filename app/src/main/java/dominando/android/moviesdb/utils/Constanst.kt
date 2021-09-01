@@ -8,3 +8,4 @@ object Constanst {
 }
 
 //https://image.tmdb.org/t/p/w500/jlGmlFOcfo8n5tURmhC7YVd4Iyy.jpg
+//https://api.themoviedb.org/3/discover/movie?api_key=e591023d8d396231d3045ea6341a6fd2

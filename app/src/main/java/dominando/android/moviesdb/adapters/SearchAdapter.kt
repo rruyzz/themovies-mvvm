@@ -30,10 +30,14 @@ class SearchAdapter(
 
     override fun getItemCount(): Int = list.size
 
+    override fun getItemId(position: Int) = position.toLong()
+
+    override fun getItemViewType(position: Int) = position
+
     inner class SearchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         fun bind(movie: MovieSerieItem) = with(binding) {
             textName.text = movie.title
-            Glide.with(context).load(movie.poster)
+            Glide.with(context).load(movie.backPoster)
                 .placeholder(R.drawable.sopranos_backdrop).into(imagePoster)
         }
 

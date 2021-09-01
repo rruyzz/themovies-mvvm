@@ -6,6 +6,7 @@ import dominando.android.moviesdb.home.HomeViewModel
 import dominando.android.moviesdb.login.signup.SignUpViewModel
 import dominando.android.moviesdb.movieDetail.MovieDetailViewModel
 import dominando.android.moviesdb.search.SearchViewModel
+import dominando.android.moviesdb.search.seriesSearch.SeriesSearchViewModel
 import dominando.android.moviesdb.serieDetail.SerieDetailViewModel
 import dominando.android.moviesdb.utils.api.Service
 import dominando.android.moviesdb.utils.api.retrofitBuilder
@@ -42,6 +43,7 @@ class MyCustomApp : Application() {
         viewModel { MovieDetailViewModel(get()) }
         viewModel { SerieDetailViewModel(get()) }
         viewModel { SearchViewModel(get()) }
+        viewModel { SeriesSearchViewModel(get()) }
     }
 
     val retrofitModule = module {

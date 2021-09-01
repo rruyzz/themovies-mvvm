@@ -5,17 +5,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import dominando.android.moviesdb.databinding.FragmentSearchBinding
+import dominando.android.moviesdb.model.MovieItem
+import dominando.android.moviesdb.model.ResultsItem
+import dominando.android.moviesdb.model.SerieItem
 import dominando.android.moviesdb.search.movieSearch.MoviesSearchFragment
 import dominando.android.moviesdb.search.seriesSearch.SeriesSearchFragment
 import dominando.android.moviesdb.serieDetail.SerieDetailAdapter
-import androidx.lifecycle.Observer
-import dominando.android.moviesdb.model.ResultsItem
 import dominando.android.moviesdb.utils.extensions.showToast
-
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -35,8 +37,8 @@ class SearchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setObserver()
-//        setViewPager()
         setView()
+        viewModel.getDiscoveyList()
     }
 
     private fun setObserver() {
@@ -44,9 +46,20 @@ class SearchFragment : Fragment() {
             when(it){
                 is SearchState.Succcess -> setViewPager(it.success.results)
                 is SearchState.Error -> showToast(requireContext(), "Error")
-                is SearchState.Loading -> showToast(requireContext(), "LOADING")
+                is SearchState.Loading -> renderLoading(it.isLoading)
             }
         })
+        viewModel.discoveryListViewState.observe(requireActivity(), Observer {
+            when(it){
+                is SeriesSearchList.Success -> setViewPagerDiscovery(it.listSerie.results, it.listMovie.results)
+                is SeriesSearchList.Error -> showToast(requireContext(), "Error")
+                is SeriesSearchList.Loading -> binding.progress.isVisible = it.isLoading
+            }
+        })
+    }
+
+    private fun renderLoading(isLoading: Boolean) = with(binding){
+        progress.isVisible  = isLoading
     }
     private fun setView() = with(binding){
         textInputLayout.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -65,8 +78,16 @@ class SearchFragment : Fragment() {
 
     private fun setViewPager(results: List<ResultsItem>) = with(binding){
         val pagerAdapter = SerieDetailAdapter(this@SearchFragment)
-        pagerAdapter.addFragment(SeriesSearchFragment(results.filter{ it.mediaType == "tv"}))
-        pagerAdapter.addFragment(MoviesSearchFragment(results.filter { it.mediaType == "movie"}))
+        pagerAdapter.addFragment(SeriesSearchFragment(results ?: listOf(), null))
+        pagerAdapter.addFragment(MoviesSearchFragment(results, null))
+        viewPager.adapter = pagerAdapter
+        setTab()
+    }
+
+    private fun setViewPagerDiscovery(resultsSerie: List<SerieItem>?,resultsMovie: List<MovieItem>?) = with(binding){
+        val pagerAdapter = SerieDetailAdapter(this@SearchFragment)
+        pagerAdapter.addFragment(SeriesSearchFragment(null, resultsSerie ?: listOf()))
+        pagerAdapter.addFragment(MoviesSearchFragment(null, resultsMovie ?: listOf()))
         viewPager.adapter = pagerAdapter
         setTab()
     }

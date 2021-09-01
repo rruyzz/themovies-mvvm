@@ -35,4 +35,5 @@ data class SerieItem(
 	override val poster: String get() = Constanst.IMAGE_URL + posterPath
 	override val movie_id: Int get() = id
 	override val isShow: Boolean get() = true
+	override val backPoster: String get() = Constanst.IMAGE_URL + backdropPath
 }

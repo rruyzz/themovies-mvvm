@@ -4,20 +4,25 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import dominando.android.moviesdb.adapters.HomeAdapter
 import dominando.android.moviesdb.adapters.SearchAdapter
 import dominando.android.moviesdb.databinding.FragmentSeriesSearchBinding
-import dominando.android.moviesdb.home.HomeFragmentDirections
 import dominando.android.moviesdb.model.ResultsItem
-import dominando.android.moviesdb.model.SearchResponse
-import dominando.android.moviesdb.model.SeriesResultsResponse
-import dominando.android.moviesdb.serieDetail.SerieDetail
+import dominando.android.moviesdb.model.SerieItem
+import dominando.android.moviesdb.search.SearchFragmentDirections
+import dominando.android.moviesdb.search.SearchViewModel
+import dominando.android.moviesdb.utils.extensions.showToast
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class SeriesSearchFragment(val serieList: List<ResultsItem>) : Fragment() {
+class SeriesSearchFragment(val serieSearch: List<ResultsItem>?, val serieItemList: List<SerieItem>?) : Fragment() {
 
     private lateinit var binding : FragmentSeriesSearchBinding
+    private val navigation get() = findNavController()
+    private val viewModel: SearchViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,17 +35,21 @@ class SeriesSearchFragment(val serieList: List<ResultsItem>) : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setViews(serieList)
+        setViews(serieSearch ?: listOf())
     }
 
     private fun setViews(listSerie: List<ResultsItem>) = with(binding){
-        rvSeries.adapter= SearchAdapter(::onClick, listSerie, requireContext())
-        rvSeries.layoutManager = LinearLayoutManager(requireContext())
+        if(listSerie.isEmpty()) {
+            rvSeries.adapter= SearchAdapter(::onClick, serieItemList ?: listOf(), requireContext())
+            rvSeries.layoutManager = LinearLayoutManager(requireContext())
+        } else {
+            rvSeries.adapter= SearchAdapter(::onClick,listSerie.filter{ it.mediaType == "tv"}.sortedByDescending { it.popularity }, requireContext())
+            rvSeries.layoutManager = LinearLayoutManager(requireContext())
+        }
     }
 
     private fun onClick(id: Int, isShow: Boolean) {
-//        val destination = if(isShow) HomeFragmentDirections.actionListFragmentToSerieDetailFragment(id.toString())
-//        else HomeFragmentDirections.actionListFragmentToMovieDetailFragment(id.toString())
-//        navigation.navigate(destination)
+        val destination =  SearchFragmentDirections.actionSearchFragmentToSerieDetailFragment(id.toString())
+        navigation.navigate(destination)
     }
 }

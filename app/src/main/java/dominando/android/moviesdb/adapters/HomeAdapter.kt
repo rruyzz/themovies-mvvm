@@ -51,6 +51,7 @@ interface MovieSerieItem {
     val title: String
     val grade: String
     val poster: String
+    val backPoster: String
     val movie_id: Int
     val isShow: Boolean
 }

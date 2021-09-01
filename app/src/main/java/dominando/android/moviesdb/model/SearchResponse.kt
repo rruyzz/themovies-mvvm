@@ -48,6 +48,7 @@ data class ResultsItem(
 		get() = id
 	override val isShow: Boolean
 		get() =  (mediaType == "tv")
+	override val backPoster: String get() = Constanst.IMAGE_URL + backdropPath
 }
 
 @Parcelize

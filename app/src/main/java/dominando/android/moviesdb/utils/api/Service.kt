@@ -38,9 +38,9 @@ interface Service {
     @GET("search/multi")
     suspend fun getSearch(@Query("query") search: String) : SearchResponse
 
-    @GET("tv/popular")
-    suspend fun getDiscoverySeries() : SeriesResultsResponse
+    @GET("discover/tv")
+    suspend fun getDiscoverySeries(@Query("page") page: Int) : SeriesResultsResponse
 
     @GET("movie/popular")
-    suspend fun getDiescoveryMovies() : MovieResultResponse
+    suspend fun getDiescoveryMovies(@Query("page") page: Int) : MovieResultResponse
 }
