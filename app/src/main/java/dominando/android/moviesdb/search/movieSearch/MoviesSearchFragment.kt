@@ -32,10 +32,13 @@ class MoviesSearchFragment(val moviesList: List<ResultsItem>?, val serieItemList
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setViews(moviesList?.filter { it.mediaType == "movie"}?.sortedByDescending { it.popularity } ?: listOf())
+        setViews(moviesList
+            ?.filter { it.mediaType == "movie"}
+            ?.sortedByDescending { it.popularity } ?: listOf())
     }
 
     private fun setViews(listMovies: List<ResultsItem>) = with(binding){
+
         if(listMovies.isEmpty()) {
             rvMovies.adapter = SearchAdapter(::onClick, serieItemList ?: listOf(), requireContext())
             rvMovies.layoutManager = LinearLayoutManager(requireContext())

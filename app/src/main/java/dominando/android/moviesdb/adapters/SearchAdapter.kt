@@ -7,9 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import dominando.android.moviesdb.R
-import dominando.android.moviesdb.databinding.ItemMovieBinding
 import dominando.android.moviesdb.databinding.ItemSearchBinding
-import dominando.android.moviesdb.utils.Constanst.IMAGE_URL
 
 class SearchAdapter(
     var onClick: (Int, Boolean) -> Unit,
@@ -38,7 +36,7 @@ class SearchAdapter(
         fun bind(movie: MovieSerieItem) = with(binding) {
             textName.text = movie.title
             Glide.with(context).load(movie.backPoster)
-                .placeholder(R.drawable.sopranos_backdrop).into(imagePoster)
+                .placeholder(R.color.gray_brand_light).into(imagePoster)
         }
 
         init {

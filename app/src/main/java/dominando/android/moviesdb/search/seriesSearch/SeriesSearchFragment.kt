@@ -35,7 +35,9 @@ class SeriesSearchFragment(val serieSearch: List<ResultsItem>?, val serieItemLis
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setViews(serieSearch ?: listOf())
+        setViews(serieSearch
+            ?.filter{ it.mediaType == "tv"}
+            ?.sortedByDescending { it.popularity } ?: listOf())
     }
 
     private fun setViews(listSerie: List<ResultsItem>) = with(binding){
@@ -43,7 +45,7 @@ class SeriesSearchFragment(val serieSearch: List<ResultsItem>?, val serieItemLis
             rvSeries.adapter= SearchAdapter(::onClick, serieItemList ?: listOf(), requireContext())
             rvSeries.layoutManager = LinearLayoutManager(requireContext())
         } else {
-            rvSeries.adapter= SearchAdapter(::onClick,listSerie.filter{ it.mediaType == "tv"}.sortedByDescending { it.popularity }, requireContext())
+            rvSeries.adapter= SearchAdapter(::onClick,listSerie, requireContext())
             rvSeries.layoutManager = LinearLayoutManager(requireContext())
         }
     }
