@@ -5,9 +5,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
+import dominando.android.moviesdb.adapters.ActorsAdapters
+import dominando.android.moviesdb.adapters.SeasonAdapter
 import dominando.android.moviesdb.databinding.FragmentSerieSeasonsBinding
+import dominando.android.moviesdb.serieDetail.SerieDetail
 
-class SerieSeasonsFragment : Fragment() {
+class SerieSeasonsFragment(val serieDetail: SerieDetail) : Fragment() {
 
     private lateinit var binding: FragmentSerieSeasonsBinding
     override fun onCreateView(
@@ -18,5 +22,16 @@ class SerieSeasonsFragment : Fragment() {
         binding = FragmentSerieSeasonsBinding.inflate(inflater, container, false)
         return binding.root
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        renderSeriesList()
+    }
+
+    private fun renderSeriesList() = with(binding){
+        recyclerView.adapter= SeasonAdapter(serieDetail.detail.seasons,requireActivity())
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+    }
+
 }
 

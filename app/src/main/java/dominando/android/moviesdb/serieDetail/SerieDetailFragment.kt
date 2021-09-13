@@ -92,7 +92,7 @@ class SerieDetailFragment : Fragment() {
     private fun setViewPager(serieDetail: SerieDetail) = with(binding){
         val pagerAdapter = SerieDetailAdapter(this@SerieDetailFragment)
         pagerAdapter.addFragment(SerieInfosFragment(serieDetail))
-        pagerAdapter.addFragment(SerieSeasonsFragment())
+        pagerAdapter.addFragment(SerieSeasonsFragment(serieDetail))
         viewPager.adapter = pagerAdapter
     }
 }
