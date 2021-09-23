@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import dominando.android.moviesdb.R
 import dominando.android.moviesdb.databinding.ItemSeasonBinding
 import dominando.android.moviesdb.model.SeasonsItem
+import dominando.android.moviesdb.utils.customView.CustomSerieItem
 
 class SeasonAdapter(
     private val list: List<SeasonsItem>,
@@ -36,11 +37,17 @@ class SeasonAdapter(
 
     inner class SeasonsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         fun bind(seasons: SeasonsItem) = with(binding) {
-            val lista = mutableListOf<String>()
+            seasonTitle.text = "Temporada ${seasons.seasonNumber}"
             for(i in 0..seasons.episodeCount){
-                lista.add((i + 1).toString())
+                linear.addView(parseToSerieItem(seasons, seasons.seasonNumber))
             }
-            spinner.adapter = ArrayAdapter(context, R.layout.layout_spinner,R.id.textSeason,lista.toTypedArray() )
+        }
+        private fun parseToSerieItem(seaason: SeasonsItem, episode: Int): CustomSerieItem{
+            val item = CustomSerieItem(context, null, 0)
+            item.setTitle(seaason.name)
+            item.setEpisode(seaason.seasonNumber, episode )
+            item.setImage(seaason.posterPath)
+            return item
         }
     }
 }
