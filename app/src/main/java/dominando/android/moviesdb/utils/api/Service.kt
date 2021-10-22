@@ -32,6 +32,10 @@ interface Service {
     @GET("tv/{tv_id}")
     suspend fun getSerieDetail(@Path("tv_id") tv_id: String) : SerieDetailResponse
 
+//    @GET("tv/{tv_id}")
+//    suspend fun getSerieDetail(@Path("tv_id") tv_id: String,
+//                               @Query("append_to_response") append_to_response: String= "season/1,season/2,season/3,season/4,season/5,season/6") : SerieDetailResponse
+
     @GET("tv/{tv_id}/credits")
     suspend fun getCast(@Path("tv_id") tv_id: String) : CastResponse
 

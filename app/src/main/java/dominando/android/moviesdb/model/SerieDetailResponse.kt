@@ -63,7 +63,9 @@ data class SeasonsItem(
 	@SerializedName("name") val name: String,
 	@SerializedName("season_number") val seasonNumber: Int,
 	@SerializedName("id") val id: Int,
-	@SerializedName("poster_path") val posterPath: String
+	@SerializedName("poster_path") val posterPath: String ,
+	var showEpisodes : Boolean = false,
+	var teste : Int = 100
 ) : Parcelable
 
 @Parcelize

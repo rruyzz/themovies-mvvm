@@ -5,12 +5,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     app:cardCornerRadius="5dp"
     android:id="@+id/card"
+    android:background="@color/transparent"
     android:layout_height="wrap_content">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/gray_brand_light">
+        android:background="@color/gray_brand_light"
+        android:layout_marginBottom="8dp">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/episodeImage"

@@ -34,7 +34,7 @@ class CustomSerieItem  @JvmOverloads constructor(
     fun setEpisode(season: Int, episode: Int){
         binding.textEpisode.text = "S$season | E$episode"
     }
-    fun setImage(image: String){
+    fun setImage(image: String?){
         Glide.with(context).load(Constanst.IMAGE_URL +image).into(binding.episodeImage)
     }
 
