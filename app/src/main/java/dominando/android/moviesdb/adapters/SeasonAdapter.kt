@@ -54,9 +54,7 @@ class SeasonAdapter(
                 val position = adapterPosition
                 if (RecyclerView.NO_POSITION != position) {
                     list[position].showEpisodes = !list[position].showEpisodes
-//                    binding.seasonTitle.text = list[position].teste.toString()
                     binding.linear.isVisible = list[position].showEpisodes
-//                    binding.icBack1.isVisible = list[position].showEpisodes
                     notifyDataSetChanged()
                 }
             }
