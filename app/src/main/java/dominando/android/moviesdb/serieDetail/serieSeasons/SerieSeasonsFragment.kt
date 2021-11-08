@@ -1,19 +1,24 @@
 package dominando.android.moviesdb.serieDetail.serieSeasons
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import dominando.android.moviesdb.adapters.ActorsAdapters
 import dominando.android.moviesdb.adapters.SeasonAdapter
 import dominando.android.moviesdb.databinding.FragmentSerieSeasonsBinding
+import dominando.android.moviesdb.model.EpisodesItem
 import dominando.android.moviesdb.serieDetail.SerieDetail
+import dominando.android.moviesdb.serieDetail.SerieDetailFragmentDirections
 
 class SerieSeasonsFragment(val serieDetail: SerieDetail) : Fragment() {
 
     private lateinit var binding: FragmentSerieSeasonsBinding
+    private val navigation get() = findNavController()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -29,8 +34,14 @@ class SerieSeasonsFragment(val serieDetail: SerieDetail) : Fragment() {
     }
 
     private fun renderSeriesList() = with(binding){
-        recyclerView.adapter= SeasonAdapter(serieDetail.detail.seasons, requireContext())
+        val seasons =serieDetail.detail.seasonList.filterNotNull()
+        recyclerView.adapter= SeasonAdapter(::onClick, seasons, requireContext())
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
+    }
+
+    private fun onClick(episode: EpisodesItem) {
+        val action = SerieDetailFragmentDirections.actionSerieDetailFragmentToEpisodeDetailFragment(episode, serieDetail.providers)
+        navigation.navigate(action)
     }
 }
 

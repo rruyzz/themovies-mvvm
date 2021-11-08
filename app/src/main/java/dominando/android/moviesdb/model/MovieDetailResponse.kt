@@ -12,7 +12,7 @@ data class MovieDetailResponse(
 	@SerializedName("title") val title: String,
 	@SerializedName("backdrop_path") val backdropPath: String,
 	@SerializedName("revenue") val revenue: Int ,
-	@SerializedName("genres") val genres: List<GenresItem>,
+	@SerializedName("genres") val genres: List<GenresItem> = listOf(GenresItem("",0)),
 	@SerializedName("popularity") val popularity: Double,
 	@SerializedName("production_countries") val productionCountries: List<ProductionCountriesItem>,
 	@SerializedName("id") val id: Int ,

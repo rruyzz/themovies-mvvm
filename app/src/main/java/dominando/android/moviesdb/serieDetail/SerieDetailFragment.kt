@@ -73,7 +73,8 @@ class SerieDetailFragment : Fragment() {
             Log.e("MoviesDetail", "exception", e);
             "Tempo não disponivel"
         }
-        textGenero.text = serieDetail.detail.genres[0].name
+        textGenero.text = if (serieDetail.detail.genres?.isNotEmpty() == true) serieDetail.detail.genres.first()?.name
+        else ""
     }
     private fun setTab() = with(binding){
         val tabNames = listOf("Sobre", "Episódios")

@@ -40,7 +40,7 @@ class SerieInfosFragment(val serieDetail: SerieDetail) : Fragment() {
     private fun setDetails()= with(binding){
         textResume.text = serieDetail.detail.overview
         firstAir.text = serieDetail.detail.firstAirDate.formtattedAsDate()
-        textGenero.text = serieDetail.detail.genres[0].name
+        textGenero.text = if (serieDetail.detail.genres?.isNotEmpty() == true) serieDetail.detail.genres.first()?.name else ""
         textGrade.text = "${serieDetail.detail.voteAverage}/10"
     }
 

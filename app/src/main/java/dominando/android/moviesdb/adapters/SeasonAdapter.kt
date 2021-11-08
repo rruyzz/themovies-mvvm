@@ -3,15 +3,16 @@ package dominando.android.moviesdb.adapters
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.annotation.NonNull
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import dominando.android.moviesdb.databinding.ItemSeasonBinding
-import dominando.android.moviesdb.model.SeasonsItem
+import dominando.android.moviesdb.model.EpisodesItem
+import dominando.android.moviesdb.model.Season
 import dominando.android.moviesdb.utils.customView.CustomSerieItem
 
 class SeasonAdapter(
-    private val list: List<SeasonsItem>,
+    var onClick: (EpisodesItem) -> Unit,
+    private val list: List<Season?>,
     private val context: Context
 ) : RecyclerView.Adapter<SeasonAdapter.SeasonsViewHolder>() {
 
@@ -33,29 +34,31 @@ class SeasonAdapter(
         holder.bind(list[position])
     }
 
-    inner class SeasonsViewHolder(private val binding: ItemSeasonBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(seasons: SeasonsItem) = with(binding) {
-            seasonTitle.text = "${seasons.name}"
-            for (i in 0..seasons.episodeCount) {
-                linear.addView(parseToSerieItem(seasons, i+1))
+    inner class SeasonsViewHolder(private val binding: ItemSeasonBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(seasons: Season?) = with(binding) {
+            seasonTitle.text = "${seasons?.name}"
+            seasons?.episodes?.forEach {
+                linear.addView(parseToSerieItem(it))
             }
         }
 
-        private fun parseToSerieItem(seaason: SeasonsItem, episode: Int): CustomSerieItem {
-            val item = CustomSerieItem(context, null, 0)
-            item.setTitle(seaason.name)
-            item.setEpisode(seaason.seasonNumber, episode)
-            item.setImage(seaason.posterPath)
+        private fun parseToSerieItem(episode: EpisodesItem): CustomSerieItem {
+            val item = CustomSerieItem(context)
+            item.setEpisode(episode)
+            item.setTitle(episode.name)
+            item.setEpisode(episode.seasonNumber, episode.episodeNumber)
+            item.setImage(episode.stillPath)
+            item.setOnClickListener { onClick(item.getShowId()) }
             return item
         }
 
         init {
-            itemView.setOnClickListener {
+            binding.seasonTitle.setOnClickListener {
                 val position = adapterPosition
                 if (RecyclerView.NO_POSITION != position) {
-                    list[position].showEpisodes = !list[position].showEpisodes
-                    binding.linear.isVisible = list[position].showEpisodes
-                    notifyDataSetChanged()
+                    list[position]?.showEpisodes = !list[position]?.showEpisodes!!
+                    binding.linear.isVisible = list[position]?.showEpisodes ?: false
                 }
             }
         }

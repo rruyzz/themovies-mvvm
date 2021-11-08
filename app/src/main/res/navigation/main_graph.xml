@@ -49,6 +49,13 @@
         <argument
             android:name="serie_id"
             app:argType="string" />
+        <action
+            android:id="@+id/action_serieDetailFragment_to_episodeDetailFragment"
+            app:destination="@id/episodeDetailFragment"
+            app:enterAnim="@anim/slide_in_up"
+            app:exitAnim="@anim/no_animation"
+            app:popEnterAnim="@anim/no_animation"
+            app:popExitAnim="@anim/slide_out_up"/>
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
@@ -69,5 +76,17 @@
             app:exitAnim="@anim/no_animation"
             app:popEnterAnim="@anim/no_animation"
             app:popExitAnim="@anim/slide_out_up"/>
+    </fragment>
+    <fragment
+        android:id="@+id/episodeDetailFragment"
+        android:name="dominando.android.moviesdb.serieDetail.episodeDetail.EpisodeDetailFragment"
+        android:label="fragment_episode_detail"
+        tools:layout="@layout/fragment_episode_detail" >
+        <argument
+            android:name="episode"
+            app:argType="dominando.android.moviesdb.model.EpisodesItem" />
+        <argument
+            android:name="providers"
+            app:argType="dominando.android.moviesdb.model.MovieProviderResponse" />
     </fragment>
 </navigation>

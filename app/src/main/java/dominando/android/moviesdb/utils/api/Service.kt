@@ -1,6 +1,7 @@
 package dominando.android.moviesdb.utils.api
 
 import dominando.android.moviesdb.model.*
+import dominando.android.moviesdb.utils.Constanst.APPEND_TO_RESPONSE
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -29,12 +30,12 @@ interface Service {
     @GET("movie/{movie_id}/similar")
     suspend fun getSimilarMovie(@Path("movie_id") movie_id: String) : MovieResultResponse
 
-    @GET("tv/{tv_id}")
-    suspend fun getSerieDetail(@Path("tv_id") tv_id: String) : SerieDetailResponse
-
 //    @GET("tv/{tv_id}")
-//    suspend fun getSerieDetail(@Path("tv_id") tv_id: String,
-//                               @Query("append_to_response") append_to_response: String= "season/1,season/2,season/3,season/4,season/5,season/6") : SerieDetailResponse
+//    suspend fun getSerieDetail(@Path("tv_id") tv_id: String) : SerieDetailResponse
+
+    @GET("tv/{tv_id}")
+    suspend fun getSerieDetail(@Path("tv_id") tv_id: String,
+                               @Query("append_to_response") append_to_response: String= APPEND_TO_RESPONSE) : SerieResponse
 
     @GET("tv/{tv_id}/credits")
     suspend fun getCast(@Path("tv_id") tv_id: String) : CastResponse
