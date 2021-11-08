@@ -24,7 +24,7 @@ import retrofit2.Retrofit
 class MyCustomApp : Application() {
     override fun onCreate() {
         super.onCreate()
-        val appModules = listOf(viewModels, apiModule, retrofitModule)
+        val appModules = listOf( retrofitModule, viewModels, apiModule)
         startKoin {
             androidLogger()
             androidContext(this@MyCustomApp)
