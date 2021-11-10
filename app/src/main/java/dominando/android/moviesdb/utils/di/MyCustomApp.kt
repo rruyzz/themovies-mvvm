@@ -1,6 +1,7 @@
 package dominando.android.moviesdb.utils.di
 
 import android.app.Application
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.gson.GsonBuilder
 import dominando.android.moviesdb.home.HomeViewModel
 import dominando.android.moviesdb.login.signup.SignUpViewModel
@@ -32,6 +33,8 @@ class MyCustomApp : Application() {
         }
 
     }
+
+
 
     val apiModule = module {
         single(createdAtStart = false) { get<Retrofit>().create(Service::class.java) }

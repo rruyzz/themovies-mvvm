@@ -1,7 +1,7 @@
 package dominando.android.moviesdb.utils.api
 
-import dominando.android.moviesdb.utils.Constanst.API_KEY
-import dominando.android.moviesdb.utils.Constanst.API_URL
+import dominando.android.moviesdb.utils.remoteConfig.RemoteConfig.apiKey
+import dominando.android.moviesdb.utils.remoteConfig.RemoteConfig.baseUrl
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -16,7 +16,7 @@ const val WRITE_TIMEOUT = 15L
 const val READ_TIMEOUT = 15L
 fun Scope.retrofitBuilder(): Retrofit {
     return Retrofit.Builder()
-        .baseUrl(API_URL)
+        .baseUrl(baseUrl)
         .addConverterFactory(GsonConverterFactory.create(get()))
         .client(get())
         .build()
@@ -25,7 +25,7 @@ fun Scope.retrofitBuilder(): Retrofit {
 var clientInterceptor = Interceptor { chain ->
     var request = chain.request()
     val url = request.url.newBuilder()
-        .addQueryParameter("api_key", API_KEY)
+        .addQueryParameter("api_key", apiKey)
         .addQueryParameter("language", "pt-BR").build()
     request = request.newBuilder().url(url).build()
     chain.proceed(request)
