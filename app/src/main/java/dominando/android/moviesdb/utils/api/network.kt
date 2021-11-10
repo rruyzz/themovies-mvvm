@@ -1,5 +1,6 @@
 package dominando.android.moviesdb.utils.api
 
+import dominando.android.moviesdb.utils.Constanst
 import dominando.android.moviesdb.utils.remoteConfig.RemoteConfig.apiKey
 import dominando.android.moviesdb.utils.remoteConfig.RemoteConfig.baseUrl
 import okhttp3.Interceptor
@@ -14,13 +15,6 @@ import java.util.concurrent.TimeUnit
 const val CONNECT_TIMEOUT = 15L
 const val WRITE_TIMEOUT = 15L
 const val READ_TIMEOUT = 15L
-fun Scope.retrofitBuilder(): Retrofit {
-    return Retrofit.Builder()
-        .baseUrl(baseUrl)
-        .addConverterFactory(GsonConverterFactory.create(get()))
-        .client(get())
-        .build()
-}
 
 var clientInterceptor = Interceptor { chain ->
     var request = chain.request()
@@ -31,17 +25,23 @@ var clientInterceptor = Interceptor { chain ->
     chain.proceed(request)
 }
 
-fun Scope.retrofitHttpClient(): OkHttpClient {
+fun retrofitClient(client: OkHttpClient) = Retrofit.Builder()
+    .client(client)
+    .baseUrl(baseUrl)
+    .addConverterFactory(GsonConverterFactory.create())
+    .build()
 
-    return OkHttpClient.Builder().apply {
-        cache(get())
+fun createHttpClient(): OkHttpClient {
+    val loggin = HttpLoggingInterceptor().apply {
+        level = HttpLoggingInterceptor.Level.BODY
+    }
+    val client = OkHttpClient.Builder().apply{
+        addInterceptor(loggin)
         connectTimeout(CONNECT_TIMEOUT, TimeUnit.SECONDS)
         writeTimeout(WRITE_TIMEOUT, TimeUnit.SECONDS)
         readTimeout(READ_TIMEOUT, TimeUnit.SECONDS)
-        retryOnConnectionFailure(true)
-        addInterceptor(HttpLoggingInterceptor().apply {
-            level = HttpLoggingInterceptor.Level.BODY
-        })
         addNetworkInterceptor(clientInterceptor)
-    }.build()
+        readTimeout(5 * 60, TimeUnit.SECONDS)
+    }
+    return client.build()
 }

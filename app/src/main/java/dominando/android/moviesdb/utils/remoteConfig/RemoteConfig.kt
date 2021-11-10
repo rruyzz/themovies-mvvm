@@ -5,9 +5,8 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.remoteconfig.ktx.get
 import com.google.firebase.remoteconfig.ktx.remoteConfig
 import com.google.firebase.remoteconfig.ktx.remoteConfigSettings
-import org.koin.core.KoinComponent
 
-object RemoteConfig: KoinComponent {
+object RemoteConfig {
 
     init{
         val remoteConfig = Firebase.remoteConfig
