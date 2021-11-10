@@ -12,6 +12,7 @@ import com.google.firebase.auth.FirebaseAuth
 import dominando.android.moviesdb.MainActivity
 import dominando.android.moviesdb.R
 import dominando.android.moviesdb.login.SignUpActivity
+import dominando.android.moviesdb.utils.remoteConfig.RemoteConfig.remoteFetch
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -38,6 +39,7 @@ class SplashFragment : Fragment() {
 
     private fun setSplashTime(){
         scope.launch {
+            remoteFetch()
             delay(3000)
             checkSignIn()
         }
