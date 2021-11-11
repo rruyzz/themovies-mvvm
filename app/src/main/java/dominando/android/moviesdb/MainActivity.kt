@@ -22,6 +22,14 @@ class MainActivity : AppCompatActivity() {
         visibilityBottomNav()
     }
 
+    override fun onBackPressed() {
+        val listFragmentsHome = listOf(R.id.profileFragment)
+        if(navController.currentDestination?.id in listFragmentsHome){
+            navController.setGraph(R.navigation.main_graph)
+        } else {
+            super.onBackPressed()
+        }
+    }
     private fun setupNavigationController(bundle: Bundle?) {
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.home_fragment) as NavHostFragment
@@ -36,6 +44,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun visibilityBottomNav() = with(binding){
         val listFragmentsHome = listOf(R.id.listFragment, R.id.profileFragment)
-        linearBottom.isVisible = navController.currentDestination?.id in listFragmentsHome
+        navController.addOnDestinationChangedListener { _, destination,_ ->
+            linearBottom.isVisible = destination.id in listFragmentsHome
+        }
     }
 }

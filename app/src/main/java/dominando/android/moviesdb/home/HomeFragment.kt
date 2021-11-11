@@ -73,11 +73,9 @@ class HomeFragment : Fragment() {
         disableTouch(isLoading)
     }
     private fun setButtons() = with(binding){
-        ic_back3.setOnClickListener {
+        searchClick.setOnClickListener {
             val directions = HomeFragmentDirections.actionListFragmentToSearchFragment()
             navigation.navigate(directions)
-//            showToast(requireContext(), "PESQUISAR")
-//            viewModel.searchMovie(textInputLayout.query.toString())
         }
         textSeries.setOnClickListener {
             mAuth = FirebaseAuth.getInstance()

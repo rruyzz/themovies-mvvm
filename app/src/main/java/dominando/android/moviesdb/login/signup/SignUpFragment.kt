@@ -21,6 +21,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
+import com.google.firebase.auth.FirebaseAuth
 import dominando.android.moviesdb.MainActivity
 import dominando.android.moviesdb.R
 import dominando.android.moviesdb.databinding.FragmentSignUpBinding
@@ -35,6 +36,7 @@ class SignUpFragment : Fragment() {
     private lateinit var callbackManager: CallbackManager
     private val viewModel: SignUpViewModel by viewModel()
     private var facebookHasCall = false
+    private var mAuth = FirebaseAuth.getInstance()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

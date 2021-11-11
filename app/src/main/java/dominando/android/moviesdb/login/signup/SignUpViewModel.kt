@@ -1,12 +1,16 @@
 package dominando.android.moviesdb.login.signup
 
-import androidx.lifecycle.LiveData
+import android.content.ContentValues.TAG
+import android.net.Uri
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.facebook.AccessToken
 import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.auth.ktx.userProfileChangeRequest
+import com.google.firebase.ktx.Firebase
 
 class SignUpViewModel() : ViewModel() {
     private var mAuth = FirebaseAuth.getInstance()
@@ -16,15 +20,34 @@ class SignUpViewModel() : ViewModel() {
         mAuth.createUserWithEmailAndPassword(email, password)
     }
 
-    fun getGoogleLogin(credential: String) {
+    fun getGoogleLogin(idToken: String) {
         state.value = LoginState.LOADING
-        val credential = GoogleAuthProvider.getCredential(credential, null)
+        val credential = GoogleAuthProvider.getCredential(idToken, null)
         mAuth.signInWithCredential(credential)
             .addOnFailureListener {
                 state.value = LoginState.ERROR
             }
             .addOnSuccessListener {
+//                Log.d(TAG, "User profile updated.")
                 state.value = LoginState.SUCCESS
+
+//                updateProfile(it.user?.displayName, it.user?.photoUrl)
+            }
+    }
+
+    private fun updateProfile(name: String?, photo: Uri?){
+        val user = mAuth.currentUser
+        val profileUpdates = userProfileChangeRequest {
+            displayName = name + "RUIZ"
+            photoUri = photo
+        }
+
+        user!!.updateProfile(profileUpdates)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    Log.d(TAG, "User profile updated.")
+                    state.value = LoginState.SUCCESS
+                }
             }
     }
 
