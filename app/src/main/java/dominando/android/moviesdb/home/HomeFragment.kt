@@ -74,16 +74,24 @@ class HomeFragment : Fragment() {
     }
     private fun setButtons() = with(binding){
         searchClick.setOnClickListener {
-            val directions = HomeFragmentDirections.actionListFragmentToSearchFragment()
-            navigation.navigate(directions)
+            navigateSearchFragment()
         }
         textSeries.setOnClickListener {
-            mAuth = FirebaseAuth.getInstance()
-            mAuth.signOut()
-            val intent = Intent(requireContext(), SplashActivity::class.java)
-            startActivity(intent)
-            requireActivity().finish()
+            logOut()
         }
+    }
+
+    private fun navigateSearchFragment(){
+        val directions = HomeFragmentDirections.actionListFragmentToSearchFragment()
+        navigation.navigate(directions)
+    }
+
+    private fun logOut(){
+        mAuth = FirebaseAuth.getInstance()
+        mAuth.signOut()
+        val intent = Intent(requireContext(), SplashActivity::class.java)
+        startActivity(intent)
+        requireActivity().finish()
     }
 
     private fun onClick(id: Int, isShow: Boolean) {
