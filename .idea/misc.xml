@@ -15,10 +15,11 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.18" />
         <entry key="app/src/main/res/layout/activity_my_custom_app.xml" value="0.3697916666666667" />
         <entry key="app/src/main/res/layout/fragment_episode_detail.xml" value="0.33" />
-        <entry key="app/src/main/res/layout/fragment_list.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/fragment_list.xml" value="0.22" />
         <entry key="app/src/main/res/layout/fragment_login_home.xml" value="0.3697916666666667" />
         <entry key="app/src/main/res/layout/fragment_movie_detail.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_movies_search.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/fragment_my.xml" value="0.19895833333333332" />
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_search.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_serie_detail.xml" value="0.25" />
@@ -41,7 +42,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
