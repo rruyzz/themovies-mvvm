@@ -1,41 +1,38 @@
 package dominando.android.moviesdb.movieDetail
 
-import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dominando.android.moviesdb.model.MovieDetailResponse
 import dominando.android.moviesdb.model.MovieProviderResponse
 import dominando.android.moviesdb.model.MovieResultResponse
+import dominando.android.moviesdb.utils.SafeRequest
 import dominando.android.moviesdb.utils.api.Service
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class MovieDetailViewModel(private val service: Service) : ViewModel() {
-    private val movieDetailState = MutableLiveData<MovieDetails>()
-    val movieDetailViewState: LiveData<MovieDetails> = movieDetailState
-    val listMovies : MutableList<MovieDetail> = mutableListOf()
+
+    private val _movieDetailState = MutableSharedFlow<MovieDetails>(0)
+    val movieDetailState = _movieDetailState.asSharedFlow()
+    val listMovies: MutableList<MovieDetail> = mutableListOf()
     var itemPosition = 0
-    fun getMovieDetail(movieId: String) {
-        movieDetailState.value = MovieDetails.Loading(true)
-        viewModelScope.launch {
-            withContext(Dispatchers.Main) {
-                try {
-                    val resultMovieDetail = service.getMovieDetail(movieId)
-                    val provideMovies = service.getMoviesProviders(movieId)
-                    val similarMovies = service.getSimilarMovie(movieId)
-                    listMovies.add(MovieDetail(resultMovieDetail, provideMovies, similarMovies))
-                    movieDetailState.value = MovieDetails.Success(listMovies)
-                } catch (throwable: Exception) {
-                    Log.e("MoviesDetail", "exception", throwable);
-                    movieDetailState.value = MovieDetails.Error(throwable.message ?: "Erro Desconhecido")
-                } finally {
-                    movieDetailState.value = MovieDetails.Loading(false)
-                }
-            }
-        }
+
+    fun getMovieDetail(movieId: String) = viewModelScope.launch {
+        _movieDetailState.emit(MovieDetails.Loading(true))
+        val resultMovieDetailRequest = async { SafeRequest.safeApiCall { service.getMovieDetail(movieId) } }
+        val provideMoviesRequest = async { SafeRequest.safeApiCall { service.getMoviesProviders(movieId) } }
+        val similarMoviesRequest = async { SafeRequest.safeApiCall { service.getSimilarMovie(movieId) } }
+        val resultMovieDetail = resultMovieDetailRequest.await()
+        val provideMovies = provideMoviesRequest.await()
+        val similarMovies = similarMoviesRequest.await()
+        if (resultMovieDetail.isSuccess && provideMovies.isSuccess && similarMovies.isSuccess) {
+            listMovies.add(MovieDetail(resultMovieDetail.successBody?.body(), provideMovies.successBody?.body(), similarMovies.successBody?.body()))
+            _movieDetailState.emit(MovieDetails.Success(listMovies))
+        } else _movieDetailState.emit(MovieDetails.Error("ErrorEmitido"))
+        _movieDetailState.emit(MovieDetails.Loading(false))
     }
 }
 
@@ -46,7 +43,7 @@ sealed class MovieDetails {
 }
 
 data class MovieDetail(
-    val detail: MovieDetailResponse,
-    val providers: MovieProviderResponse,
-    val similar: MovieResultResponse
+    val detail: MovieDetailResponse?,
+    val providers: MovieProviderResponse?,
+    val similar: MovieResultResponse?
 )

@@ -34,8 +34,8 @@ class SerieSeasonsFragment(val serieDetail: SerieDetail) : Fragment() {
     }
 
     private fun renderSeriesList() = with(binding){
-        val seasons =serieDetail.detail.seasonList.filterNotNull()
-        recyclerView.adapter= SeasonAdapter(::onClick, seasons, requireContext())
+        val seasons =serieDetail.detail?.seasonList?.filterNotNull()
+        recyclerView.adapter= SeasonAdapter(::onClick, seasons ?: listOf(), requireContext())
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
     }
 

@@ -1,51 +1,45 @@
 package dominando.android.moviesdb.serieDetail
 
-import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dominando.android.moviesdb.model.CastResponse
 import dominando.android.moviesdb.model.MovieProviderResponse
-import dominando.android.moviesdb.model.SerieDetailResponse
 import dominando.android.moviesdb.model.SerieResponse
-import dominando.android.moviesdb.movieDetail.MovieDetails
+import dominando.android.moviesdb.utils.SafeRequest
 import dominando.android.moviesdb.utils.api.Service
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import java.lang.Exception
 
 class SerieDetailViewModel(private val service: Service) : ViewModel() {
-    private val serieDetailState = MutableLiveData<SerieDetailsState>()
-    val serieDetailViewState: LiveData<SerieDetailsState> = serieDetailState
+
+    private val _serieDetailState = MutableSharedFlow<SerieDetailsState>(0)
+    val serieDetailState = _serieDetailState.asSharedFlow()
     private var episodeDetail: SerieDetail? = null
 
-    fun getSerieDetail(serieId: String){
-        serieDetailState.value = SerieDetailsState.Loading(true)
+    fun getSerieDetail(serieId: String) {
         viewModelScope.launch {
-            withContext(Dispatchers.Main) {
-                try{
-                    if(episodeDetail != null){
-                        serieDetailState.value = SerieDetailsState.Success(episodeDetail!!)
-                        return@withContext
-                    }
-                    val serieDetail = service.getSerieDetail(serieId)
-                    val providers = service.getSerieProviders(serieId)
-                    val casting = service.getCast(serieId)
-                    episodeDetail = SerieDetail(serieDetail, providers, casting)
-                    serieDetailState.value = SerieDetailsState.Success(episodeDetail!!)
-                } catch (e: Exception){
-                    Log.e("MoviesDetail", "exception", e)
-                    serieDetailState.value = SerieDetailsState.Error(e.message ?: "Erro Desconhecido")
-                } finally {
-                    serieDetailState.value = SerieDetailsState.Loading(false)
-                }
+            _serieDetailState.emit(SerieDetailsState.Loading(true))
+            val serieDetailResponse = async { SafeRequest.safeApiCall { service.getSerieDetail(serieId) } }
+            val providersResponse = async { SafeRequest.safeApiCall { service.getSerieProviders(serieId) } }
+            val castingResponse = async { SafeRequest.safeApiCall { service.getCast(serieId) } }
+            val serieDetail = serieDetailResponse.await()
+            val providers = providersResponse.await()
+            val casting = castingResponse.await()
+            if (serieDetail.isSuccess && providers.isSuccess && casting.isSuccess) {
+                episodeDetail = SerieDetail(
+                    serieDetail.successBody?.body(),
+                    providers.successBody?.body(),
+                    casting.successBody?.body()
+                )
+                _serieDetailState.emit(SerieDetailsState.Success(episodeDetail!!))
             }
+            _serieDetailState.emit(SerieDetailsState.Loading(false))
         }
     }
 }
-
 sealed class SerieDetailsState {
     class Success(val serieDetail: SerieDetail) : SerieDetailsState()
     class Loading(val isLoading: Boolean) : SerieDetailsState()
@@ -53,7 +47,7 @@ sealed class SerieDetailsState {
 }
 
 data class SerieDetail(
-    val detail: SerieResponse,
-    val providers: MovieProviderResponse,
-    val casting: CastResponse
+    val detail: SerieResponse?,
+    val providers: MovieProviderResponse?,
+    val casting: CastResponse?
 )

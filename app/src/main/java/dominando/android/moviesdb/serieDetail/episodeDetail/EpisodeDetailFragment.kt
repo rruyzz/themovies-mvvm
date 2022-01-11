@@ -47,9 +47,7 @@ class EpisodeDetailFragment : Fragment() {
         textResume.text = episode.overview
         rvSimilarMovies.adapter = ActorsAdapters(episode.guestStars, requireContext())
         rvSimilarMovies.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        rvProvider.adapter = ProviderAdapter(detail.results.bR?.flatrate ?: listOf())
+        rvProvider.adapter = ProviderAdapter(detail?.results?.bR?.flatrate ?: listOf())
         rvProvider.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-
-
     }
 }

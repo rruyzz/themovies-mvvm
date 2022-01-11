@@ -5,10 +5,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,9 +20,9 @@ import dominando.android.moviesdb.splash.SplashActivity
 import dominando.android.moviesdb.utils.extensions.disableTouch
 import dominando.android.moviesdb.utils.extensions.showToast
 import kotlinx.android.synthetic.main.fragment_list.*
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import kotlinx.coroutines.flow.collect
 
 
 class HomeFragment : Fragment() {
@@ -54,20 +52,11 @@ class HomeFragment : Fragment() {
 
     private fun setObservers() {
         lifecycleScope.launch {
-            viewModel.movieViewState.collect { state ->
+            viewModel.movieState.collect { state ->
                 when (state) {
                     is HomeMovieList.Success -> setRecycler(state.listSerie, state.listMovie, state.listTopSerie)
                     is HomeMovieList.Error -> renderError()
                     is HomeMovieList.Loading -> renderLoading(state.isLoading)
-                }
-            }
-        }
-        lifecycleScope.launch {
-            viewModel.state.collect { state ->
-                when (state) {
-                    is StateFlowClass.SuccessFlow -> binding.successo.visibility = View.VISIBLE
-                    is StateFlowClass.Erro -> Toast.makeText(requireContext(), "Eroor", Toast.LENGTH_SHORT).show()
-                    is StateFlowClass.Loading -> renderLoading(state.loading)
                 }
             }
         }
@@ -105,11 +94,7 @@ class HomeFragment : Fragment() {
 
     private fun setButtons() = with(binding) {
         searchClick.setOnClickListener {
-//            navigateSearchFragment()
-//            viewModel.searchMovie()
-        }
-        textMovies.setOnClickListener {
-            viewModel.searchMovie()
+            navigateSearchFragment()
         }
         textSeries.setOnClickListener {
             logOut()

@@ -7,18 +7,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
-import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import dominando.android.moviesdb.databinding.FragmentSerieDetailBinding
-import dominando.android.moviesdb.model.SerieDetailResponse
 import dominando.android.moviesdb.serieDetail.serieInfos.SerieInfosFragment
 import dominando.android.moviesdb.serieDetail.serieSeasons.SerieSeasonsFragment
 import dominando.android.moviesdb.utils.Constanst.IMAGE_URL
 import dominando.android.moviesdb.utils.extensions.formattedAsHour
 import dominando.android.moviesdb.utils.extensions.showToast
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.lang.Exception
 
@@ -49,13 +50,15 @@ class SerieDetailFragment : Fragment() {
     }
 
     private fun setObserve(){
-        viewModel.serieDetailViewState.observe(requireActivity(), Observer {
-            when(it){
-                is SerieDetailsState.Success -> renderSuccess(it.serieDetail)
-                is SerieDetailsState.Error -> showToast(requireContext(), it.error)
-                is SerieDetailsState.Loading -> renderLoading(it.isLoading)
+        lifecycleScope.launch {
+            viewModel.serieDetailState.collect {
+                when (it) {
+                    is SerieDetailsState.Success -> renderSuccess(it.serieDetail)
+                    is SerieDetailsState.Error -> showToast(requireContext(), it.error)
+                    is SerieDetailsState.Loading -> renderLoading(it.isLoading)
+                }
             }
-        })
+        }
     }
 
     private fun renderLoading(isLoading: Boolean) = with(binding){
@@ -65,15 +68,15 @@ class SerieDetailFragment : Fragment() {
 
     private fun renderSuccess(serieDetail: SerieDetail) = with(binding){
         setViews(serieDetail)
-        Glide.with(this@SerieDetailFragment).load(IMAGE_URL+serieDetail.detail.backdropPath).into(poster)
-        textTitle.text = serieDetail.detail.name
+        Glide.with(this@SerieDetailFragment).load(IMAGE_URL+serieDetail.detail?.backdropPath).into(poster)
+        textTitle.text = serieDetail.detail?.name
         textDuration.text = try{
-            serieDetail.detail.episodeRunTime?.get(0).toString().formattedAsHour()
+            serieDetail.detail?.episodeRunTime?.get(0).toString().formattedAsHour()
         } catch (e: Exception) {
             Log.e("MoviesDetail", "exception", e);
             "Tempo não disponivel"
         }
-        textGenero.text = if (serieDetail.detail.genres?.isNotEmpty() == true) serieDetail.detail.genres.first()?.name
+        textGenero.text = if (serieDetail.detail?.genres?.isNotEmpty() == true) serieDetail.detail?.genres.first()?.name
         else ""
     }
     private fun setTab() = with(binding){

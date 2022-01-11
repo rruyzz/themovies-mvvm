@@ -87,6 +87,7 @@
             app:argType="dominando.android.moviesdb.model.EpisodesItem" />
         <argument
             android:name="providers"
-            app:argType="dominando.android.moviesdb.model.MovieProviderResponse" />
+            app:argType="dominando.android.moviesdb.model.MovieProviderResponse"
+            app:nullable="true" />
     </fragment>
 </navigation>

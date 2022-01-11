@@ -8,7 +8,7 @@ import android.view.animation.AnimationUtils
 import androidx.activity.OnBackPressedCallback
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -25,6 +25,8 @@ import dominando.android.moviesdb.utils.extensions.formattedAsHour
 import dominando.android.moviesdb.utils.extensions.formtattedAsDate
 import dominando.android.moviesdb.utils.extensions.showToast
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 class MovieDetailFragment : Fragment() {
 
@@ -65,21 +67,27 @@ class MovieDetailFragment : Fragment() {
     }
 
     private fun setObservers() {
-        viewModel.movieDetailViewState.observe(requireActivity(), Observer {
-            when (it) {
-                is MovieDetails.Success -> renderSucces(it.movie)
-                is MovieDetails.Error -> renderError()
-                is MovieDetails.Loading -> binding.progress.isVisible = it.isLoading
+        lifecycleScope.launch {
+            viewModel.movieDetailState.collect {
+                when (it) {
+                    is MovieDetails.Success -> renderSucces(it.movie)
+                    is MovieDetails.Error -> renderError()
+                    is MovieDetails.Loading -> renderLoading(it.isLoading)
+                }
             }
-        })
+        }
     }
 
+    private fun renderLoading(isLoading: Boolean) = with(binding){
+        progress.isVisible = isLoading
+        scroll.isVisible = isLoading.not()
+    }
     private fun renderSucces(movieList: List<MovieDetail>) = with(binding) {
         scroll.isVisible = true
-        movieId = movieList[viewModel.itemPosition].detail.id.toString()
-        renderDetail(movieList[viewModel.itemPosition].detail)
-        renderProvider(movieList[viewModel.itemPosition].providers.results.bR?.flatrate ?: listOf())
-        renderSimilar(movieList[viewModel.itemPosition].similar.results)
+        movieId = movieList[viewModel.itemPosition].detail?.id.toString()
+        movieList[viewModel.itemPosition].detail?.let { renderDetail(it) }
+        renderProvider(movieList[viewModel.itemPosition].providers?.results?.bR?.flatrate ?: listOf())
+        movieList[viewModel.itemPosition].similar?.results?.let { renderSimilar(it) }
         if(movieId != firstMovieId) animationIn()
     }
 

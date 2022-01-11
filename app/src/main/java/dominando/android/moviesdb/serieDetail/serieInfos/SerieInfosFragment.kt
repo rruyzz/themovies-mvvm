@@ -38,21 +38,21 @@ class SerieInfosFragment(val serieDetail: SerieDetail) : Fragment() {
     }
 
     private fun setDetails()= with(binding){
-        textResume.text = serieDetail.detail.overview
-        firstAir.text = serieDetail.detail.firstAirDate.formtattedAsDate()
-        textGenero.text = if (serieDetail.detail.genres?.isNotEmpty() == true) serieDetail.detail.genres.first()?.name else ""
-        textGrade.text = "${serieDetail.detail.voteAverage}/10"
+        textResume.text = serieDetail.detail?.overview
+        firstAir.text = serieDetail.detail?.firstAirDate?.formtattedAsDate()
+        textGenero.text = if (serieDetail.detail?.genres?.isNotEmpty() == true) serieDetail.detail.genres.first()?.name else ""
+        textGrade.text = "${serieDetail.detail?.voteAverage}/10"
     }
 
     private fun setProviders() = with(binding){
-        textWhereWatch.isVisible = serieDetail.providers.results.bR?.flatrate?.isNullOrEmpty()?.not() ?: false
-        view2.isVisible = serieDetail.providers.results.bR?.flatrate?.isNullOrEmpty()?.not() ?: false
+        textWhereWatch.isVisible = serieDetail.providers?.results?.bR?.flatrate?.isNullOrEmpty()?.not() ?: false
+        view2.isVisible = serieDetail.providers?.results?.bR?.flatrate?.isNullOrEmpty()?.not() ?: false
         rvProvider.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        rvProvider.adapter = ProviderAdapter(serieDetail.providers.results.bR?.flatrate ?: listOf())
+        rvProvider.adapter = ProviderAdapter(serieDetail.providers?.results?.bR?.flatrate ?: listOf())
     }
 
     private fun renderCasting() = with(binding){
-        rvCasting.adapter= ActorsAdapters(serieDetail.casting.cast,requireActivity())
+        rvCasting.adapter= ActorsAdapters(serieDetail.casting?.cast ?: listOf(),requireActivity())
         rvCasting.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL, false)
     }
 }

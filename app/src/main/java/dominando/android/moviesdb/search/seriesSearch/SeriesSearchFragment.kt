@@ -4,9 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import dominando.android.moviesdb.adapters.SearchAdapter
@@ -15,14 +13,12 @@ import dominando.android.moviesdb.model.ResultsItem
 import dominando.android.moviesdb.model.SerieItem
 import dominando.android.moviesdb.search.SearchFragmentDirections
 import dominando.android.moviesdb.search.SearchViewModel
-import dominando.android.moviesdb.utils.extensions.showToast
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SeriesSearchFragment(val serieSearch: List<ResultsItem>?, val serieItemList: List<SerieItem>?) : Fragment() {
 
     private lateinit var binding : FragmentSeriesSearchBinding
     private val navigation get() = findNavController()
-    private val viewModel: SearchViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

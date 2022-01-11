@@ -5,7 +5,6 @@ import dominando.android.moviesdb.home.HomeViewModel
 import dominando.android.moviesdb.login.signup.SignUpViewModel
 import dominando.android.moviesdb.movieDetail.MovieDetailViewModel
 import dominando.android.moviesdb.search.SearchViewModel
-import dominando.android.moviesdb.search.seriesSearch.SeriesSearchViewModel
 import dominando.android.moviesdb.serieDetail.SerieDetailViewModel
 import dominando.android.moviesdb.utils.api.*
 import org.koin.android.ext.koin.androidContext
@@ -38,6 +37,5 @@ class MyCustomApp : Application() {
         viewModel { MovieDetailViewModel(get()) }
         viewModel { SerieDetailViewModel(get()) }
         viewModel { SearchViewModel(get()) }
-        viewModel { SeriesSearchViewModel(get()) }
     }
 }
