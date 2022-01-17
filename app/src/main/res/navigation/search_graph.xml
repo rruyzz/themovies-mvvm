@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/search_graph"
+    app:startDestination="@id/searchFragment2">
+
+    <fragment
+        android:id="@+id/searchFragment2"
+        android:name="dominando.android.moviesdb.search.SearchFragment"
+        android:label="fragment_search"
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_searchFragment_to_serieDetailFragment"
+            app:destination="@id/serieDetailFragment" />
+        <action
+            android:id="@+id/action_searchFragment_to_movieDetailFragment"
+            app:destination="@id/movieDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/serieDetailFragment"
+        android:name="dominando.android.moviesdb.serieDetail.SerieDetailFragment"
+        android:label="fragment_serie_detail"
+        tools:layout="@layout/fragment_serie_detail" >
+        <argument
+            android:name="serie_id"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/movieDetailFragment"
+        android:name="dominando.android.moviesdb.movieDetail.MovieDetailFragment"
+        android:label="fragment_movie_detail"
+        tools:layout="@layout/fragment_movie_detail" >
+        <argument
+            android:name="movie_id"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_movieDetailFragment_to_episodeDetailFragment"
+            app:destination="@id/episodeDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/episodeDetailFragment"
+        android:name="dominando.android.moviesdb.serieDetail.episodeDetail.EpisodeDetailFragment"
+        android:label="fragment_episode_detail"
+        tools:layout="@layout/fragment_episode_detail" >
+        <argument
+            android:name="episode"
+            app:argType="dominando.android.moviesdb.model.EpisodesItem" />
+        <argument
+            android:name="providers"
+            app:argType="dominando.android.moviesdb.model.MovieProviderResponse"
+            app:nullable="true" />
+    </fragment>
+</navigation>

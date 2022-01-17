@@ -19,21 +19,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-
-
-            <androidx.appcompat.widget.SearchView
-                android:id="@+id/textInputLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="16dp"
-                android:layout_marginTop="16dp"
-                android:background="@color/gray_brand_light"
-                app:iconifiedByDefault="false"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:queryHint="Procurar" />
-
             <TextView
                 android:id="@+id/textSeries"
                 android:layout_width="wrap_content"
@@ -44,7 +29,7 @@
                 android:layout_marginTop="24dp"
                 android:textColor="@color/white"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/textInputLayout" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/textSeriesMore"
@@ -176,27 +161,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-            <View
-                android:id="@+id/searchClick"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                app:layout_constraintBottom_toBottomOf="@id/textInputLayout"
-                app:layout_constraintEnd_toEndOf="@id/textInputLayout"
-                app:layout_constraintStart_toStartOf="@id/textInputLayout"
-                app:layout_constraintTop_toTopOf="@id/textInputLayout" />
-            <TextView
-                android:id="@+id/successo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:textSize="55sp"
-                android:text="SUCESSO"
-                android:textColor="@color/yellow_brand"
-                android:visibility="gone"
-                tools:visibility="visible"/>
             <androidx.constraintlayout.widget.Group
                 android:id="@+id/group"
                 android:layout_width="wrap_content"
@@ -207,113 +171,6 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.core.widget.NestedScrollView>
-
-<!--    <androidx.constraintlayout.widget.ConstraintLayout-->
-<!--        android:id="@+id/linearBottom"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="0dp"-->
-<!--        android:background="@color/gray_brand_02"-->
-<!--        android:gravity="center"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        android:orientation="horizontal">-->
-
-<!--        <View-->
-<!--            android:id="@+id/viewBottom"-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="1dp"-->
-<!--            android:background="@color/gray_brand_light"-->
-<!--            app:layout_constraintTop_toTopOf="parent"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"/>-->
-<!--        <androidx.appcompat.widget.AppCompatImageView-->
-<!--            android:id="@+id/ic_back1"-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:padding="12dp"-->
-<!--            android:src="@drawable/ic_tv"-->
-<!--            android:foregroundTint="@color/gray_brand_light"-->
-<!--            app:layout_constraintBottom_toTopOf="@id/textSerieBottom"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintEnd_toStartOf="@id/ic_back2"-->
-<!--            />-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/textSerieBottom"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="Séries"-->
-<!--            android:textColor="@color/white"-->
-<!--            android:layout_marginBottom="4dp"-->
-<!--            app:layout_constraintBottom_toBottomOf="parent"-->
-<!--            app:layout_constraintEnd_toEndOf="@id/ic_back1"-->
-<!--            app:layout_constraintStart_toStartOf="@id/ic_back1" />-->
-
-<!--        <androidx.appcompat.widget.AppCompatImageView-->
-<!--            android:id="@+id/ic_back2"-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:padding="12dp"-->
-<!--            android:src="@drawable/ic_movie"-->
-<!--            app:layout_constraintBottom_toTopOf="@id/textMoviesBottom"-->
-<!--            app:layout_constraintStart_toEndOf="@id/ic_back1"-->
-<!--            app:layout_constraintEnd_toStartOf="@id/ic_back3" />-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/textMoviesBottom"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="Filmes"-->
-<!--            android:textColor="@color/white"-->
-<!--            android:layout_marginBottom="4dp"-->
-<!--            app:layout_constraintBottom_toBottomOf="parent"-->
-<!--            app:layout_constraintEnd_toEndOf="@id/ic_back2"-->
-<!--            app:layout_constraintStart_toStartOf="@id/ic_back2" />-->
-
-<!--        <androidx.appcompat.widget.AppCompatImageView-->
-<!--            android:id="@+id/ic_back3"-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:padding="12dp"-->
-<!--            android:src="@drawable/ic_search"-->
-<!--            app:layout_constraintBottom_toTopOf="@id/textSearchBottom"-->
-<!--            app:layout_constraintStart_toEndOf="@id/ic_back2"-->
-<!--            app:layout_constraintEnd_toStartOf="@id/ic_back4" />-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/textSearchBottom"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="Descobrir"-->
-<!--            android:textColor="@color/white"-->
-<!--            android:layout_marginBottom="4dp"-->
-<!--            app:layout_constraintBottom_toBottomOf="parent"-->
-<!--            app:layout_constraintEnd_toEndOf="@id/ic_back3"-->
-<!--            app:layout_constraintStart_toStartOf="@id/ic_back3" />-->
-
-<!--        <androidx.appcompat.widget.AppCompatImageView-->
-<!--            android:id="@+id/ic_back4"-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:padding="12dp"-->
-<!--            android:src="@drawable/ic_profile"-->
-<!--            app:layout_constraintBottom_toTopOf="@id/textProfileBottom"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintStart_toEndOf="@id/ic_back3" />-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/textProfileBottom"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="Descobrir"-->
-<!--            android:textColor="@color/white"-->
-<!--            android:layout_marginBottom="4dp"-->
-<!--            app:layout_constraintBottom_toBottomOf="parent"-->
-<!--            app:layout_constraintEnd_toEndOf="@id/ic_back4"-->
-<!--            app:layout_constraintStart_toStartOf="@id/ic_back4" />-->
-
-<!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
 
     <ImageView
         android:id="@+id/backgroundBlack"

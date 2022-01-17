@@ -78,8 +78,8 @@ class SearchFragment : Fragment() {
             }
         })
         tabLayout.tabGravity = TabLayout.GRAVITY_FILL
-        tabLayout.addTab((tabLayout.newTab().setText("Serie")))
-        tabLayout.addTab((tabLayout.newTab().setText("Movie")))
+        tabLayout.addTab((tabLayout.newTab().setText("Séries")))
+        tabLayout.addTab((tabLayout.newTab().setText("Filmes")))
     }
 
     private fun setViewPager(results: List<ResultsItem>) = with(binding){

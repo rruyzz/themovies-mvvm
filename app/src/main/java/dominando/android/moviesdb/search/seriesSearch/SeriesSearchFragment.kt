@@ -12,8 +12,6 @@ import dominando.android.moviesdb.databinding.FragmentSeriesSearchBinding
 import dominando.android.moviesdb.model.ResultsItem
 import dominando.android.moviesdb.model.SerieItem
 import dominando.android.moviesdb.search.SearchFragmentDirections
-import dominando.android.moviesdb.search.SearchViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SeriesSearchFragment(val serieSearch: List<ResultsItem>?, val serieItemList: List<SerieItem>?) : Fragment() {
 

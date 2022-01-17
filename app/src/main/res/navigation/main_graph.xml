@@ -24,13 +24,6 @@
             app:exitAnim="@anim/no_animation"
             app:popEnterAnim="@anim/no_animation"
             app:popExitAnim="@anim/slide_out_up"/>
-        <action
-            android:id="@+id/action_listFragment_to_searchFragment"
-            app:destination="@id/searchFragment"
-            app:enterAnim="@anim/slide_in_up"
-            app:exitAnim="@anim/no_animation"
-            app:popEnterAnim="@anim/no_animation"
-            app:popExitAnim="@anim/slide_out_up"/>
     </fragment>
     <fragment
         android:id="@+id/movieDetailFragment"
@@ -52,26 +45,6 @@
         <action
             android:id="@+id/action_serieDetailFragment_to_episodeDetailFragment"
             app:destination="@id/episodeDetailFragment"
-            app:enterAnim="@anim/slide_in_up"
-            app:exitAnim="@anim/no_animation"
-            app:popEnterAnim="@anim/no_animation"
-            app:popExitAnim="@anim/slide_out_up"/>
-    </fragment>
-    <fragment
-        android:id="@+id/searchFragment"
-        android:name="dominando.android.moviesdb.search.SearchFragment"
-        android:label="fragment_search"
-        tools:layout="@layout/fragment_search" >
-        <action
-            android:id="@+id/action_searchFragment_to_movieDetailFragment"
-            app:destination="@id/movieDetailFragment"
-            app:enterAnim="@anim/slide_in_up"
-            app:exitAnim="@anim/no_animation"
-            app:popEnterAnim="@anim/no_animation"
-            app:popExitAnim="@anim/slide_out_up"/>
-        <action
-            android:id="@+id/action_searchFragment_to_serieDetailFragment"
-            app:destination="@id/serieDetailFragment"
             app:enterAnim="@anim/slide_in_up"
             app:exitAnim="@anim/no_animation"
             app:popEnterAnim="@anim/no_animation"

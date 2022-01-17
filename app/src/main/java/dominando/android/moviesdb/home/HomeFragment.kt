@@ -93,17 +93,9 @@ class HomeFragment : Fragment() {
     }
 
     private fun setButtons() = with(binding) {
-        searchClick.setOnClickListener {
-            navigateSearchFragment()
-        }
         textSeries.setOnClickListener {
             logOut()
         }
-    }
-
-    private fun navigateSearchFragment() {
-        val directions = HomeFragmentDirections.actionListFragmentToSearchFragment()
-        navigation.navigate(directions)
     }
 
     private fun logOut() {

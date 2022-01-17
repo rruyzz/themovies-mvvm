@@ -1,11 +1,18 @@
 package dominando.android.moviesdb
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.view.isVisible
 import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
+import bolts.AppLinkNavigation.navigate
 import dominando.android.moviesdb.databinding.ActivityMainBinding
+import dominando.android.moviesdb.home.HomeFragmentDirections
+import dominando.android.moviesdb.search.SearchActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -39,7 +46,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun setButtons() = with(binding){
         icProfile.setOnClickListener { navController.setGraph(R.navigation.profile_graph) }
-        icSearch.setOnClickListener { navController.setGraph(R.navigation.main_graph) }
+        icSearch.setOnClickListener {
+            val intent = Intent(this@MainActivity, SearchActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun visibilityBottomNav() = with(binding){
