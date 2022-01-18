@@ -1,18 +1,17 @@
 package dominando.android.moviesdb.search.movieSearch
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import dominando.android.moviesdb.adapters.MovieSerieItem
 import dominando.android.moviesdb.adapters.SearchAdapter
 import dominando.android.moviesdb.databinding.FragmentMoviesSearchBinding
 import dominando.android.moviesdb.model.MovieItem
 import dominando.android.moviesdb.model.ResultsItem
-import dominando.android.moviesdb.model.SearchResponse
-import dominando.android.moviesdb.model.SerieItem
 import dominando.android.moviesdb.search.SearchFragmentDirections
 
 
@@ -48,8 +47,8 @@ class MoviesSearchFragment(val moviesList: List<ResultsItem>?, val serieItemList
         }
     }
 
-    private fun onClick(id: Int, isShow: Boolean) {
-        val destination = SearchFragmentDirections.actionSearchFragmentToMovieDetailFragment(id.toString())
+    private fun onClick(movie: MovieSerieItem) {
+        val destination = SearchFragmentDirections.actionSearchFragmentToMovieDetailFragment(movie.movie_id.toString(), movie.title)
         navigation.navigate(destination)
     }
 }

@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import dominando.android.moviesdb.adapters.MovieSerieItem
 import dominando.android.moviesdb.adapters.SearchAdapter
 import dominando.android.moviesdb.databinding.FragmentSeriesSearchBinding
 import dominando.android.moviesdb.model.ResultsItem
@@ -44,8 +45,8 @@ class SeriesSearchFragment(val serieSearch: List<ResultsItem>?, val serieItemLis
         }
     }
 
-    private fun onClick(id: Int, isShow: Boolean) {
-        val destination =  SearchFragmentDirections.actionSearchFragmentToSerieDetailFragment(id.toString())
+    private fun onClick(movie: MovieSerieItem) {
+        val destination =  SearchFragmentDirections.actionSearchFragmentToSerieDetailFragment(movie.movie_id.toString())
         navigation.navigate(destination)
     }
 }

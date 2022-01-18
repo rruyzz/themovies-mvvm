@@ -14,6 +14,7 @@
     <color name="gray_brand_01">#888787</color>
     <color name="gray_brand_02">#232222</color>
     <color name="transparent">#232222</color>
+    <color name="gray_brand_ligh_opacus">#B2FFFFFF</color>
 
     <color name="yellow_brand">#f6d452</color>
     <color name="blue_brand">#247291</color>

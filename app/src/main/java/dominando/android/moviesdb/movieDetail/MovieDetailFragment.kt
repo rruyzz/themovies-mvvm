@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import dominando.android.moviesdb.R
 import dominando.android.moviesdb.adapters.HomeAdapter
+import dominando.android.moviesdb.adapters.MovieSerieItem
 import dominando.android.moviesdb.adapters.ProviderAdapter
 import dominando.android.moviesdb.databinding.FragmentMovieDetailBinding
 import dominando.android.moviesdb.model.FlatrateItem
@@ -24,6 +25,7 @@ import dominando.android.moviesdb.utils.Constanst.IMAGE_URL
 import dominando.android.moviesdb.utils.extensions.formattedAsHour
 import dominando.android.moviesdb.utils.extensions.formtattedAsDate
 import dominando.android.moviesdb.utils.extensions.showToast
+import dominando.android.moviesdb.utils.firebase.firebase.saveMovie
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -35,6 +37,9 @@ class MovieDetailFragment : Fragment() {
     private val args by navArgs<MovieDetailFragmentArgs>()
     private val firstMovieId get() = args.movieId
     private var movieId = ""
+    private var movieNome = ""
+    private var moviePoster = ""
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -64,6 +69,9 @@ class MovieDetailFragment : Fragment() {
         icBack.setOnClickListener {
             findNavController().popBackStack()
         }
+        icSave.setOnClickListener{
+            saveMovie(movieNome,movieId, moviePoster)
+        }
     }
 
     private fun setObservers() {
@@ -85,6 +93,8 @@ class MovieDetailFragment : Fragment() {
     private fun renderSucces(movieList: List<MovieDetail>) = with(binding) {
         scroll.isVisible = true
         movieId = movieList[viewModel.itemPosition].detail?.id.toString()
+        movieNome = movieList[viewModel.itemPosition].detail?.title ?: "Rodolfo"
+        moviePoster = movieList[viewModel.itemPosition].detail?.posterPath ?: "Rodolfo"
         movieList[viewModel.itemPosition].detail?.let { renderDetail(it) }
         renderProvider(movieList[viewModel.itemPosition].providers?.results?.bR?.flatrate ?: listOf())
         movieList[viewModel.itemPosition].similar?.results?.let { renderSimilar(it) }
@@ -129,9 +139,8 @@ class MovieDetailFragment : Fragment() {
         layout.startAnimation(animation)
     }
 
-    private fun onClick(id: Int, isShow: Boolean) {
-        movieId = id.toString()
+    private fun onClick(movie: MovieSerieItem) {
         viewModel.itemPosition++
-        viewModel.getMovieDetail(id.toString())
+        viewModel.getMovieDetail(movie.movie_id.toString())
     }
 }

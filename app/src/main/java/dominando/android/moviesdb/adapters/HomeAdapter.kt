@@ -9,7 +9,7 @@ import com.bumptech.glide.Glide
 import dominando.android.moviesdb.databinding.ItemMovieBinding
 
 class HomeAdapter(
-    var onClick: (Int, Boolean) -> Unit,
+    var onClick: (MovieSerieItem) -> Unit,
     private val list: List<MovieSerieItem>,
     private val context: Context
 ) : RecyclerView.Adapter<HomeAdapter.ListViewHolder>() {
@@ -41,7 +41,7 @@ class HomeAdapter(
             itemView.setOnClickListener {
                 val position = adapterPosition
                 if (RecyclerView.NO_POSITION != position)
-                    onClick(list[position].movie_id, list[position].isShow)
+                    onClick(list[position])
             }
         }
     }

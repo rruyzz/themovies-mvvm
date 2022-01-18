@@ -78,6 +78,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth-ktx'
     implementation 'com.facebook.android:facebook-login:[8.1)'
     implementation 'com.facebook.android:facebook-android-sdk:8.1.0'
+    implementation 'com.google.firebase:firebase-database-ktx'
 
     //Crashlytics
     implementation 'com.google.firebase:firebase-crashlytics-ktx'

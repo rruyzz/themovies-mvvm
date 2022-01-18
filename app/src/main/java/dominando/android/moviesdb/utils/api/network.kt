@@ -1,12 +1,10 @@
 package dominando.android.moviesdb.utils.api
 
-import dominando.android.moviesdb.utils.Constanst
-import dominando.android.moviesdb.utils.remoteConfig.RemoteConfig.apiKey
-import dominando.android.moviesdb.utils.remoteConfig.RemoteConfig.baseUrl
+import dominando.android.moviesdb.utils.firebase.firebase.apiKey
+import dominando.android.moviesdb.utils.firebase.firebase.baseUrl
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import org.koin.core.scope.Scope
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit

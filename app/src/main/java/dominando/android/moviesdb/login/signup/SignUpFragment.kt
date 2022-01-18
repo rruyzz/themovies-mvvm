@@ -25,6 +25,7 @@ import com.google.firebase.auth.FirebaseAuth
 import dominando.android.moviesdb.MainActivity
 import dominando.android.moviesdb.R
 import dominando.android.moviesdb.databinding.FragmentSignUpBinding
+import dominando.android.moviesdb.utils.firebase.firebase.saveUser
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -120,6 +121,7 @@ class SignUpFragment : Fragment() {
 
     private fun loginSuccess() = with(binding) {
         progress.isVisible = false
+        saveUser()
         val intent = Intent(requireContext(), MainActivity::class.java)
         startActivity(intent)
         requireActivity().finish()

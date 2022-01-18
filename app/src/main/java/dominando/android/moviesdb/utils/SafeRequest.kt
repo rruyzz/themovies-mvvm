@@ -23,14 +23,14 @@ object SafeRequest {
                     }
                     else -> {
                         val student = Gson().fromJson(response.body().toString(), ErrorResponse::class.java)
-                        ResultWrapper.Error(student)
+                        ResultWrapper.Error(student.status_message)
                     }
                 }
-            } else ResultWrapper.Error(response as ErrorResponse)
+            } else ResultWrapper.UnknownError(response.code(), response as ErrorResponse)
             wrapper
 
         } catch (throwable: Exception) {
-            ResultWrapper.Error(ErrorResponse())
+            ResultWrapper.Error(throwable.message)
         }
         Log.d("SAFE_REQUEST", resultWrapper.toString())
         return resultWrapper
@@ -46,7 +46,7 @@ object SafeRequest {
 
 sealed class ResultWrapper<out T>(val isSuccess: Boolean = false, val successBody: T? = null) {
     data class Success<out T>(val value: T) : ResultWrapper<T>(true, value)
-    data class Error(val error: SafeRequest.ErrorResponse? = null) : ResultWrapper<Nothing>(false)
+    data class Error(val error: String? = null) : ResultWrapper<Nothing>(false)
     data class UnknownError(val code: Int? = null, val error: SafeRequest.ErrorResponse? = null) :
         ResultWrapper<Nothing>(false)
 

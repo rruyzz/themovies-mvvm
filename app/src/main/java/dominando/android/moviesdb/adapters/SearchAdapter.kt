@@ -10,7 +10,7 @@ import dominando.android.moviesdb.R
 import dominando.android.moviesdb.databinding.ItemSearchBinding
 
 class SearchAdapter(
-    var onClick: (Int, Boolean) -> Unit,
+    var onClick: (MovieSerieItem) -> Unit,
     private val list: List<MovieSerieItem>,
     private val context: Context
 ) : RecyclerView.Adapter<SearchAdapter.SearchViewHolder>() {
@@ -43,7 +43,7 @@ class SearchAdapter(
             itemView.setOnClickListener {
                 val position = adapterPosition
                 if (RecyclerView.NO_POSITION != position)
-                    onClick(list[position].movie_id, list[position].isShow)
+                    onClick(list[position])
             }
         }
     }

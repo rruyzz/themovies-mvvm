@@ -69,3 +69,4 @@ data class KnownForItem(
 	@SerializedName("adult") val adult: Boolean,
 	@SerializedName("vote_count") val voteCount: Int
 ) : Parcelable
+

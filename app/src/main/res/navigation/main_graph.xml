@@ -33,6 +33,9 @@
         <argument
             android:name="movie_id"
             app:argType="string" />
+        <argument
+            android:name="movie_name"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/serieDetailFragment"

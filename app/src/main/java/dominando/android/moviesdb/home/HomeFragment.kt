@@ -106,10 +106,10 @@ class HomeFragment : Fragment() {
         requireActivity().finish()
     }
 
-    private fun onClick(id: Int, isShow: Boolean) {
+    private fun onClick(movie: MovieSerieItem) {
         val destination =
-            if (isShow) HomeFragmentDirections.actionListFragmentToSerieDetailFragment(id.toString())
-            else HomeFragmentDirections.actionListFragmentToMovieDetailFragment(id.toString())
+            if (movie.isShow) HomeFragmentDirections.actionListFragmentToSerieDetailFragment(movie.movie_id.toString())
+            else HomeFragmentDirections.actionListFragmentToMovieDetailFragment(movie.movie_id.toString(), movie.title)
         navigation.navigate(destination)
     }
 
