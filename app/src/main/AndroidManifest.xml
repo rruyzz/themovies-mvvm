@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/MainTheme">
         <activity
+            android:name=".watched.WatchedActivity"
+            android:exported="true" />
+        <activity
             android:name=".search.SearchActivity"
             android:exported="true" />
         <activity android:name=".splash.SplashActivity">

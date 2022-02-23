@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        val listFragmentsHome = listOf(R.id.profileFragment)
+        val listFragmentsHome = listOf(R.id.profileFragment, R.id.moviesWatchedFragment)
         if(navController.currentDestination?.id in listFragmentsHome){
             navController.setGraph(R.navigation.main_graph)
         } else {
@@ -50,10 +50,13 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this@MainActivity, SearchActivity::class.java)
             startActivity(intent)
         }
+        icMovies.setOnClickListener{
+            navController.setGraph(R.navigation.watched_movies_graph)
+        }
     }
 
     private fun visibilityBottomNav() = with(binding){
-        val listFragmentsHome = listOf(R.id.listFragment, R.id.profileFragment)
+        val listFragmentsHome = listOf(R.id.listFragment, R.id.profileFragment, R.id.moviesWatchedFragment)
         navController.addOnDestinationChangedListener { _, destination,_ ->
             linearBottom.isVisible = destination.id in listFragmentsHome
         }

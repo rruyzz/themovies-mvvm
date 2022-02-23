@@ -44,7 +44,7 @@
             android:foregroundTint="@color/gray_brand_light"
             app:layout_constraintBottom_toTopOf="@id/textSerieBottom"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/ic_back2"
+            app:layout_constraintEnd_toStartOf="@id/ic_movies"
             />
 
         <TextView
@@ -59,7 +59,7 @@
             app:layout_constraintStart_toStartOf="@id/ic_back1" />
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/ic_back2"
+            android:id="@+id/ic_movies"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:padding="12dp"
@@ -76,8 +76,8 @@
             android:textColor="@color/white"
             android:layout_marginBottom="4dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@id/ic_back2"
-            app:layout_constraintStart_toStartOf="@id/ic_back2" />
+            app:layout_constraintEnd_toEndOf="@id/ic_movies"
+            app:layout_constraintStart_toStartOf="@id/ic_movies" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/ic_search"
@@ -86,7 +86,7 @@
             android:padding="12dp"
             android:src="@drawable/ic_search"
             app:layout_constraintBottom_toTopOf="@id/textSearchBottom"
-            app:layout_constraintStart_toEndOf="@id/ic_back2"
+            app:layout_constraintStart_toEndOf="@id/ic_movies"
             app:layout_constraintEnd_toStartOf="@id/ic_profile" />
 
         <TextView
