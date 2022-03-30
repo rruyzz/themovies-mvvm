@@ -2,6 +2,7 @@ package dominando.android.moviesdb.model
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import com.thoughtbot.expandablerecyclerview.models.ExpandableGroup
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
@@ -89,7 +90,8 @@ data class EpisodesItem(
 	@SerializedName("still_path") val stillPath: String,
 	@SerializedName("vote_count") val voteCount: Int,
 	@SerializedName("crew") val crew: List<CrewItem>,
-	@SerializedName("guest_stars") val guestStars: List<ActorsItem>
+	@SerializedName("guest_stars") val guestStars: List<ActorsItem>,
+	var isVisible: Boolean = false
 ) : Parcelable
 
 @Parcelize

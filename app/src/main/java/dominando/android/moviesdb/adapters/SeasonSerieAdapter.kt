@@ -11,12 +11,10 @@ import dominando.android.moviesdb.databinding.ItemSeasonBinding
 import dominando.android.moviesdb.databinding.ItemSerieEpisodeBinding
 import dominando.android.moviesdb.model.EpisodesItem
 import dominando.android.moviesdb.model.Season
-import dominando.android.moviesdb.serieDetail.serieSeasons.SerieSeasonsFragment
-import dominando.android.moviesdb.serieDetail.serieSeasons.SerieSeasonsFragment.ClassSerie
 import dominando.android.moviesdb.utils.Constanst
 import dominando.android.moviesdb.utils.customView.CustomSerieItem
 
-class SeasonAdapter(
+class SeasonSerieAdapter(
     var onClick: (EpisodesItem) -> Unit,
     private var list: List<ClassSerie?>,
     private val context: Context
@@ -84,12 +82,8 @@ class SeasonAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
-            is ItemSeasonHolder -> {
-                holder.bind(list[position])
-            }
-            is SerieSeasonHolder -> {
-                holder.bind(list[position])
-            }
+            is ItemSeasonHolder -> { holder.bind(list[position]) }
+            is SerieSeasonHolder -> { holder.bind(list[position]) }
         }
     }
 
@@ -120,15 +114,15 @@ class SeasonAdapter(
 //            }
         }
 
-        private fun parseToSerieItem(episode: EpisodesItem): CustomSerieItem {
-            val item = CustomSerieItem(context)
+//        private fun parseToSerieItem(episode: EpisodesItem): CustomSerieItem {
+//            val item = CustomSerieItem(context)
 //            item.setEpisode(episode)
 //            item.setTitle(episode.name)
 //            item.setEpisode(episode.seasonNumber, episode.episodeNumber)
 //            item.setImage(episode.stillPath)
 //            item.setOnClickListener { onClick(item.getShowId()) }
-            return item
-        }
+//            return item
+//        }
 
 //        init {
 //            binding.seasonTitle.setOnClickListener {
@@ -142,9 +136,9 @@ class SeasonAdapter(
     }
 
 
-//    sealed class ClassSerie {
-//        class SeasonClass(val season: Season?) : ClassSerie()
-//        class Episode(val episode: EpisodesItem?) : ClassSerie()
-//    }
+    sealed class ClassSerie {
+        class SeasonClass(val season: Season?) : ClassSerie()
+        class Episode(val episode: EpisodesItem?) : ClassSerie()
+    }
 }
 

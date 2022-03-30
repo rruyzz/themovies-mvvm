@@ -69,7 +69,8 @@ class SignUpFragment : Fragment() {
     }
     private fun setButtons() = with(binding) {
         buttonLoginGoogle.setOnClickListener {
-            checkLogin()
+//            checkLogin()
+            loginSuccess()
         }
         buttonLoginFacebook.setOnClickListener {
             checkFacebook()
