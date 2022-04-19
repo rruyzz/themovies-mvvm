@@ -35,9 +35,9 @@ class LoginHomeFragment : Fragment() {
 
     private fun setButton(){
         binding.buttonStart.setOnClickListener {
-                val intent = Intent(requireContext(), MainActivity::class.java)
-                startActivity(intent)
-//            navigate.navigate(LoginHomeFragmentDirections.actionLoginHomeFragmentToLoginFragment())
+//                val intent = Intent(requireContext(), MainActivity::class.java)
+//                startActivity(intent)
+            navigate.navigate(LoginHomeFragmentDirections.actionLoginHomeFragmentToLoginFragment())
         }
     }
 }

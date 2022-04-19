@@ -36,17 +36,15 @@ class ProfileFragment : Fragment() {
     private fun setButtons() = with(binding) {
         mAuth = FirebaseAuth.getInstance()
         Glide.with(this@ProfileFragment).load(mAuth.currentUser?.photoUrl).into(imageProfile)
-        imageProfile.setImageURI(mAuth.currentUser?.photoUrl)
         icSettings.setOnClickListener {
             Log.d("TESTE", "Click: ")
-
             logOut()
         }
         imageProfile.setOnClickListener {
             Log.d("TESTE", "Click: ")
-
             logOut()
         }
+        textName.text = mAuth.currentUser?.displayName ?: "ERROR"
     }
 
     private fun logOut() {

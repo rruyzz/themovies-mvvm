@@ -61,10 +61,6 @@ class SeasonSerieAdapter(
             binding.textTitle.text = season?.name
             Glide.with(context).load(Constanst.IMAGE_URL + season?.stillPath)
                 .into(binding.episodeImage)
-
-//            if(season?.isVisible != false)  binding.card.visibility = View.VISIBLE else binding.card.visibility = View.GONE
-//            if(season?.isVisible != false)  binding.card.visibility = View.VISIBLE else binding.card.visibility = View.GONE
-//            binding.card.isVisible = season?.isVisible ?: false
         }
     }
 
@@ -81,11 +77,6 @@ class SeasonSerieAdapter(
         list[position] is ClassSerie.SeasonClass -> 0
         list[position] is ClassSerie.Episode -> 1
         else -> 2
-    }
-
-    private fun checkEpisodeVisibility(position: Int) : Int {
-        val episode = try { list[position] as ClassSerie.Episode } catch (e: Exception) { null}
-        return if(episode?.episode?.isVisible != true) 1 else 2
     }
 
     sealed class ClassSerie {
