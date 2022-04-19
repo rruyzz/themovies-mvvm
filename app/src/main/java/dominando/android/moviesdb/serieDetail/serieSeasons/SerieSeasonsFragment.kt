@@ -6,11 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
-import dominando.android.moviesdb.adapters.SeasonAdapter
 import dominando.android.moviesdb.databinding.FragmentSerieSeasonsBinding
 import dominando.android.moviesdb.model.EpisodesItem
-import dominando.android.moviesdb.model.Season
 import dominando.android.moviesdb.serieDetail.SerieDetail
 import dominando.android.moviesdb.serieDetail.SerieDetailFragmentDirections
 
@@ -34,9 +31,6 @@ class SerieSeasonsFragment(val serieDetail: SerieDetail) : Fragment() {
     }
 
     private fun renderSeriesList() = with(binding){
-        val seasons =serieDetail.detail?.seasonList?.filterNotNull()
-//        recyclerView.adapter= SeasonAdapter(::onClick, parse(serieDetail), requireContext())
-//        recyclerView.layoutManager = LinearLayoutManager(requireContext())
         customItem.setCustomView(serieDetail)
     }
 
@@ -46,9 +40,5 @@ class SerieSeasonsFragment(val serieDetail: SerieDetail) : Fragment() {
         navigation.navigate(action)
     }
 
-    sealed class ClassSerie{
-        data class SeasonClass(val season: Season) : ClassSerie()
-        data class Episode(val episode: EpisodesItem) : ClassSerie()
-    }
 }
 

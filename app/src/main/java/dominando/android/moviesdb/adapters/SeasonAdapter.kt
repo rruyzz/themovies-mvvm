@@ -11,14 +11,12 @@ import dominando.android.moviesdb.databinding.ItemSeasonBinding
 import dominando.android.moviesdb.databinding.ItemSerieEpisodeBinding
 import dominando.android.moviesdb.model.EpisodesItem
 import dominando.android.moviesdb.model.Season
-import dominando.android.moviesdb.serieDetail.serieSeasons.SerieSeasonsFragment
-import dominando.android.moviesdb.serieDetail.serieSeasons.SerieSeasonsFragment.ClassSerie
 import dominando.android.moviesdb.utils.Constanst
 import dominando.android.moviesdb.utils.customView.CustomSerieItem
 
 class SeasonAdapter(
     var onClick: (EpisodesItem) -> Unit,
-    private var list: List<ClassSerie?>,
+    private var list: List<SeasonSerieAdapter.ClassSerie?>,
     private val context: Context
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -30,7 +28,7 @@ class SeasonAdapter(
 //        return SeasonsViewHolder(binding)
 //    }
 
-    fun updateList(updateList : List<ClassSerie?>){
+    fun updateList(updateList : List<SeasonSerieAdapter.ClassSerie?>){
         list = updateList
     }
 
@@ -57,14 +55,13 @@ class SeasonAdapter(
     }
 
     class ItemSeasonHolder(val binding: ItemSeasonBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(season: ClassSerie?) {
-            val seasonItem = (season as ClassSerie.SeasonClass).season
+        fun bind(season: SeasonSerieAdapter.ClassSerie?) {
+            val seasonItem = (season as SeasonSerieAdapter.ClassSerie.SeasonClass).season
             binding.seasonTitle.text = seasonItem?.name
             binding.seasonTitle.setOnClickListener {
                 val position = adapterPosition
                 if (RecyclerView.NO_POSITION != position) {
                     seasonItem?.showEpisodes = !seasonItem?.showEpisodes!!
-                    binding.linear.isVisible = seasonItem.showEpisodes ?: false
                 }
             }
         }
@@ -72,8 +69,8 @@ class SeasonAdapter(
 
     class SerieSeasonHolder(val binding: ItemSerieEpisodeBinding, val context: Context) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(episode: ClassSerie?) {
-            val season = (episode as ClassSerie.Episode).episode
+        fun bind(episode: SeasonSerieAdapter.ClassSerie?) {
+            val season = (episode as SeasonSerieAdapter.ClassSerie.Episode).episode
             binding.textEpisode.text = "S${season?.seasonNumber.toString()} | E${season?.episodeNumber.toString()}"
             binding.textTitle.text = season?.name
             Glide.with(context).load(Constanst.IMAGE_URL + season?.stillPath)
@@ -98,8 +95,8 @@ class SeasonAdapter(
     override fun getItemId(position: Int) = position.toLong()
 
     override fun getItemViewType(position: Int) = when {
-        list[position] is ClassSerie.SeasonClass -> 0
-        list[position] is ClassSerie.Episode -> 1
+        list[position] is SeasonSerieAdapter.ClassSerie.SeasonClass -> 0
+        list[position] is SeasonSerieAdapter.ClassSerie.Episode -> 1
         else -> 2
     }
 

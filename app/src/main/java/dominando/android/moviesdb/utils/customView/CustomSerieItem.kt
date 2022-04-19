@@ -10,6 +10,7 @@ import dominando.android.moviesdb.adapters.SeasonAdapter
 import dominando.android.moviesdb.adapters.SeasonSerieAdapter
 import dominando.android.moviesdb.databinding.NewItemSerieEpisodeBinding
 import dominando.android.moviesdb.model.EpisodesItem
+import dominando.android.moviesdb.model.Season
 import dominando.android.moviesdb.serieDetail.SerieDetail
 
 class CustomSerieItem  @JvmOverloads constructor(
@@ -29,19 +30,13 @@ class CustomSerieItem  @JvmOverloads constructor(
     private val adapter = SeasonSerieAdapter(::onClick, listSerie, context)
 
     init {
-        getAtrributes(attrs)
-        binding.recycler.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        binding.recycler.adapter= SeasonSerieAdapter(::onClick, listSerie, context)
-//        binding.recycler.adapter= adapter
-//        setTitle(title)
-//        setEpisode(season, episode)
-//        setImage(image)
+        binding.recycler.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        binding.recycler.adapter= adapter
     }
 
     fun setCustomView(listSerieDetail: SerieDetail?) = with(binding) {
         listSerie = parse(listSerieDetail)
-        binding.recycler.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        binding.recycler.adapter= SeasonSerieAdapter(::onClick, listSerie, context)
+        adapter.updateList(listSerie)
     }
 
     
@@ -56,7 +51,14 @@ class CustomSerieItem  @JvmOverloads constructor(
         return listaClass
     }
 
-    private fun onClick(episode: EpisodesItem) {
+    private fun onClick(episode: Season?) {
+        listSerie.map {
+            if(it is SeasonSerieAdapter.ClassSerie.Episode){
+                if(it.episode?.seasonNumber == episode?.seasonNumber) it.episode?.isVisible = it.episode?.isVisible?.not() ?: false
+            }
+        }
+        adapter.updateList(listSerie)
+
 //        val action = SerieDetailFragmentDirections.actionSerieDetailFragmentToEpisodeDetailFragment(episode, serieDetail.providers)
 //        navigation.navigate(action)
     }
@@ -65,63 +67,7 @@ class CustomSerieItem  @JvmOverloads constructor(
         attrs, R.styleable.CustomSerieItem, 0, 0
     )//.apply {
 
-
-//    fun getShowId() = episodeItem
-//
-//
-//    fun setEpisode(episode: EpisodesItem){
-//        episodeItem = episode
-//    }
-//    fun setTitle(title: String){
-//        binding.textTitle.text = title
-//    }
-//    fun setEpisode(season: Int, episode: Int){
-//        binding.textEpisode.text = "S$season | E$episode"
-//    }
-//    fun setImage(image: String?){
-//        Glide.with(context).load(Constanst.IMAGE_URL +image).into(binding.episodeImage)
-//    }
-
     override fun setOnClickListener(l: OnClickListener?) {
 //        binding.card.setOnClickListener(l)
     }
 }
-
-//class CustomSerieItem  @JvmOverloads constructor(
-//    context: Context,
-//    defStyle: Int = 0,
-//    attrs: AttributeSet? = null,
-//) : ConstraintLayout(context, attrs, defStyle) {
-//
-//    private lateinit var binding: ItemSerieEpisodeBinding
-//    private var episode = 0
-//    private var season = 0
-//    private var title = ""
-//    private var image = ""
-//    private lateinit var episodeItem : EpisodesItem
-//
-//    init {
-//        binding = ItemSerieEpisodeBinding.inflate(LayoutInflater.from(context), this, true)
-//        setTitle(title)
-//        setEpisode(season, episode)
-//        setImage(image)
-//    }
-//    fun getShowId() = episodeItem
-//
-//    fun setEpisode(episode: EpisodesItem){
-//        episodeItem = episode
-//    }
-//    fun setTitle(title: String){
-//        binding.textTitle.text = title
-//    }
-//    fun setEpisode(season: Int, episode: Int){
-//        binding.textEpisode.text = "S$season | E$episode"
-//    }
-//    fun setImage(image: String?){
-//        Glide.with(context).load(Constanst.IMAGE_URL +image).into(binding.episodeImage)
-//    }
-//
-//    override fun setOnClickListener(l: OnClickListener?) {
-//        binding.card.setOnClickListener(l)
-//    }
-//}
