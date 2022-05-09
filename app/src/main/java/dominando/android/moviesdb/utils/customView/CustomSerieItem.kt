@@ -4,14 +4,20 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.navigation.NavDirections
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import bolts.AppLinkNavigation.navigate
 import dominando.android.moviesdb.R
 import dominando.android.moviesdb.adapters.SeasonAdapter
 import dominando.android.moviesdb.adapters.SeasonSerieAdapter
 import dominando.android.moviesdb.databinding.NewItemSerieEpisodeBinding
 import dominando.android.moviesdb.model.EpisodesItem
+import dominando.android.moviesdb.model.MovieProviderResponse
 import dominando.android.moviesdb.model.Season
 import dominando.android.moviesdb.serieDetail.SerieDetail
+import dominando.android.moviesdb.serieDetail.SerieDetailFragmentDirections
 
 class CustomSerieItem  @JvmOverloads constructor(
     context: Context,
@@ -27,15 +33,24 @@ class CustomSerieItem  @JvmOverloads constructor(
     private var image = ""
     private var episodeItem : SerieDetail? = null
     private var listSerie : List<SeasonSerieAdapter.ClassSerie?> = listOf()
-    private val adapter = SeasonSerieAdapter(::onClick, listSerie, context)
+    private val adapter = SeasonSerieAdapter(::onClick, ::onClickEpisode, listSerie, context)
+    private lateinit var action: SerieDetailFragmentDirections.Companion
+    private var providerResponse: MovieProviderResponse? = null
+    private val navigate get() = findNavController()
 
     init {
         binding.recycler.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         binding.recycler.adapter= adapter
     }
 
-    fun setCustomView(listSerieDetail: SerieDetail?) = with(binding) {
+    fun setCustomView(
+        listSerieDetail: SerieDetail?,
+        actionNav: SerieDetailFragmentDirections.Companion,
+        providers: MovieProviderResponse?
+    ) = with(binding) {
         listSerie = parse(listSerieDetail)
+        action = actionNav
+        providerResponse = providers
         adapter.updateList(listSerie)
     }
 
@@ -59,8 +74,12 @@ class CustomSerieItem  @JvmOverloads constructor(
         }
         adapter.updateList(listSerie)
 
-//        val action = SerieDetailFragmentDirections.actionSerieDetailFragmentToEpisodeDetailFragment(episode, serieDetail.providers)
-//        navigation.navigate(action)
+    }
+
+    private fun onClickEpisode(episode: EpisodesItem?){
+        episode?.let{
+            navigate.navigate(action.actionSerieDetailFragmentToEpisodeDetailFragment(it, providerResponse))
+        }
     }
 
     private fun getAtrributes(attrs: AttributeSet?)= context.theme.obtainStyledAttributes(

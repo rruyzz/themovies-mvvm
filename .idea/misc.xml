@@ -7,6 +7,8 @@
         <entry key="app/src/main/res/drawable/background_black.xml" value="0.3546875" />
         <entry key="app/src/main/res/drawable/background_black_fade.xml" value="0.3859375" />
         <entry key="app/src/main/res/drawable/background_black_poster.xml" value="0.3859375" />
+        <entry key="app/src/main/res/drawable/ic_group_12.xml" value="0.301" />
+        <entry key="app/src/main/res/drawable/ic_logo.xml" value="0.301" />
         <entry key="app/src/main/res/drawable/ic_movie.xml" value="0.3546875" />
         <entry key="app/src/main/res/drawable/ic_profile.xml" value="0.3546875" />
         <entry key="app/src/main/res/drawable/ic_save.xml" value="0.3859375" />

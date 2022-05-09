@@ -31,7 +31,8 @@ class SerieSeasonsFragment(val serieDetail: SerieDetail) : Fragment() {
     }
 
     private fun renderSeriesList() = with(binding){
-        customItem.setCustomView(serieDetail)
+        val action = SerieDetailFragmentDirections
+        customItem.setCustomView(serieDetail, action, serieDetail.providers)
     }
 
 

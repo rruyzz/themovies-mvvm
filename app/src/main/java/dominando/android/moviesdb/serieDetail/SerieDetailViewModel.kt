@@ -20,7 +20,13 @@ class SerieDetailViewModel(private val service: Service) : ViewModel() {
     private var episodeDetail: SerieDetail? = null
 
     fun getSerieDetail(serieId: String) {
+
         viewModelScope.launch {
+            if(episodeDetail != null){
+                _serieDetailState.emit(SerieDetailsState.Loading(false))
+                _serieDetailState.emit(SerieDetailsState.Success(episodeDetail!!))
+                return@launch
+            }
             _serieDetailState.emit(SerieDetailsState.Loading(true))
             val serieDetailResponse = async { SafeRequest.safeApiCall { service.getSerieDetail(serieId) } }
             val providersResponse = async { SafeRequest.safeApiCall { service.getSerieProviders(serieId) } }

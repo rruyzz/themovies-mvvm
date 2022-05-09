@@ -14,6 +14,7 @@ import dominando.android.moviesdb.utils.Constanst
 
 class SeasonSerieAdapter(
     var onClick: (Season?) -> Unit,
+    var onClickEpisode: (EpisodesItem?) -> Unit,
     private var list: List<ClassSerie?>,
     private val context: Context
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -61,6 +62,12 @@ class SeasonSerieAdapter(
             binding.textTitle.text = season?.name
             Glide.with(context).load(Constanst.IMAGE_URL + season?.stillPath)
                 .into(binding.episodeImage)
+            itemView.setOnClickListener {
+                val position = adapterPosition
+                if (RecyclerView.NO_POSITION != position) {
+                    onClickEpisode(season)
+                }
+            }
         }
     }
 
