@@ -2,31 +2,35 @@ package dominando.android.moviesdb.home
 
 import android.content.Intent
 import android.os.Bundle
-import android.text.Spannable
-import android.text.SpannableStringBuilder
-import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
-import dominando.android.moviesdb.R
+import dominando.android.moviesdb.adapters.HomeAdapter
+import dominando.android.moviesdb.adapters.MovieSerieItem
 import dominando.android.moviesdb.databinding.FragmentListBinding
-import dominando.android.moviesdb.model.DiscoveryListMovieResponse
+import dominando.android.moviesdb.model.MovieResultResponse
+import dominando.android.moviesdb.model.SeriesResultsResponse
 import dominando.android.moviesdb.splash.SplashActivity
+import dominando.android.moviesdb.utils.extensions.disableTouch
+import dominando.android.moviesdb.utils.extensions.showToast
 import kotlinx.android.synthetic.main.fragment_list.*
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
-class HomeFragment : Fragment(), HomeAdapter.onClick {
+class HomeFragment : Fragment() {
 
     private lateinit var mAuth: FirebaseAuth
     private val viewModel: HomeViewModel by viewModel()
-    private lateinit var binding : FragmentListBinding
+    private lateinit var binding: FragmentListBinding
+    private val navigation get() = findNavController()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,55 +42,77 @@ class HomeFragment : Fragment(), HomeAdapter.onClick {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setView()
         setButtons()
         setObservers()
         viewModel.getAllMovies()
-    }
-    private fun setObservers() {
-        viewModel.state.observe(requireActivity(), Observer {
-            when(it){
-                is HomeMovieList.Success -> setRecycler(it.response)
-                is HomeMovieList.Error -> Toast.makeText(requireActivity() ,it.error, Toast.LENGTH_SHORT).show()
-                is HomeMovieList.Loading -> renderLoading(it.isLoading)
+        textSeries.setOnClickListener{
+                viewModel.getAllMovies()
             }
-        })
     }
 
-    private fun setRecycler(list: DiscoveryListMovieResponse){
-        recycler_view_main.adapter= HomeAdapter(this ,list.results, requireContext())
-        recycler_view_main.layoutManager = GridLayoutManager(requireContext(), 2, GridLayoutManager.VERTICAL, false)
-    }
-
-    private fun renderLoading(isLoading: Boolean) = with(binding){
-        progress.isVisible  = isLoading
-    }
-    private fun setButtons(){
-        text_title.setOnClickListener {
-            mAuth = FirebaseAuth.getInstance()
-            mAuth.signOut()
-            val intent = Intent(requireContext(), SplashActivity::class.java)
-            startActivity(intent)
-            requireActivity().finish()
-        }
-        text_check_movies.setOnClickListener {
-            Toast.makeText(requireContext(), "TESTO", Toast.LENGTH_SHORT).show()
+    private fun setObservers() {
+        lifecycleScope.launch {
+            viewModel.movieState.collect { state ->
+                when (state) {
+                    is HomeMovieList.Success -> setRecycler(state.listSerie, state.listMovie, state.listTopSerie)
+                    is HomeMovieList.Error -> renderError()
+                    is HomeMovieList.Loading -> renderLoading(state.isLoading)
+                }
+            }
         }
     }
 
+    private fun setRecycler(
+        listSerie: SeriesResultsResponse,
+        listMovie: MovieResultResponse,
+        topSeries: MovieResultResponse
+    ) = with(binding) {
+        rvSeries.apply {
+            adapter = homeAdapter(listSerie.results)
+            layoutManager = linearLayoutManeger()
+        }
+        rvMovies.apply {
+            adapter =  homeAdapter(listMovie.results)
+            layoutManager = linearLayoutManeger()
+        }
+        rvTopSeries.apply{
+            adapter = homeAdapter(topSeries.results)
+            layoutManager = linearLayoutManeger()
+        }
 
-    private fun setView() {
-        val spannable = SpannableStringBuilder(getString(R.string.text_title_list))
-        spannable.setSpan(
-            ForegroundColorSpan(resources.getColor(R.color.red)),
-            12,
-            spannable.length,
-            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-        )
-        text_title.text = spannable
+    }
+    private fun renderError() {
+        showToast(requireActivity(), "Error")
+        binding.group.isVisible = false
     }
 
-    override fun onClick() {
-        TODO("Not yet implemented")
+    private fun renderLoading(isLoading: Boolean) = with(binding) {
+        progress.isVisible = isLoading
+        group.isVisible = isLoading.not()
+        disableTouch(isLoading)
     }
+
+    private fun setButtons() = with(binding) {
+        textSeries.setOnClickListener {
+            logOut()
+        }
+    }
+
+    private fun logOut() {
+        mAuth = FirebaseAuth.getInstance()
+        mAuth.signOut()
+        val intent = Intent(requireContext(), SplashActivity::class.java)
+        startActivity(intent)
+        requireActivity().finish()
+    }
+
+    private fun onClick(movie: MovieSerieItem) {
+        val destination =
+            if (movie.isShow) HomeFragmentDirections.actionListFragmentToSerieDetailFragment(movie.movie_id.toString())
+            else HomeFragmentDirections.actionListFragmentToMovieDetailFragment(movie.movie_id.toString(), movie.title)
+        navigation.navigate(destination)
+    }
+
+    private fun linearLayoutManeger() = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+    private fun homeAdapter(list: List<MovieSerieItem>) = HomeAdapter(::onClick, list, requireContext())
 }

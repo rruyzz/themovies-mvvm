@@ -3,16 +3,55 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../../../../layout/custom_preview.xml" value="0.39791666666666664" />
+        <entry key="app/src/main/res/drawable/background_black.xml" value="0.3546875" />
+        <entry key="app/src/main/res/drawable/background_black_fade.xml" value="0.3859375" />
+        <entry key="app/src/main/res/drawable/background_black_poster.xml" value="0.3859375" />
+        <entry key="app/src/main/res/drawable/ic_group_12.xml" value="0.301" />
+        <entry key="app/src/main/res/drawable/ic_logo.xml" value="0.301" />
+        <entry key="app/src/main/res/drawable/ic_movie.xml" value="0.3546875" />
+        <entry key="app/src/main/res/drawable/ic_profile.xml" value="0.3546875" />
+        <entry key="app/src/main/res/drawable/ic_save.xml" value="0.3859375" />
+        <entry key="app/src/main/res/drawable/ic_search.xml" value="0.3546875" />
+        <entry key="app/src/main/res/drawable/ic_tv.xml" value="0.3546875" />
+        <entry key="app/src/main/res/drawable/item_provider.xml" value="0.3859375" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.18" />
         <entry key="app/src/main/res/layout/activity_my_custom_app.xml" value="0.3697916666666667" />
-        <entry key="app/src/main/res/layout/fragment_list.xml" value="0.3697916666666667" />
+        <entry key="app/src/main/res/layout/activity_search.xml" value="0.3697916666666667" />
+        <entry key="app/src/main/res/layout/activity_watched.xml" value="0.3697916666666667" />
+        <entry key="app/src/main/res/layout/fragment_episode_detail.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/fragment_list.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/fragment_login_home.xml" value="0.3697916666666667" />
+        <entry key="app/src/main/res/layout/fragment_movie_detail.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/fragment_movies_search.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/fragment_movies_watched.xml" value="0.3697916666666667" />
+        <entry key="app/src/main/res/layout/fragment_my.xml" value="0.19895833333333332" />
+        <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/fragment_search.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/fragment_serie_detail.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_serie_infos.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_serie_seasons.xml" value="0.3697916666666667" />
+        <entry key="app/src/main/res/layout/fragment_series.xml" value="0.31302083333333336" />
+        <entry key="app/src/main/res/layout/fragment_series_search.xml" value="0.25677083333333334" />
         <entry key="app/src/main/res/layout/fragment_sign_in.xml" value="0.3697916666666667" />
         <entry key="app/src/main/res/layout/fragment_sign_up.xml" value="0.2078125" />
         <entry key="app/src/main/res/layout/fragment_sign_up_email.xml" value="0.3697916666666667" />
+        <entry key="app/src/main/res/layout/fragment_splash.xml" value="0.3697916666666667" />
+        <entry key="app/src/main/res/layout/item_cast.xml" value="1.0" />
         <entry key="app/src/main/res/layout/item_movie.xml" value="0.3697916666666667" />
+        <entry key="app/src/main/res/layout/item_movie_small.xml" value="0.3697916666666667" />
+        <entry key="app/src/main/res/layout/item_provider.xml" value="0.3697916666666667" />
+        <entry key="app/src/main/res/layout/item_search.xml" value="0.3697916666666667" />
+        <entry key="app/src/main/res/layout/item_season.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/item_serie_episode.xml" value="0.3697916666666667" />
+        <entry key="app/src/main/res/layout/layout_spinner.xml" value="0.3697916666666667" />
+        <entry key="app/src/main/res/layout/new_item_serie_episode.xml" value="0.275" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_icon.xml" value="0.2925" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.2925" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

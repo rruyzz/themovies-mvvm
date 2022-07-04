@@ -1,13 +1,17 @@
 package dominando.android.moviesdb.login.home
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
+import dominando.android.moviesdb.MainActivity
 import dominando.android.moviesdb.R
 import dominando.android.moviesdb.databinding.FragmentLoginHomeBinding
+import dominando.android.moviesdb.utils.firebase.firebase.saveUser
 
 
 class LoginHomeFragment : Fragment() {
@@ -31,6 +35,8 @@ class LoginHomeFragment : Fragment() {
 
     private fun setButton(){
         binding.buttonStart.setOnClickListener {
+//                val intent = Intent(requireContext(), MainActivity::class.java)
+//                startActivity(intent)
             navigate.navigate(LoginHomeFragmentDirections.actionLoginHomeFragmentToLoginFragment())
         }
     }
