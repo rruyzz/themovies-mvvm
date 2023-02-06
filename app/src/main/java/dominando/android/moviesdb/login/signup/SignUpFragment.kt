@@ -74,6 +74,9 @@ class SignUpFragment : Fragment() {
         buttonLoginFacebook.setOnClickListener {
             checkFacebook()
         }
+        textViewMoreOptions.setOnClickListener {
+            loginSuccess()
+        }
     }
 
     private fun checkLogin() {
